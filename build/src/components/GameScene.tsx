@@ -21,11 +21,13 @@ import { PlayerLevelUpEffect } from './PlayerLevelUpEffect';
 import { BuyOrderPanel } from './BuyOrderPanel';
 import { PotSkinPanel } from './PotSkinPanel';
 import { ProfileMenu } from './ProfileMenu';
+import { GreenhouseAtmosphere } from './GreenhouseAtmosphere';
 import { useGameState } from '../hooks/useGameState';
 import { useCooldown } from '../hooks/useCooldown';
 import { assets } from '../data/assets';
 import { FlowerType } from '../types';
 import { DRAG_THRESHOLD_PX } from '../config';
+import { useAtmosphere } from '../hooks/useAtmosphere';
 
 export const GameScene: FC = () => {
   const {
@@ -81,6 +83,9 @@ export const GameScene: FC = () => {
 
   // 冷却计时器
   useCooldown(pots, setPots);
+
+  // 温室氛围（昼夜 + 天气）
+  const atmosphere = useAtmosphere();
 
   const [showInventory, setShowInventory] = useState(false);
   const [showPurchase, setShowPurchase] = useState(false);
@@ -298,6 +303,11 @@ export const GameScene: FC = () => {
     <div className="game-scene" onDragStart={e => e.preventDefault()}>
       <img src={assets.background.sky} alt="天空" className="game-bg-sky" draggable={false} />
       <img src={assets.background.frame} alt="温室" className="game-bg-frame" draggable={false} />
+      <GreenhouseAtmosphere
+        timeOfDay={atmosphere.timeOfDay}
+        timeColor={atmosphere.timeColor}
+        weather={atmosphere.weather}
+      />
       <div className="game-content">
         <CurrencyBar currency={currency} maxWater={maxWater} noWaterWarning={noWaterWarning} waterRegenCountdown={waterRegenCountdown} />
         <PlayerLevelBar playerLevel={playerLevel} />

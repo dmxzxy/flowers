@@ -49,28 +49,213 @@
   width: 100%; height: 100%;
   object-fit: cover;
   object-position: center top;
-  z-index: 0;
+  z-index: 1;
 }
-/* 暖色氛围蒙版 — 柔化天空与内容之间的过渡 */
-.game-scene::before {
-  content: '';
+
+/* ========== 温室氛围系统 ========== */
+.greenhouse-atmosphere {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  z-index: 0;
+  z-index: 2;
   pointer-events: none;
+  overflow: hidden;
+}
+
+/* --- 暖色晕影（原 ::before，始终有效） --- */
+.atmo-vignette {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   background:
-    /* 四角暗角（暖色晕影） */
     radial-gradient(ellipse 90% 85% at 50% 55%, transparent 40%, rgba(120,90,60,0.22) 100%),
-    /* 底部暖色雾 — 与花架衔接 */
     linear-gradient(to top, rgba(180,150,110,0.30) 0%, rgba(180,150,110,0.12) 25%, transparent 50%),
-    /* 顶部轻微压暗 */
     linear-gradient(to bottom, rgba(80,100,70,0.12) 0%, transparent 30%);
 }
 
+/* --- 昼夜色调覆盖 --- */
+.atmo-time-overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  transition: background 60s ease;
+}
+
+/* --- 阳光光柱 --- */
+.atmo-sun-rays {
+  position: absolute;
+  top: 0; right: 0;
+  width: 100%; height: 65%;
+  overflow: hidden;
+}
+.atmo-ray {
+  position: absolute;
+  top: -10%;
+  background: linear-gradient(180deg,
+    rgba(255,240,180,0.18) 0%,
+    rgba(255,240,180,0.06) 60%,
+    transparent 100%);
+  transform-origin: top center;
+  animation: rayPulse 6s ease-in-out infinite alternate;
+}
+.atmo-ray-1 { right: 5%;  width: 80px; height: 120%; transform: rotate(-15deg); animation-delay: 0s;  opacity: 0.7; }
+.atmo-ray-2 { right: 18%; width: 60px; height: 110%; transform: rotate(-22deg); animation-delay: 2s;  opacity: 0.5; }
+.atmo-ray-3 { right: 30%; width: 50px; height: 100%; transform: rotate(-28deg); animation-delay: 4s;  opacity: 0.4; }
+@keyframes rayPulse {
+  0%   { opacity: 0.3; }
+  100% { opacity: 0.8; }
+}
+
+/* --- 雨天蒙版 --- */
+.atmo-rain-tint {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(100,120,140,0.10);
+}
+
+/* --- 雨滴 --- */
+.atmo-rain {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+}
+.atmo-raindrop {
+  position: absolute;
+  top: -20px;
+  width: 1.5px;
+  background: linear-gradient(to bottom, transparent, rgba(180,210,230,0.55));
+  border-radius: 0 0 1px 1px;
+  animation: rainFall linear infinite;
+}
+@keyframes rainFall {
+  0%   { transform: translateY(-20px) rotate(8deg); opacity: 0; }
+  10%  { opacity: 0.7; }
+  90%  { opacity: 0.45; }
+  100% { transform: translateY(100vh) rotate(8deg); opacity: 0; }
+}
+
+/* --- 玻璃水珠 --- */
+.atmo-glass-drops {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 30%;
+}
+.atmo-glass-drop {
+  position: absolute;
+  width: 5px; height: 7px;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4), rgba(180,210,230,0.15));
+  box-shadow: 0 0 2px rgba(180,210,230,0.2);
+  animation: glassDropPulse 8s ease-in-out infinite;
+}
+@keyframes glassDropPulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50%      { transform: scale(1.4); opacity: 0.8; }
+  80%      { transform: scale(1) translateY(4px); opacity: 0.3; }
+}
+
+/* --- 雾气 --- */
+.atmo-fog {
+  position: absolute;
+  top: 0; left: 0;
+  width: 200%; height: 100%;
+  background:
+    radial-gradient(ellipse 50% 40% at 25% 50%, rgba(220,220,210,0.30) 0%, transparent 70%),
+    radial-gradient(ellipse 45% 35% at 75% 40%, rgba(210,215,200,0.25) 0%, transparent 70%);
+  animation: fogDrift 30s ease-in-out infinite alternate;
+}
+@keyframes fogDrift {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-25%); }
+}
+
+/* --- 阴天加暗 --- */
+.atmo-clouds-dim {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(160,160,155,0.10);
+}
+
+/* --- 灰尘浮粒 --- */
+.atmo-dust {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+}
+.atmo-dust--night { opacity: 0.35; }
+.atmo-mote {
+  position: absolute;
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: rgba(255,248,220,0.5);
+  animation: moteDrift linear infinite;
+}
+.atmo-mote-1 { left: 20%; top: 35%; animation-duration: 12s; animation-delay: 0s; }
+.atmo-mote-2 { left: 55%; top: 25%; animation-duration: 15s; animation-delay: 2s; }
+.atmo-mote-3 { left: 75%; top: 45%; animation-duration: 10s; animation-delay: 4s; }
+.atmo-mote-4 { left: 35%; top: 55%; animation-duration: 14s; animation-delay: 1s; }
+.atmo-mote-5 { left: 60%; top: 60%; animation-duration: 11s; animation-delay: 3s; }
+.atmo-mote-6 { left: 15%; top: 50%; animation-duration: 13s; animation-delay: 5s; }
+@keyframes moteDrift {
+  0%   { transform: translate(0, 0) scale(1);        opacity: 0; }
+  10%  { opacity: 0.6; }
+  50%  { transform: translate(30px, -40px) scale(1.3); opacity: 0.4; }
+  90%  { opacity: 0.2; }
+  100% { transform: translate(-20px, -80px) scale(0.8); opacity: 0; }
+}
+
+/* --- 蝴蝶 --- */
+.atmo-butterflies {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 55%;
+}
+.atmo-butterfly {
+  position: absolute;
+  font-size: 16px;
+  animation: butterflyPath ease-in-out infinite;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15));
+}
+.atmo-butterfly-1 { left: 15%; top: 40%; animation-duration: 18s; font-size: 14px; opacity: 0.7; }
+.atmo-butterfly-2 { left: 65%; top: 30%; animation-duration: 22s; animation-delay: 5s; font-size: 12px; opacity: 0.5; }
+@keyframes butterflyPath {
+  0%   { transform: translate(0, 0) scaleX(1); }
+  15%  { transform: translate(40px, -20px) scaleX(1); }
+  30%  { transform: translate(80px, 10px) scaleX(-1); }
+  45%  { transform: translate(50px, -30px) scaleX(-1); }
+  60%  { transform: translate(10px, -10px) scaleX(1); }
+  75%  { transform: translate(-30px, 15px) scaleX(1); }
+  90%  { transform: translate(-10px, -25px) scaleX(-1); }
+  100% { transform: translate(0, 0) scaleX(1); }
+}
+
+/* --- 萤火虫 --- */
+.atmo-firefly {
+  position: absolute;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #FFE082;
+  box-shadow: 0 0 8px 3px rgba(255,224,130,0.6), 0 0 16px 6px rgba(255,224,130,0.3);
+  animation: fireflyFloat ease-in-out infinite alternate, fireflyGlow 2s ease-in-out infinite;
+}
+@keyframes fireflyFloat {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(15px, -10px); }
+  50%  { transform: translate(-10px, -20px); }
+  75%  { transform: translate(20px, -5px); }
+  100% { transform: translate(-5px, -15px); }
+}
+@keyframes fireflyGlow {
+  0%, 100% { opacity: 0.3; }
+  50%      { opacity: 1; }
+}
+/* ========== /温室氛围系统 ========== */
+
 .game-content {
   position: relative;
-  z-index: 1;
+  z-index: 3;
   width: 100%;
   height: 100%;
   display: flex;
