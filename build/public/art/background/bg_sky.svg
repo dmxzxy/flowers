@@ -1,43 +1,39 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1400" viewBox="0 0 800 1400">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1400" viewBox="0 0 800 1400" preserveAspectRatio="xMidYMin slice">
   <defs>
-    <!-- 天空渐变：柔和的蓝→白 -->
     <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#7EC8E3"/>
-      <stop offset="35%" stop-color="#A8DCEF"/>
-      <stop offset="70%" stop-color="#D4EEF7"/>
-      <stop offset="100%" stop-color="#EDF7FC"/>
+      <stop offset="0%" stop-color="#82C9E5"/>
+      <stop offset="40%" stop-color="#A8DCF0"/>
+      <stop offset="75%" stop-color="#D0EDF8"/>
+      <stop offset="100%" stop-color="#E8F5FC"/>
     </linearGradient>
   </defs>
 
-  <!-- 天空整片 -->
+  <!-- 整片天空 -->
   <rect width="800" height="1400" fill="url(#sky)"/>
 
-  <!-- 太阳：暖金色光晕 -->
-  <circle cx="650" cy="120" r="80" fill="#FFF3C4" opacity="0.5"/>
-  <circle cx="650" cy="120" r="50" fill="#FFE88A" opacity="0.7"/>
-  <circle cx="650" cy="120" r="30" fill="#FFDD57" opacity="0.9"/>
+  <!-- 太阳（右上方，暖光晕） -->
+  <circle cx="620" cy="100" r="100" fill="#FFF8DC" opacity="0.35"/>
+  <circle cx="620" cy="100" r="60" fill="#FFECB3" opacity="0.5"/>
+  <circle cx="620" cy="100" r="35" fill="#FFE082" opacity="0.8"/>
+  <circle cx="620" cy="100" r="18" fill="#FFD54F"/>
 
-  <!-- 云朵群 1（左上） -->
-  <g opacity="0.85">
-    <ellipse cx="150" cy="160" rx="90" ry="35" fill="white"/>
-    <ellipse cx="210" cy="145" rx="70" ry="30" fill="white"/>
-    <ellipse cx="110" cy="150" rx="55" ry="25" fill="#F5F5F5"/>
+  <!-- 云朵组 1 — 左上近处 -->
+  <g opacity="0.9">
+    <ellipse cx="140" cy="130" rx="85" ry="30" fill="white"/>
+    <ellipse cx="200" cy="118" rx="65" ry="26" fill="white"/>
+    <ellipse cx="100" cy="124" rx="50" ry="22" fill="#F5F5F5"/>
   </g>
 
-  <!-- 云朵群 2（右中） -->
-  <g opacity="0.7">
-    <ellipse cx="550" cy="250" rx="100" ry="38" fill="white"/>
-    <ellipse cx="620" cy="235" rx="75" ry="32" fill="white"/>
-    <ellipse cx="500" cy="245" rx="60" ry="28" fill="#F5F5F5"/>
+  <!-- 云朵组 2 — 右中远处 -->
+  <g opacity="0.65">
+    <ellipse cx="500" cy="200" rx="95" ry="32" fill="white"/>
+    <ellipse cx="570" cy="188" rx="70" ry="28" fill="white"/>
+    <ellipse cx="450" cy="195" rx="55" ry="24" fill="#F5F5F5"/>
   </g>
 
-  <!-- 云朵群 3（左下远处） -->
-  <g opacity="0.5">
-    <ellipse cx="100" cy="400" rx="120" ry="30" fill="white"/>
-    <ellipse cx="180" cy="390" rx="80" ry="25" fill="white"/>
+  <!-- 云朵组 3 — 左下更远 -->
+  <g opacity="0.4">
+    <ellipse cx="250" cy="310" rx="110" ry="28" fill="white"/>
+    <ellipse cx="330" cy="300" rx="75" ry="22" fill="white"/>
   </g>
-
-  <!-- 远景山丘（淡绿色） -->
-  <path d="M0 550 Q200 440 400 500 Q600 430 800 520 L800 600 L0 600Z" fill="#C8E6C9" opacity="0.4"/>
-  <path d="M0 580 Q150 520 350 560 Q550 510 800 570 L800 620 L0 620Z" fill="#A5D6A7" opacity="0.3"/>
 </svg>

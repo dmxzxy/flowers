@@ -1,121 +1,150 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1400" viewBox="0 0 800 1400">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1400" viewBox="0 0 800 1400" preserveAspectRatio="xMidYMin slice">
   <defs>
-    <!-- 玻璃面板淡色填充 -->
-    <linearGradient id="glass" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="rgba(255,255,255,0.18)"/>
-      <stop offset="50%" stop-color="rgba(255,255,255,0.06)"/>
-      <stop offset="100%" stop-color="rgba(255,255,255,0.15)"/>
+    <!-- 玻璃淡色 -->
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.15)"/>
+      <stop offset="50%" stop-color="rgba(255,255,255,0.04)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0.12)"/>
     </linearGradient>
-    <!-- 顶部玻璃穹顶渐变 -->
-    <linearGradient id="roofGlass" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="rgba(255,255,255,0.22)"/>
-      <stop offset="100%" stop-color="rgba(255,255,255,0.04)"/>
-    </linearGradient>
-    <!-- 地砖渐变 -->
-    <linearGradient id="floor" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#A1887F"/>
+    <!-- 地面 -->
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#BCAAA4"/>
+      <stop offset="30%" stop-color="#A1887F"/>
       <stop offset="100%" stop-color="#8D6E63"/>
     </linearGradient>
-    <!-- 木架颜色 -->
-    <linearGradient id="wood" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#6D4C41"/>
-      <stop offset="100%" stop-color="#5D4037"/>
+    <!-- 金属框 -->
+    <linearGradient id="metal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#90A4AE"/>
+      <stop offset="100%" stop-color="#78909C"/>
+    </linearGradient>
+    <!-- 木质 -->
+    <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8D6E63"/>
+      <stop offset="100%" stop-color="#6D4C41"/>
     </linearGradient>
   </defs>
 
-  <!-- ========== 玻璃穹顶（弧形屋顶） ========== -->
-  <!-- 穹顶玻璃面 -->
-  <path d="M30 280 Q400 30 770 280 L770 300 Q400 50 30 300Z" fill="url(#roofGlass)" stroke="#B0BEC5" stroke-width="1.5"/>
+  <!--
+    室内视角：站在温室内部，稍仰头。
+    透视消失点 VP = (400, 180)
+    玻璃屋顶在上方，两侧玻璃墙向远方收窄，
+    下方是温室地面（花盆在此区域上方的 UI 层）。
+  -->
 
-  <!-- 穹顶龙骨（金属框架） -->
-  <path d="M30 280 Q400 30 770 280" fill="none" stroke="#78909C" stroke-width="4"/>
-  <path d="M30 300 Q400 50 770 300" fill="none" stroke="#78909C" stroke-width="3"/>
-  <!-- 纵向龙骨 -->
-  <line x1="400" y1="42" x2="400" y2="300" stroke="#90A4AE" stroke-width="2.5"/>
-  <line x1="215" y1="130" x2="215" y2="296" stroke="#90A4AE" stroke-width="2"/>
-  <line x1="585" y1="130" x2="585" y2="296" stroke="#90A4AE" stroke-width="2"/>
-  <line x1="120" y1="210" x2="120" y2="294" stroke="#90A4AE" stroke-width="1.5"/>
-  <line x1="680" y1="210" x2="680" y2="294" stroke="#90A4AE" stroke-width="1.5"/>
+  <!-- ========== 玻璃天花板（透视网格） ========== -->
+  <!-- 外框：梯形天花板轮廓 -->
+  <polygon points="0,0 800,0 660,340 140,340" fill="url(#glass)" stroke="#90A4AE" stroke-width="2"/>
 
-  <!-- ========== 左侧玻璃墙 ========== -->
+  <!-- 纵向龙骨（从顶部向消失点汇聚） -->
+  <line x1="0"   y1="0" x2="140" y2="340" stroke="#90A4AE" stroke-width="3.5" opacity="0.8"/>
+  <line x1="200" y1="0" x2="244" y2="340" stroke="#90A4AE" stroke-width="2.5" opacity="0.7"/>
+  <line x1="400" y1="0" x2="400" y2="340" stroke="#90A4AE" stroke-width="3"   opacity="0.8"/>
+  <line x1="600" y1="0" x2="556" y2="340" stroke="#90A4AE" stroke-width="2.5" opacity="0.7"/>
+  <line x1="800" y1="0" x2="660" y2="340" stroke="#90A4AE" stroke-width="3.5" opacity="0.8"/>
+
+  <!-- 横向龙骨（越远间距越小 — 透视） -->
+  <line x1="18"  y1="45"  x2="782" y2="45"  stroke="#B0BEC5" stroke-width="2" opacity="0.5"/>
+  <line x1="40"  y1="100" x2="760" y2="100" stroke="#B0BEC5" stroke-width="2" opacity="0.55"/>
+  <line x1="68"  y1="165" x2="732" y2="165" stroke="#B0BEC5" stroke-width="2.5" opacity="0.6"/>
+  <line x1="100" y1="240" x2="700" y2="240" stroke="#B0BEC5" stroke-width="2.5" opacity="0.65"/>
+  <line x1="126" y1="300" x2="674" y2="300" stroke="#B0BEC5" stroke-width="2.5" opacity="0.7"/>
+
+  <!-- 天花板中脊（加粗主梁） -->
+  <line x1="400" y1="0" x2="400" y2="340" stroke="#78909C" stroke-width="5" opacity="0.9"/>
+
+  <!-- 天花板玻璃反光 -->
+  <line x1="250" y1="50" x2="310" y2="150" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+  <line x1="520" y1="80" x2="490" y2="200" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
+  <path d="M180 120 Q220 95 260 115" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+
+  <!-- ========== 天花板下沿横梁 ========== -->
+  <rect x="130" y="334" width="540" height="14" fill="url(#wood)" rx="2"/>
+  <rect x="130" y="348" width="540" height="4" fill="rgba(0,0,0,0.06)"/>
+  <!-- 左右延伸到边 -->
+  <polygon points="0,0 140,334 140,348 0,8" fill="url(#wood)" opacity="0.7"/>
+  <polygon points="800,0 660,334 660,348 800,8" fill="url(#wood)" opacity="0.7"/>
+
+  <!-- ========== 左侧玻璃墙（透视：从天花板左边缘向下展开） ========== -->
   <g>
-    <!-- 金属框架 -->
-    <line x1="30" y1="280" x2="30" y2="850" stroke="#78909C" stroke-width="5"/>
-    <!-- 横向框架线 -->
-    <line x1="30" y1="420" x2="80" y2="420" stroke="#90A4AE" stroke-width="2"/>
-    <line x1="30" y1="560" x2="80" y2="560" stroke="#90A4AE" stroke-width="2"/>
-    <line x1="30" y1="700" x2="80" y2="700" stroke="#90A4AE" stroke-width="2"/>
-    <!-- 玻璃面板 -->
-    <rect x="30" y="280" width="50" height="140" fill="url(#glass)" rx="2"/>
-    <rect x="30" y="420" width="50" height="140" fill="url(#glass)" rx="2"/>
-    <rect x="30" y="560" width="50" height="140" fill="url(#glass)" rx="2"/>
-    <rect x="30" y="700" width="50" height="150" fill="url(#glass)" rx="2"/>
+    <!-- 墙面玻璃 -->
+    <polygon points="0,8 140,348 140,900 0,1100" fill="url(#glass)"/>
+    <!-- 竖直金属框 -->
+    <line x1="0" y1="8" x2="0" y2="1100" stroke="#78909C" stroke-width="5"/>
+    <line x1="140" y1="348" x2="140" y2="900" stroke="#78909C" stroke-width="3"/>
+    <!-- 纵向中线 -->
+    <line x1="70" y1="178" x2="70" y2="1000" stroke="#90A4AE" stroke-width="2" opacity="0.6"/>
+    <!-- 横线（间距递增 — 近大远小反转，越低越近） -->
+    <line x1="0" y1="450" x2="140" y2="450" stroke="#90A4AE" stroke-width="1.5" opacity="0.5"/>
+    <line x1="0" y1="580" x2="140" y2="575" stroke="#90A4AE" stroke-width="1.5" opacity="0.5"/>
+    <line x1="0" y1="730" x2="140" y2="710" stroke="#90A4AE" stroke-width="1.5" opacity="0.5"/>
+    <line x1="0" y1="900" x2="140" y2="860" stroke="#90A4AE" stroke-width="1.5" opacity="0.5"/>
+    <!-- 玻璃反光 -->
+    <line x1="25" y1="400" x2="50" y2="600" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
   </g>
 
-  <!-- ========== 右侧玻璃墙 ========== -->
+  <!-- ========== 右侧玻璃墙（对称） ========== -->
   <g>
-    <line x1="770" y1="280" x2="770" y2="850" stroke="#78909C" stroke-width="5"/>
-    <line x1="720" y1="420" x2="770" y2="420" stroke="#90A4AE" stroke-width="2"/>
-    <line x1="720" y1="560" x2="770" y2="560" stroke="#90A4AE" stroke-width="2"/>
-    <line x1="720" y1="700" x2="770" y2="700" stroke="#90A4AE" stroke-width="2"/>
-    <rect x="720" y="280" width="50" height="140" fill="url(#glass)" rx="2"/>
-    <rect x="720" y="420" width="50" height="140" fill="url(#glass)" rx="2"/>
-    <rect x="720" y="560" width="50" height="140" fill="url(#glass)" rx="2"/>
-    <rect x="720" y="700" width="50" height="150" fill="url(#glass)" rx="2"/>
+    <polygon points="800,8 660,348 660,900 800,1100" fill="url(#glass)"/>
+    <line x1="800" y1="8" x2="800" y2="1100" stroke="#78909C" stroke-width="5"/>
+    <line x1="660" y1="348" x2="660" y2="900" stroke="#78909C" stroke-width="3"/>
+    <line x1="730" y1="178" x2="730" y2="1000" stroke="#90A4AE" stroke-width="2" opacity="0.6"/>
+    <line x1="660" y1="450" x2="800" y2="450" stroke="#90A4AE" stroke-width="1.5" opacity="0.5"/>
+    <line x1="660" y1="575" x2="800" y2="580" stroke="#90A4AE" stroke-width="1.5" opacity="0.5"/>
+    <line x1="660" y1="710" x2="800" y2="730" stroke="#90A4AE" stroke-width="1.5" opacity="0.5"/>
+    <line x1="660" y1="860" x2="800" y2="900" stroke="#90A4AE" stroke-width="1.5" opacity="0.5"/>
+    <line x1="750" y1="420" x2="725" y2="620" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
   </g>
-
-  <!-- ========== 顶部横梁 ========== -->
-  <rect x="20" y="294" width="760" height="12" fill="url(#wood)" rx="2"/>
-  <!-- 木梁阴影 -->
-  <rect x="20" y="306" width="760" height="4" fill="rgba(0,0,0,0.08)" rx="1"/>
-
-  <!-- ========== 玻璃面板光泽反射 ========== -->
-  <!-- 左上方对角线反光 -->
-  <line x1="45" y1="310" x2="65" y2="390" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
-  <line x1="735" y1="320" x2="755" y2="400" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
-  <!-- 穹顶反光 -->
-  <path d="M250 140 Q310 100 370 130" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
-  <path d="M480 160 Q520 130 560 155" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
 
   <!-- ========== 温室地面 ========== -->
-  <rect x="0" y="850" width="800" height="550" fill="url(#floor)"/>
+  <polygon points="0,1100 140,900 660,900 800,1100 800,1400 0,1400" fill="url(#floor)"/>
 
-  <!-- 地砖线 -->
-  <g stroke="#9E8E82" stroke-width="0.8" opacity="0.4">
-    <line x1="0" y1="920" x2="800" y2="920"/>
-    <line x1="0" y1="990" x2="800" y2="990"/>
-    <line x1="0" y1="1060" x2="800" y2="1060"/>
-    <line x1="0" y1="1130" x2="800" y2="1130"/>
-    <line x1="0" y1="1200" x2="800" y2="1200"/>
-    <line x1="0" y1="1270" x2="800" y2="1270"/>
-    <line x1="0" y1="1340" x2="800" y2="1340"/>
-    <line x1="160" y1="850" x2="160" y2="1400"/>
-    <line x1="320" y1="850" x2="320" y2="1400"/>
-    <line x1="480" y1="850" x2="480" y2="1400"/>
-    <line x1="640" y1="850" x2="640" y2="1400"/>
+  <!-- 地面与墙体交界线（木质踢脚线） -->
+  <line x1="140" y1="900" x2="660" y2="900" stroke="#6D4C41" stroke-width="6"/>
+  <line x1="0" y1="1100" x2="140" y2="900" stroke="#6D4C41" stroke-width="4"/>
+  <line x1="800" y1="1100" x2="660" y2="900" stroke="#6D4C41" stroke-width="4"/>
+
+  <!-- 地砖纹理（透视：从消失点散射出去） -->
+  <g stroke="#9E8E82" stroke-width="0.8" opacity="0.3">
+    <!-- 横线 -->
+    <line x1="80"  y1="960"  x2="720" y2="960"/>
+    <line x1="50"  y1="1030" x2="750" y2="1030"/>
+    <line x1="25"  y1="1110" x2="775" y2="1110"/>
+    <line x1="0"   y1="1200" x2="800" y2="1200"/>
+    <line x1="0"   y1="1300" x2="800" y2="1300"/>
+    <!-- 纵线（向远处汇聚） -->
+    <line x1="260" y1="900" x2="200" y2="1400"/>
+    <line x1="400" y1="900" x2="400" y2="1400"/>
+    <line x1="540" y1="900" x2="600" y2="1400"/>
   </g>
 
-  <!-- 地面高光（湿润感） -->
-  <rect x="0" y="850" width="800" height="8" fill="rgba(255,255,255,0.06)"/>
+  <!-- 地面边缘高光 -->
+  <line x1="140" y1="902" x2="660" y2="902" stroke="rgba(255,255,255,0.08)" stroke-width="3"/>
 
-  <!-- ========== 底部装饰木架 ========== -->
-  <rect x="20" y="845" width="760" height="10" fill="url(#wood)" rx="2"/>
-
-  <!-- ========== 两侧木柱 ========== -->
-  <rect x="22" y="294" width="14" height="556" fill="url(#wood)" rx="2"/>
-  <rect x="764" y="294" width="14" height="556" fill="url(#wood)" rx="2"/>
-
-  <!-- ========== 悬挂花盆装饰（左右各一） ========== -->
-  <!-- 左侧 -->
-  <g opacity="0.6">
-    <line x1="29" y1="380" x2="10" y2="360" stroke="#8D6E63" stroke-width="1.5"/>
-    <ellipse cx="10" cy="370" rx="12" ry="8" fill="#A1887F"/>
-    <ellipse cx="10" cy="365" rx="8" ry="5" fill="#66BB6A"/>
+  <!-- ========== 装饰：两侧墙边的小绿植 ========== -->
+  <!-- 左墙脚 -->
+  <g opacity="0.5" transform="translate(60,870)">
+    <ellipse cx="0" cy="0" rx="16" ry="10" fill="#A1887F"/>
+    <ellipse cx="-6" cy="-10" rx="8" ry="14" fill="#66BB6A" transform="rotate(-15)"/>
+    <ellipse cx="6" cy="-10" rx="8" ry="14" fill="#81C784" transform="rotate(15)"/>
   </g>
-  <!-- 右侧 -->
-  <g opacity="0.6">
-    <line x1="771" y1="450" x2="790" y2="430" stroke="#8D6E63" stroke-width="1.5"/>
-    <ellipse cx="790" cy="440" rx="12" ry="8" fill="#A1887F"/>
-    <ellipse cx="790" cy="435" rx="8" ry="5" fill="#81C784"/>
+  <!-- 右墙脚 -->
+  <g opacity="0.5" transform="translate(740,870)">
+    <ellipse cx="0" cy="0" rx="16" ry="10" fill="#A1887F"/>
+    <ellipse cx="-5" cy="-10" rx="7" ry="13" fill="#81C784" transform="rotate(-10)"/>
+    <ellipse cx="5" cy="-10" rx="7" ry="13" fill="#66BB6A" transform="rotate(10)"/>
+  </g>
+
+  <!-- ========== 装饰：天花板上的悬挂植物 ========== -->
+  <g opacity="0.4">
+    <!-- 左侧悬挂 -->
+    <line x1="260" y1="340" x2="260" y2="385" stroke="#8D6E63" stroke-width="1.5"/>
+    <ellipse cx="260" cy="390" rx="14" ry="9" fill="#A1887F"/>
+    <ellipse cx="254" cy="382" rx="10" ry="14" fill="#66BB6A"/>
+    <ellipse cx="266" cy="384" rx="9" ry="12" fill="#81C784"/>
+    <!-- 右侧悬挂 -->
+    <line x1="540" y1="340" x2="540" y2="380" stroke="#8D6E63" stroke-width="1.5"/>
+    <ellipse cx="540" cy="385" rx="13" ry="8" fill="#A1887F"/>
+    <ellipse cx="534" cy="378" rx="9" ry="12" fill="#81C784"/>
+    <ellipse cx="546" cy="380" rx="8" ry="11" fill="#66BB6A"/>
   </g>
 </svg>
