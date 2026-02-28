@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- 薰衣草-开花: 多穗紫色花序 -->
+  <path d="M108 200 Q105 140 108 70" stroke="#228B22" stroke-width="4" fill="none"/>
+  <path d="M128 200 Q126 130 128 60" stroke="#228B22" stroke-width="5" fill="none"/>
+  <path d="M148 200 Q151 140 148 70" stroke="#228B22" stroke-width="4" fill="none"/>
+  <!-- 左穗 -->
+  <ellipse cx="108" cy="70" rx="6" ry="8" fill="#9B59B6"/>
+  <ellipse cx="108" cy="82" rx="7" ry="8" fill="#8E44AD"/>
+  <ellipse cx="108" cy="94" rx="7" ry="8" fill="#9B59B6"/>
+  <ellipse cx="108" cy="106" rx="6" ry="7" fill="#8E44AD"/>
+  <!-- 中穗 -->
+  <ellipse cx="128" cy="60" rx="7" ry="9" fill="#9B59B6"/>
+  <ellipse cx="128" cy="73" rx="8" ry="9" fill="#8E44AD"/>
+  <ellipse cx="128" cy="86" rx="8" ry="9" fill="#9B59B6"/>
+  <ellipse cx="128" cy="99" rx="7" ry="8" fill="#8E44AD"/>
+  <ellipse cx="128" cy="112" rx="6" ry="7" fill="#9B59B6"/>
+  <!-- 右穗 -->
+  <ellipse cx="148" cy="70" rx="6" ry="8" fill="#8E44AD"/>
+  <ellipse cx="148" cy="82" rx="7" ry="8" fill="#9B59B6"/>
+  <ellipse cx="148" cy="94" rx="7" ry="8" fill="#8E44AD"/>
+  <ellipse cx="148" cy="106" rx="6" ry="7" fill="#9B59B6"/>
+  <!-- 叶子 -->
+  <ellipse cx="90" cy="155" rx="18" ry="6" fill="#228B22" transform="rotate(-35 90 155)"/>
+  <ellipse cx="166" cy="155" rx="18" ry="6" fill="#228B22" transform="rotate(35 166 155)"/>
+</svg>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- 雏菊-开花 -->
+  <path d="M128 200 Q120 150 128 120" stroke="#228B22" stroke-width="6" fill="none"/>
+  <!-- 花瓣 -->
+  <ellipse cx="128" cy="50" rx="12" ry="30" fill="white"/>
+  <ellipse cx="128" cy="110" rx="12" ry="30" fill="white"/>
+  <ellipse cx="78" cy="80" rx="12" ry="30" fill="white" transform="rotate(-60 78 80)"/>
+  <ellipse cx="178" cy="80" rx="12" ry="30" fill="white" transform="rotate(60 178 80)"/>
+  <ellipse cx="93" cy="55" rx="12" ry="30" fill="white" transform="rotate(-30 93 55)"/>
+  <ellipse cx="163" cy="55" rx="12" ry="30" fill="white" transform="rotate(30 163 55)"/>
+  <ellipse cx="93" cy="105" rx="12" ry="30" fill="white" transform="rotate(30 93 105)"/>
+  <ellipse cx="163" cy="105" rx="12" ry="30" fill="white" transform="rotate(-30 163 105)"/>
+  <!-- 花心 -->
+  <circle cx="128" cy="80" r="20" fill="#FFD700"/>
+  <circle cx="123" cy="75" r="3" fill="#FFA500"/>
+  <circle cx="133" cy="75" r="3" fill="#FFA500"/>
+  <circle cx="128" cy="85" r="3" fill="#FFA500"/>
+  <!-- 叶子 -->
+  <ellipse cx="100" cy="140" rx="20" ry="10" fill="#228B22" transform="rotate(-30 100 140)"/>
+  <ellipse cx="156" cy="140" rx="20" ry="10" fill="#228B22" transform="rotate(30 156 140)"/>
+</svg>

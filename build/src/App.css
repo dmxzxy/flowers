@@ -1,0 +1,2391 @@
+/* ==================== Feminine Garden Theme ==================== */
+:root {
+  --pink-50: #FCE4EC;
+  --pink-100: #F8BBD0;
+  --pink-200: #F48FB1;
+  --pink-300: #F06292;
+  --pink-400: #EC407A;
+  --pink-500: #E91E63;
+  --lavender-50: #F3E5F5;
+  --lavender-100: #E1BEE7;
+  --lavender-200: #CE93D8;
+  --rose-gold: #B76E79;
+  --rose-gold-light: #D4A0A7;
+  --cream: #FFF9F5;
+  --blush: #FFF0EB;
+  --warm-brown: #5D4037;
+}
+
+.game-scene {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  font-family: 'PingFang SC', -apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+  touch-action: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 禁止游戏内所有图片被浏览器原生拖走 */
+.game-scene img {
+  -webkit-user-drag: none;
+  user-drag: none;
+  pointer-events: none;
+}
+
+.game-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+}
+
+.game-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}
+
+/* Toolbar */
+.toolbar {
+  background: linear-gradient(135deg, rgba(255,245,248,0.97), rgba(255,240,245,0.97));
+  border-radius: 20px;
+  padding: 10px 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 24px rgba(183,110,121,0.12), inset 0 1px 0 rgba(255,255,255,0.9);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  flex-wrap: wrap;
+  justify-content: center;
+  border: 1px solid rgba(236,64,122,0.08);
+  backdrop-filter: blur(12px);
+}
+
+.toolbar-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toolbar-title {
+  font-weight: 600;
+  color: #AD1457;
+  font-size: 14px;
+  white-space: nowrap;
+  letter-spacing: 0.5px;
+}
+
+.toolbar-divider {
+  width: 1px;
+  height: 40px;
+  background: #ddd;
+}
+
+.toolbar-flowers {
+  display: flex;
+  gap: 8px;
+}
+
+.toolbar-flower {
+  width: 45px;
+  height: 45px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.toolbar-flower:hover {
+  transform: scale(1.1);
+}
+
+.toolbar-flower:active {
+  cursor: grabbing;
+}
+
+.toolbar-flower-selected {
+  border-color: #EC407A;
+  box-shadow: 0 0 0 3px rgba(236, 64, 122, 0.25);
+}
+
+.toolbar-flower-name {
+  font-size: 10px;
+  color: white;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.toolbar-water {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 15px;
+  background: linear-gradient(135deg, #E0F7FA, #B2EBF2);
+  border: 2px solid #80DEEA;
+  border-radius: 12px;
+  cursor: grab;
+  transition: all 0.2s ease;
+}
+
+.toolbar-water:hover {
+  background: linear-gradient(135deg, #B2EBF2, #80DEEA);
+  transform: scale(1.05);
+}
+
+.toolbar-water:active {
+  cursor: grabbing;
+}
+
+.toolbar-water-selected {
+  border-color: #00ACC1;
+  background: linear-gradient(135deg, #80DEEA, #4DD0E1);
+}
+
+.toolbar-water-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.toolbar-water span {
+  font-size: 13px;
+  color: #1565c0;
+  font-weight: 500;
+}
+
+.toolbar-harvest {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 15px;
+  background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+  border: 2px solid #FFCC80;
+  border-radius: 12px;
+  cursor: grab;
+  transition: all 0.2s ease;
+}
+
+.toolbar-harvest:hover {
+  background: linear-gradient(135deg, #FFE0B2, #FFCC80);
+  transform: scale(1.05);
+}
+
+.toolbar-harvest:active {
+  cursor: grabbing;
+}
+
+.toolbar-harvest-selected {
+  border-color: #FF8F00;
+  background: linear-gradient(135deg, #FFD54F, #FFB74D);
+}
+
+.toolbar-harvest-icon {
+  font-size: 18px;
+}
+
+.toolbar-harvest span {
+  font-size: 13px;
+  color: #f57c00;
+  font-weight: 500;
+}
+
+.toolbar-section-status {
+  flex-direction: column;
+  gap: 5px;
+}
+
+.toolbar-current {
+  font-size: 12px;
+  color: #AD1457;
+  font-weight: 500;
+  background: #FCE4EC;
+  padding: 4px 10px;
+  border-radius: 15px;
+}
+
+.toolbar-clear {
+  padding: 4px 12px;
+  background: #FCE4EC;
+  border: 1px solid #F8BBD0;
+  border-radius: 10px;
+  color: #C2185B;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.toolbar-clear:hover {
+  background: #F8BBD0;
+}
+
+/* Garden Container */
+.garden-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.pot-grid-wrapper {
+  position: relative;
+  /* 花架底座 - 柔和暖木色 */
+  background: linear-gradient(180deg, #E8D5C4 0%, #D4B896 50%, #C8A882 100%);
+  border-radius: 18px;
+  padding: 15px;
+  /* 4列×7行, 75×85, gap=6 */
+  width: 360px;
+  height: 670px;
+  box-shadow:
+    inset 0 2px 8px rgba(255,255,255,0.35),
+    inset 0 -2px 8px rgba(0,0,0,0.1),
+    0 8px 32px rgba(183,110,121,0.18),
+    0 2px 8px rgba(0,0,0,0.08);
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+/* 花架横梁 - 暖金色 */
+.pot-grid-wrapper::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  right: 15px;
+  top: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 79px,
+    #C4956A 79px,
+    #C4956A 84px,
+    transparent 84px,
+    transparent 91px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.pot-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 75px);
+  grid-template-rows: repeat(7, 85px);
+  gap: 6px;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.pot {
+  width: 75px;
+  height: 85px;
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+  position: relative;
+}
+
+.pot:hover {
+  transform: scale(1.06);
+  filter: brightness(1.05);
+}
+
+.pot:active {
+  transform: scale(0.94);
+}
+
+.pot-drop-target {
+  transform: scale(1.15);
+  filter: brightness(1.2) drop-shadow(0 0 6px rgba(76,175,80,0.5));
+}
+
+.pot-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.pot-base {
+  width: 65px;
+  height: 65px;
+  object-fit: contain;
+  filter: drop-shadow(1px 2px 4px rgba(0,0,0,0.35));
+  z-index: 2;
+  position: relative;
+  transition: filter 0.15s ease;
+}
+
+/* 花朵在花盆圈内 */
+.pot-flower-image {
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  z-index: 1;
+  animation: flowerGrow 0.3s ease-out;
+}
+
+/* 种子状态 - 在花盆圈内 */
+.pot-flower-image[src*="seed"] {
+  bottom: 20px;
+  width: 30px;
+  height: 30px;
+}
+
+/* 成长中 */
+.pot-flower-image[src*="growing"],
+.pot-flower-image[src*="sprout"] {
+  bottom: 28px;
+  width: 40px;
+  height: 40px;
+}
+
+/* 开花状态 */
+.pot-flower-image[src*="bloom"] {
+  bottom: 30px;
+  width: 55px;
+  height: 55px;
+}
+
+@keyframes flowerGrow {
+  from {
+    transform: translateX(-50%) scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+  }
+}
+
+/* 状态文字 - 在花盆底部重叠 */
+.pot-status {
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  white-space: nowrap;
+  z-index: 4;
+  font-weight: bold;
+}
+
+.pot-status-seeded {
+  background: linear-gradient(135deg, #D4A0A7, #B76E79);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+.pot-status-bloomed {
+  background: linear-gradient(135deg, #EC407A, #D81B60);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.2);
+  font-size: 14px;
+  box-shadow: 0 1px 6px rgba(233,30,99,0.4);
+}
+
+/* Game Hint */
+.game-hint {
+  text-align: center;
+  color: rgba(255,255,255,0.95);
+  font-size: 13px;
+  padding: 10px 18px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+  background: linear-gradient(135deg, rgba(183,110,121,0.3), rgba(173,20,87,0.22));
+  border-radius: 22px;
+  margin-top: auto;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.15);
+  letter-spacing: 0.5px;
+}
+
+/* Drag Indicator */
+.drag-indicator {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1000;
+  transform: translate(-50%, -50%);
+}
+
+.drag-seed {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  animation: pulse 0.5s infinite;
+}
+
+.drag-water {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse 0.5s infinite;
+}
+
+.drag-water img {
+  width: 45px;
+  height: 45px;
+}
+
+.drag-harvest {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  animation: pulse 0.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* Picker Modal */
+.picker-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(60,20,40,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  touch-action: none;
+}
+
+.picker-modal {
+  background: linear-gradient(160deg, #ffffff, #FFF5F8);
+  border-radius: 22px;
+  padding: 20px;
+  max-width: 350px;
+  width: 90%;
+  box-shadow: 0 12px 48px rgba(183,110,121,0.2), 0 0 0 1px rgba(183,110,121,0.06);
+}
+
+.picker-title {
+  text-align: center;
+  color: #AD1457;
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.picker-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.picker-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  border: 2px solid #F3E5F5;
+  border-radius: 14px;
+  background: #FFFAF5;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.picker-option:hover {
+  border-color: #F48FB1;
+  background: #FFF0F5;
+  transform: translateY(-2px);
+}
+
+.picker-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.picker-name {
+  color: #333;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.picker-cancel {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 14px;
+  background: #F8F0F2;
+  color: #999;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.picker-cancel:hover {
+  background: #F0E4E8;
+}
+
+/* 花朵选择面板 */
+.picker-flower-modal {
+  max-width: 450px;
+}
+
+.picker-header {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.picker-flower-modal .picker-title {
+  margin-bottom: 5px;
+}
+
+.picker-hint {
+  font-size: 12px;
+  color: #888;
+}
+
+.picker-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.picker-flower-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 5px;
+  border: 2px solid #F3E5F5;
+  border-radius: 14px;
+  background: #FFFAF5;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.picker-flower-btn:hover {
+  border-color: #F48FB1;
+  background: #FFF0F5;
+  transform: scale(1.05);
+}
+
+.picker-flower-btn.selected {
+  border-color: #EC407A;
+  background: #FCE4EC;
+}
+
+.picker-flower-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.picker-flower-name {
+  font-size: 10px;
+  color: #333;
+}
+
+/* Small action pickers (water / harvest) */
+.picker-modal-small {
+  max-width: 260px;
+}
+
+.picker-modal-small .picker-options {
+  grid-template-columns: 1fr;
+}
+
+.picker-option-water {
+  border-color: #bbdefb;
+  background: #e3f2fd;
+}
+
+.picker-option-water:hover {
+  border-color: #1976d2;
+  background: #bbdefb;
+}
+
+.picker-icon-water {
+  background: #42a5f5;
+}
+
+.picker-option-harvest {
+  border-color: #ffe082;
+  background: #fff8e1;
+}
+
+.picker-option-harvest:hover {
+  border-color: #f57f17;
+  background: #ffe082;
+}
+
+.picker-icon-harvest {
+  background: transparent;
+  font-size: 28px;
+}
+
+.picker-option .picker-hint {
+  font-size: 11px;
+  color: #aaa;
+  margin-top: 4px;
+}
+
+.picker-cancel:hover {
+  background: #d0d0d0;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .pot-grid {
+    gap: 4px;
+    padding: 10px;
+  }
+  
+  .pot {
+    width: 60px;
+    height: 70px;
+  }
+  
+  .pot-base {
+    width: 52px;
+    height: 52px;
+  }
+  
+  .pot-flower-image {
+    width: 35px;
+    height: 35px;
+    bottom: 38px;
+  }
+  
+  .pot-flower-bloom .pot-flower-image {
+    width: 40px;
+    height: 40px;
+    bottom: 40px;
+  }
+  
+  .toolbar {
+    padding: 10px;
+    gap: 10px;
+  }
+  
+  .toolbar-flower {
+    width: 38px;
+    height: 38px;
+  }
+  
+  .toolbar-flower-name {
+    font-size: 8px;
+  }
+}
+
+/* Inventory */
+.inventory {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 12px;
+  padding: 12px 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  min-width: 140px;
+}
+
+.inventory-title {
+  font-weight: bold;
+  color: #5d4037;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.inventory-total {
+  font-size: 12px;
+  color: #8d6e63;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #d7ccc8;
+}
+
+.inventory-flowers {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.inventory-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.inventory-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.inventory-name {
+  font-size: 12px;
+  color: #5d4037;
+  flex: 1;
+}
+
+.inventory-count {
+  font-size: 12px;
+  color: #8d6e63;
+  font-weight: bold;
+}
+
+/* ==================== 特效动画 ==================== */
+
+/* 播种特效 - 种子落下 */
+@keyframes seedDrop {
+  0% {
+    transform: translateY(-50px) scale(0.5);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(0) scale(1.2);
+    opacity: 1;
+  }
+  70% {
+    transform: translateY(-5px) scale(0.9);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* 浇水特效 - 水滴 */
+@keyframes waterDrop {
+  0% {
+    transform: translateY(-30px);
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+}
+
+/* 花开特效 - 绽放 */
+@keyframes bloom {
+  0% {
+    transform: translateX(-50%) scale(0) rotate(-20deg);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(-50%) scale(1.3) rotate(10deg);
+  }
+  70% {
+    transform: translateX(-50%) scale(0.9) rotate(-5deg);
+  }
+  100% {
+    transform: translateX(-50%) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* 花开光芒 */
+@keyframes bloomGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
+  }
+  50% {
+    box-shadow: 0 0 20px 10px rgba(255, 215, 0, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
+  }
+}
+
+/* 收获特效 - 飞走 */
+@keyframes harvestFly {
+  0% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0) translateY(-50px);
+    opacity: 0;
+  }
+}
+
+/* +1 飘字 */
+@keyframes popUp {
+  0% {
+    transform: translate(-50%, 0) scale(0.5);
+    opacity: 0;
+  }
+  20% {
+    transform: translate(-50%, -10px) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -40px) scale(1);
+    opacity: 0;
+  }
+}
+
+/* 工具选中发光 */
+@keyframes toolGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(236, 64, 122, 0);
+  }
+  50% {
+    box-shadow: 0 0 15px 5px rgba(236, 64, 122, 0.35);
+  }
+}
+
+/* 仓库数量增加 */
+@keyframes countPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+    color: #EC407A;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* 应用特效类 */
+.pot-flower-image.blooming {
+  animation: bloom 0.5s ease-out forwards, bloomGlow 0.8s ease-out 0.3s;
+}
+
+.pot-status.bloomed {
+  animation: popUp 1s ease-out forwards;
+}
+
+.toolbar-btn-active {
+  animation: toolGlow 1.5s ease-in-out infinite;
+}
+
+.inventory-count.pulse {
+  animation: countPulse 0.3s ease-out;
+}
+
+/* ==================== 响应式移动端适配 ==================== */
+
+@media (max-width: 480px) {
+  /* 游戏内容 */
+  .game-content {
+    padding: 10px;
+    padding-top: max(10px, env(safe-area-inset-top));
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
+  }
+  
+  /* 工具栏 - 紧凑纵向 */
+  .toolbar {
+    padding: 8px 10px;
+    gap: 8px;
+    max-width: 100%;
+    border-radius: 10px;
+  }
+  
+  .toolbar-section {
+    gap: 5px;
+  }
+  
+  .toolbar-title {
+    font-size: 12px;
+  }
+  
+  .toolbar-flowers {
+    gap: 4px;
+  }
+  
+  .toolbar-flower {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .toolbar-flower-name {
+    font-size: 7px;
+  }
+  
+  .toolbar-water,
+  .toolbar-harvest {
+    padding: 6px 10px;
+  }
+  
+  .toolbar-water-icon {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .toolbar-water span,
+  .toolbar-harvest span {
+    font-size: 11px;
+  }
+  
+  .toolbar-harvest-icon {
+    font-size: 14px;
+  }
+  
+  .toolbar-current {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+  
+  .toolbar-clear {
+    padding: 3px 8px;
+    font-size: 10px;
+  }
+  
+  .toolbar-divider {
+    height: 30px;
+  }
+  
+  /* 花盆网格 */
+  .garden-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+  .pot-grid-wrapper {
+    transform: scale(0.75);
+    transform-origin: center center;
+  }
+  
+  /* 花盆 */
+  .pot {
+    width: 60px;
+    height: 68px;
+  }
+  
+  .pot-base {
+    width: 52px;
+    height: 52px;
+  }
+  
+  .pot-flower-image {
+    width: 40px;
+    height: 40px;
+    bottom: 20px;
+  }
+  
+  .pot-flower-image[src*="seed"] {
+    width: 24px;
+    height: 24px;
+    bottom: 16px;
+  }
+  
+  .pot-flower-image[src*="growing"],
+  .pot-flower-image[src*="sprout"] {
+    width: 32px;
+    height: 32px;
+    bottom: 22px;
+  }
+  
+  .pot-flower-image[src*="bloom"] {
+    width: 44px;
+    height: 44px;
+    bottom: 24px;
+  }
+  
+  .pot-status {
+    font-size: 8px;
+    padding: 1px 5px;
+    bottom: -3px;
+  }
+  
+  .pot-status-bloomed {
+    font-size: 11px;
+  }
+  
+  /* 仓库 - 左上角 */
+  .inventory {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: auto;
+    padding: 8px 10px;
+    min-width: 100px;
+    border-radius: 10px;
+  }
+  
+  .inventory-title {
+    font-size: 12px;
+  }
+  
+  .inventory-total {
+    font-size: 10px;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+  }
+  
+  .inventory-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 9px;
+  }
+  
+  .inventory-name {
+    font-size: 10px;
+  }
+  
+  .inventory-count {
+    font-size: 10px;
+  }
+  
+  /* 提示 */
+  .game-hint {
+    font-size: 11px;
+    padding: 8px 12px;
+    margin-top: 5px;
+  }
+  
+  /* 拖拽指示器 */
+  .drag-indicator {
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  
+  .drag-seed {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+  
+  .drag-water {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .drag-water img {
+    width: 36px;
+    height: 36px;
+  }
+  
+  /* 选择面板 */
+  .picker-modal {
+    padding: 15px;
+    border-radius: 15px;
+  }
+  
+  .picker-title {
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+  
+  .picker-options {
+    gap: 8px;
+  }
+  
+  .picker-option {
+    padding: 12px;
+  }
+  
+  .picker-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+  
+  .picker-name {
+    font-size: 12px;
+  }
+}
+
+/* 超小屏幕 */
+@media (max-width: 360px) {
+  .pot-grid-wrapper {
+    transform: scale(0.6);
+  }
+}
+
+/* 横屏适配 */
+@media (orientation: landscape) and (max-height: 500px) {
+  .toolbar {
+    flex-direction: row;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+  }
+  
+  .toolbar-title {
+    display: none;
+  }
+  
+  .pot-grid-wrapper {
+    transform: scale(0.65);
+  }
+  
+  .inventory {
+    top: 5px;
+    right: 5px;
+    padding: 5px 8px;
+  }
+  
+  .game-hint {
+    padding: 5px;
+    font-size: 10px;
+  }
+}
+
+/* 安全区域适配 */
+@supports (padding: max(0px)) {
+  .game-content {
+    padding-left: max(10px, env(safe-area-inset-left));
+    padding-right: max(10px, env(safe-area-inset-right));
+  }
+  
+  .inventory-panel {
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+  }
+}
+
+/* ==================== 仓库面板 ==================== */
+
+.inventory-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(60, 20, 40, 0.45);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 200;
+  animation: fadeIn 0.2s ease;
+}
+
+.inventory-panel {
+  background: linear-gradient(180deg, rgba(255,250,245,0.99), rgba(255,245,248,0.99));
+  border-radius: 24px 24px 0 0;
+  width: 100%;
+  max-width: 400px;
+  max-height: 70vh;
+  padding: 20px;
+  box-shadow: 0 -5px 30px rgba(183,110,121,0.15);
+  animation: slideUp 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.inventory-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #F8BBD0;
+}
+
+.inventory-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #AD1457;
+}
+
+.inventory-total {
+  font-size: 14px;
+  color: #8d6e63;
+  font-weight: 500;
+}
+
+.inventory-close {
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: #FCE4EC;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #C2185B;
+}
+
+.inventory-close:hover {
+  background: #F8BBD0;
+}
+
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.inventory-slot {
+  aspect-ratio: 1;
+  background: #FFF5F8;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border: 2px solid transparent;
+}
+
+.inventory-slot.has-item {
+  background: #fff;
+  border-color: #F8BBD0;
+}
+
+.inventory-slot.empty {
+  opacity: 0.5;
+}
+
+.slot-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.slot-name {
+  font-size: 10px;
+  color: #666;
+}
+
+.slot-count {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: #EC407A;
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 10px;
+}
+
+/* 工具栏按钮 */
+.toolbar-tool {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: #FFF5F8;
+  border: 2px solid transparent;
+  position: relative;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 4px rgba(183,110,121,0.1);
+}
+
+.toolbar-tool:hover {
+  background: #FCE4EC;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(183,110,121,0.15);
+}
+
+.toolbar-tool:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.toolbar-tool-selected {
+  border-color: #EC407A;
+  background: #FCE4EC;
+}
+
+.toolbar-tool-inventory {
+  background: linear-gradient(135deg, #FCE4EC, #F8BBD0);
+}
+
+.toolbar-tool-inventory:hover {
+  background: linear-gradient(135deg, #F8BBD0, #F48FB1);
+}
+
+.toolbar-icon {
+  font-size: 20px;
+}
+
+.toolbar-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: linear-gradient(135deg, #ec407a, #d81b60);
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  box-shadow: 0 1px 4px rgba(233,30,99,0.35);
+  border: 1.5px solid white;
+}
+
+.toolbar-section-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toolbar-current {
+  font-size: 12px;
+  color: #AD1457;
+  background: #FCE4EC;
+  padding: 4px 10px;
+  border-radius: 15px;
+}
+
+.toolbar-clear {
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: #FCE4EC;
+  border-radius: 50%;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #C2185B;
+}
+
+.toolbar-clear:hover {
+  background: #F8BBD0;
+}
+
+/* 隐藏旧的inventory样式 */
+.inventory,
+.inventory-title,
+.inventory-total,
+.inventory-flowers,
+.inventory-item,
+.inventory-icon,
+.inventory-name,
+.inventory-count {
+  display: none !important;
+}
+
+/* ==================== 收获飞入特效 ==================== */
+.harvest-effect {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 90;
+}
+
+.harvest-particle {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  animation: flyToInventory 0.8s ease-out forwards;
+}
+
+@keyframes flyToInventory {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  30% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% + var(--end-x, 0px)), calc(-50% + var(--end-y, -100px))) scale(0.3);
+    opacity: 0;
+  }
+}
+
+/* +1 飘字特效 */
+.harvest-plus-one {
+  position: fixed;
+  font-size: 28px;
+  font-weight: bold;
+  color: #FFD700;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  animation: plusOneFly 0.6s ease-out forwards;
+  z-index: 91;
+  pointer-events: none;
+}
+
+@keyframes plusOneFly {
+  0% {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0;
+  }
+  20% {
+    transform: translate(-50%, -50%) scale(1.3);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, calc(-50% - 30px)) scale(1);
+    opacity: 0;
+  }
+}
+
+/* ==================== 货币栏 ==================== */
+.currency-bar {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.currency-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, rgba(255,249,245,0.97), rgba(255,240,245,0.97));
+  padding: 7px 16px;
+  border-radius: 22px;
+  box-shadow: 0 2px 12px rgba(183,110,121,0.1), inset 0 1px 0 rgba(255,255,255,0.9);
+  font-weight: 600;
+  font-size: 15px;
+  position: relative;
+  border: 1px solid rgba(236,64,122,0.08);
+  backdrop-filter: blur(10px);
+}
+
+.currency-icon {
+  font-size: 18px;
+}
+
+/* 金币图标 —— 纯 CSS 圆形硬币 */
+.coin-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffd700 0%, #ffb300 100%);
+  color: #a06800;
+  font-size: 14px;
+  font-weight: 900;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.4);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* 行内小金币（用于文本中） */
+.inline-coin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffd700 0%, #ffb300 100%);
+  color: #a06800;
+  font-size: 10px;
+  font-weight: 900;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.35);
+  line-height: 1;
+  flex-shrink: 0;
+  vertical-align: middle;
+  margin-right: 2px;
+}
+
+.currency-value {
+  color: #333;
+  min-width: 28px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.3px;
+}
+
+.currency-coins .currency-value {
+  color: #996515;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+}
+
+.currency-water .currency-value {
+  color: #1565c0;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+}
+
+.currency-warning {
+  position: absolute;
+  top: -18px;
+  right: -5px;
+  font-size: 11px;
+  color: #d32f2f;
+  white-space: nowrap;
+  animation: warningPop 0.4s ease-out;
+}
+
+@keyframes warningPop {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.no-water-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-3px); }
+}
+
+/* ==================== 通用面板 ==================== */
+.panel-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(60,20,40,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 250;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.purchase-panel,
+.flower-level-panel {
+  background: linear-gradient(160deg, #FFFAF5, #FFF5F8);
+  border-radius: 22px;
+  width: 90%;
+  max-width: 400px;
+  max-height: 80vh;
+  box-shadow: 0 12px 48px rgba(183,110,121,0.2), 0 0 0 1px rgba(183,110,121,0.06);
+  animation: panelPop 0.25s ease-out;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+@keyframes panelPop {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid #F8BBD0;
+  background: linear-gradient(135deg, rgba(252,228,236,0.4), transparent);
+}
+
+.panel-header h3 {
+  margin: 0;
+  font-size: 17px;
+  color: #AD1457;
+  font-weight: 600;
+}
+
+.panel-close {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: #FCE4EC;
+  border-radius: 50%;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #C2185B;
+}
+
+.panel-close:hover {
+  background: #F8BBD0;
+}
+
+.panel-body {
+  padding: 12px 18px;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ==================== 采购任务卡片 ==================== */
+.task-card {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1.5px solid #F3E5F5;
+  gap: 10px;
+  transition: all 0.2s;
+}
+
+.task-card.task-available {
+  border-color: #F8BBD0;
+  background: #FFF5F8;
+}
+
+.task-card.task-locked {
+  opacity: 0.65;
+}
+
+.task-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.task-name {
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 2px;
+}
+
+.task-desc {
+  font-size: 11px;
+  color: #999;
+  margin-bottom: 4px;
+}
+
+.task-cost,
+.task-reward {
+  font-size: 12px;
+  color: #666;
+}
+
+.task-reward {
+  color: #AD1457;
+  font-weight: 500;
+}
+
+.task-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #F48FB1, #EC407A);
+  color: white;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(236,64,122,0.3);
+}
+
+.task-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #EC407A, #D81B60);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 12px rgba(236,64,122,0.4);
+}
+
+.task-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* ==================== 花朵升级卡片 ==================== */
+.level-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: #fff;
+  border: 1.5px solid #F3E5F5;
+  border-radius: 14px;
+}
+
+.level-flower-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50px;
+}
+
+.level-flower-icon {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.level-flower-name {
+  font-size: 10px;
+  color: #666;
+  margin-top: 2px;
+}
+
+.level-stats {
+  flex: 1;
+  min-width: 0;
+}
+
+.level-badge {
+  font-weight: bold;
+  font-size: 14px;
+  color: #EC407A;
+  margin-bottom: 2px;
+}
+
+.level-detail {
+  font-size: 11px;
+  color: #999;
+}
+
+.level-max-badge {
+  padding: 6px 10px;
+  background: linear-gradient(135deg, #F48FB1, #EC407A);
+  color: #fff;
+  font-weight: bold;
+  font-size: 12px;
+  border-radius: 10px;
+}
+
+.level-upgrade-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #CE93D8, #AB47BC);
+  color: #fff;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(171,71,188,0.3);
+}
+
+.level-upgrade-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #AB47BC, #8E24AA);
+  transform: translateY(-1px);
+}
+
+.level-upgrade-btn.btn-disabled,
+.level-upgrade-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* ==================== 花盆冷却 / 徽章 / 浮动 ==================== */
+.pot-cooldown {
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, rgba(183,110,121,0.75), rgba(173,20,87,0.65));
+  color: #fff;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 2px 8px;
+  border-radius: 10px;
+  z-index: 5;
+  box-shadow: 0 1px 4px rgba(183,110,121,0.3);
+  border: 1px solid rgba(255,255,255,0.2);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.5px;
+}
+
+.pot-cooldown::before {
+  content: '⏳';
+  margin-right: 2px;
+  font-size: 9px;
+}
+
+.pot-harvest-badge {
+  position: absolute;
+  top: -4px;
+  right: 0px;
+  background: linear-gradient(135deg, #ec407a, #d81b60);
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 10px;
+  z-index: 5;
+  box-shadow: 0 1px 4px rgba(233,30,99,0.4);
+  border: 1px solid rgba(255,255,255,0.25);
+}
+
+/* 花开浮动呼吸动画 */
+.bloom-float {
+  animation: bloomFloat 2.5s ease-in-out infinite !important;
+}
+
+@keyframes bloomFloat {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-4px); }
+}
+
+/* ==================== 播种特效 ==================== */
+.seed-effect {
+  position: fixed;
+  pointer-events: none;
+  z-index: 80;
+  transform: translate(-50%, -50%);
+}
+
+.seed-drop {
+  font-size: 28px;
+  animation: seedDropAnim 0.6s ease-out forwards;
+}
+
+@keyframes seedDropAnim {
+  0% {
+    transform: translateY(-60px) scale(0.4);
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  70% {
+    transform: translateY(5px) scale(1.15);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+}
+
+/* ==================== 浇水特效 ==================== */
+.water-effect {
+  position: fixed;
+  pointer-events: none;
+  z-index: 80;
+  transform: translate(-50%, -50%);
+}
+
+.water-drop {
+  font-size: 24px;
+  animation: waterDropAnim 0.8s ease-out forwards;
+}
+
+@keyframes waterDropAnim {
+  0% {
+    transform: translateY(-30px);
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(15px);
+    opacity: 0;
+  }
+}
+
+.water-ripple {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 2px solid rgba(66, 165, 245, 0.6);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.ripple-1 { animation: rippleExpand 0.8s ease-out 0.1s forwards; }
+.ripple-2 { animation: rippleExpand 0.8s ease-out 0.25s forwards; }
+.ripple-3 { animation: rippleExpand 0.8s ease-out 0.4s forwards; }
+
+@keyframes rippleExpand {
+  0% {
+    width: 6px;
+    height: 6px;
+    opacity: 0.8;
+  }
+  100% {
+    width: 50px;
+    height: 50px;
+    opacity: 0;
+  }
+}
+
+/* ==================== 升级特效 ==================== */
+.levelup-effect {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 260;
+}
+
+.levelup-burst {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.levelup-star {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 18px;
+  animation: starBurst 1s ease-out var(--delay) forwards;
+  opacity: 0;
+}
+
+@keyframes starBurst {
+  0% {
+    transform: translate(-50%, -50%) rotate(0) scale(0);
+    opacity: 0;
+  }
+  30% {
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-30px) scale(1.3);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-65px) scale(0.5);
+    opacity: 0;
+  }
+}
+
+.levelup-text {
+  position: absolute;
+  font-size: 28px;
+  font-weight: 900;
+  color: #ff8f00;
+  text-shadow: 2px 2px 0 #fff, -1px -1px 0 #fff;
+  animation: levelTextPop 1.2s ease-out forwards;
+}
+
+@keyframes levelTextPop {
+  0% { transform: scale(0); opacity: 0; }
+  30% { transform: scale(1.4); opacity: 1; }
+  60% { transform: scale(0.95); }
+  80% { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 0; }
+}
+
+/* ==================== 采购/升级按钮样式 ==================== */
+.toolbar-tool-purchase {
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+}
+.toolbar-tool-purchase:hover {
+  background: linear-gradient(135deg, #bbdefb, #90caf9);
+}
+.toolbar-tool-levels {
+  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+}
+.toolbar-tool-levels:hover {
+  background: linear-gradient(135deg, #ffe0b2, #ffcc80);
+}
+
+/* ==================== 交付任务完成特效 ==================== */
+.task-effect-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 300;
+}
+
+/* 背景光晕 */
+.task-effect-glow {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(236,64,122,0.3) 0%, transparent 70%);
+  animation: taskGlowExpand 1.4s ease-out forwards;
+}
+
+@keyframes taskGlowExpand {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  30% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+/* 对勾 */
+.task-effect-check {
+  font-size: 56px;
+  font-weight: 900;
+  color: #fff;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #66bb6a, #43a047);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(76,175,80,0.5);
+  animation: taskCheckPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  z-index: 2;
+}
+
+@keyframes taskCheckPop {
+  0% {
+    transform: scale(0) rotate(-30deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.2) rotate(5deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+  }
+}
+
+/* 完成文字 */
+.task-effect-text {
+  margin-top: 12px;
+  font-size: 22px;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  animation: taskTextSlide 0.6s ease-out 0.2s both;
+  z-index: 2;
+}
+
+@keyframes taskTextSlide {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* 奖励容器 */
+.task-effect-rewards {
+  display: flex;
+  gap: 16px;
+  margin-top: 10px;
+  z-index: 2;
+}
+
+/* 奖励飘字 */
+.task-reward-float {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 4px 14px;
+  border-radius: 16px;
+  animation: taskRewardFloat 1.2s ease-out 0.4s both;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.task-reward-coins {
+  color: #fff;
+  background: linear-gradient(135deg, rgba(255,193,7,0.85), rgba(255,160,0,0.85));
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 10px rgba(255,193,7,0.4);
+}
+
+.task-reward-water {
+  color: #fff;
+  background: linear-gradient(135deg, rgba(33,150,243,0.85), rgba(25,118,210,0.85));
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 10px rgba(33,150,243,0.4);
+}
+
+@keyframes taskRewardFloat {
+  0% {
+    transform: translateY(15px) scale(0.5);
+    opacity: 0;
+  }
+  40% {
+    transform: translateY(-5px) scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-20px) scale(1);
+    opacity: 0;
+  }
+}
+
+/* 装饰粒子 */
+.task-effect-spark {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--spark-color, #FFD700);
+  animation: taskSparkBurst 0.9s ease-out var(--spark-delay, 0ms) both;
+  box-shadow: 0 0 6px var(--spark-color, #FFD700);
+}
+
+@keyframes taskSparkBurst {
+  0% {
+    transform: rotate(var(--spark-angle, 0deg)) translateY(0) scale(0);
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+    transform: rotate(var(--spark-angle, 0deg)) translateY(calc(var(--spark-dist, 60px) * -0.5)) scale(1.2);
+  }
+  100% {
+    transform: rotate(var(--spark-angle, 0deg)) translateY(calc(var(--spark-dist, 60px) * -1)) scale(0);
+    opacity: 0;
+  }
+}
+
+/* ==================== 随机收购订单横幅 ==================== */
+.buy-order-banner {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #FFF5F8, #FCE4EC);
+  border: 2px solid #F8BBD0;
+  border-radius: 20px;
+  padding: 10px 14px;
+  box-shadow: 0 4px 24px rgba(236,64,122,0.15), 0 0 0 1px rgba(183,110,121,0.06);
+  z-index: 150;
+  max-width: 380px;
+  width: 92%;
+  animation: buyOrderSlideIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+
+@keyframes buyOrderSlideIn {
+  0% {
+    transform: translateX(-50%) translateY(60px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+.buy-order-shake {
+  animation: buyOrderShake 0.4s ease-in-out;
+}
+
+@keyframes buyOrderShake {
+  0%, 100% { transform: translateX(-50%); }
+  20% { transform: translateX(calc(-50% - 6px)); }
+  40% { transform: translateX(calc(-50% + 6px)); }
+  60% { transform: translateX(calc(-50% - 3px)); }
+  80% { transform: translateX(calc(-50% + 3px)); }
+}
+
+.buy-order-timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 40px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #e65100;
+  font-variant-numeric: tabular-nums;
+}
+
+.buy-order-timer-icon {
+  font-size: 16px;
+  margin-bottom: 2px;
+}
+
+.buy-order-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.buy-order-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #AD1457;
+  margin-bottom: 2px;
+}
+
+.buy-order-detail {
+  font-size: 12px;
+  color: #555;
+  line-height: 1.4;
+}
+
+.buy-order-detail strong {
+  color: #333;
+}
+
+.buy-order-stock {
+  color: #888;
+  margin-left: 4px;
+  font-size: 11px;
+}
+
+.buy-order-price {
+  font-size: 13px;
+  color: #996515;
+  font-weight: 600;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.buy-order-price strong {
+  font-size: 15px;
+  color: #b8860b;
+}
+
+.buy-order-unit {
+  font-size: 10px;
+  color: #aaa;
+  font-weight: normal;
+}
+
+.buy-order-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+}
+
+.buy-order-accept {
+  padding: 6px 16px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #F48FB1, #EC407A);
+  color: white;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(236,64,122,0.3);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.buy-order-accept:hover:not(.btn-disabled) {
+  background: linear-gradient(135deg, #EC407A, #D81B60);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(236,64,122,0.4);
+}
+
+.buy-order-accept.btn-disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.buy-order-dismiss {
+  width: 22px;
+  height: 22px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.08);
+  color: #999;
+  font-size: 11px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.buy-order-dismiss:hover {
+  background: rgba(0,0,0,0.15);
+  color: #666;
+}

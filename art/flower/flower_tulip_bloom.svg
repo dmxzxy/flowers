@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- 郁金香-开花 -->
+  <path d="M128 200 Q120 150 128 120" stroke="#228B22" stroke-width="6" fill="none"/>
+  <!-- 花朵 - 杯状 -->
+  <ellipse cx="128" cy="80" rx="35" ry="45" fill="#FFD700"/>
+  <path d="M93 80 Q93 50 128 40 Q163 50 163 80" fill="#FFC107"/>
+  <path d="M98 90 Q98 55 128 45 Q158 55 158 90" fill="#FFEB3B"/>
+  <!-- 叶子 -->
+  <ellipse cx="100" cy="140" rx="20" ry="10" fill="#228B22" transform="rotate(-30 100 140)"/>
+  <ellipse cx="156" cy="140" rx="20" ry="10" fill="#228B22" transform="rotate(30 156 140)"/>
+</svg>

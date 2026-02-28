@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- 兰花-成长中 -->
+  <path d="M128 200 Q122 150 128 100" stroke="#228B22" stroke-width="5" fill="none"/>
+  <ellipse cx="110" cy="140" rx="14" ry="24" fill="#2E8B57" transform="rotate(-25 110 140)"/>
+  <ellipse cx="146" cy="140" rx="14" ry="24" fill="#2E8B57" transform="rotate(25 146 140)"/>
+  <ellipse cx="114" cy="108" rx="11" ry="20" fill="#2E8B57" transform="rotate(-15 114 108)"/>
+  <ellipse cx="142" cy="108" rx="11" ry="20" fill="#2E8B57" transform="rotate(15 142 108)"/>
+</svg>

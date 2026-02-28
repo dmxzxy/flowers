@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- 花盆 -->
+  <ellipse cx="128" cy="220" rx="90" ry="25" fill="#8B4513"/>
+  <path d="M50 100 Q50 220 80 220 L176 220 Q206 220 206 100 Z" fill="#CD853F"/>
+  <ellipse cx="128" cy="100" rx="78" ry="20" fill="#DEB887"/>
+  <ellipse cx="128" cy="100" rx="70" ry="15" fill="#8B4513"/>
+  <!-- 高光 -->
+  <path d="M70 120 Q70 180 85 180" stroke="#D2691E" stroke-width="3" fill="none" opacity="0.5"/>
+</svg>

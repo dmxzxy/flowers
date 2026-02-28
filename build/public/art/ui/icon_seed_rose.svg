@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <!-- 玫瑰种子图标 -->
+  <circle cx="32" cy="32" r="24" fill="#E74C3C"/>
+  <circle cx="32" cy="32" r="18" fill="#C0392B"/>
+  <path d="M32 20 L32 44" stroke="#E74C3C" stroke-width="2"/>
+  <path d="M20 32 L44 32" stroke="#E74C3C" stroke-width="2"/>
+</svg>

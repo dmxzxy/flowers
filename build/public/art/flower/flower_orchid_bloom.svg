@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- 兰花-开花: 蝴蝶兰造型 -->
+  <path d="M128 200 Q124 150 128 110" stroke="#228B22" stroke-width="5" fill="none"/>
+  <!-- 上方花瓣 -->
+  <ellipse cx="128" cy="55" rx="22" ry="30" fill="#BA68C8"/>
+  <!-- 侧花瓣 -->
+  <ellipse cx="90" cy="80" rx="28" ry="18" fill="#AB47BC" transform="rotate(-20 90 80)"/>
+  <ellipse cx="166" cy="80" rx="28" ry="18" fill="#AB47BC" transform="rotate(20 166 80)"/>
+  <!-- 下花瓣-唇瓣 -->
+  <ellipse cx="128" cy="100" rx="18" ry="14" fill="#CE93D8"/>
+  <path d="M118 100 Q128 115 138 100" fill="#E1BEE7"/>
+  <!-- 花心 -->
+  <circle cx="128" cy="80" r="10" fill="#6A1B9A"/>
+  <circle cx="125" cy="77" r="3" fill="#E1BEE7"/>
+  <circle cx="131" cy="77" r="3" fill="#E1BEE7"/>
+  <!-- 叶子 -->
+  <ellipse cx="95" cy="160" rx="22" ry="10" fill="#228B22" transform="rotate(-30 95 160)"/>
+  <ellipse cx="161" cy="160" rx="22" ry="10" fill="#228B22" transform="rotate(30 161 160)"/>
+</svg>

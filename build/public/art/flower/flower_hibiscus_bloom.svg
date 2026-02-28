@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- 扶桑-开花: 5瓣大花+突出花蕊 -->
+  <path d="M128 200 Q122 155 128 120" stroke="#228B22" stroke-width="6" fill="none"/>
+  <!-- 5片大花瓣 -->
+  <ellipse cx="128" cy="42" rx="22" ry="36" fill="#FF6347"/>
+  <ellipse cx="128" cy="42" rx="22" ry="36" fill="#FF4500" transform="rotate(72 128 80)"/>
+  <ellipse cx="128" cy="42" rx="22" ry="36" fill="#FF6347" transform="rotate(144 128 80)"/>
+  <ellipse cx="128" cy="42" rx="22" ry="36" fill="#FF4500" transform="rotate(216 128 80)"/>
+  <ellipse cx="128" cy="42" rx="22" ry="36" fill="#FF6347" transform="rotate(288 128 80)"/>
+  <!-- 内层渐变 -->
+  <circle cx="128" cy="80" r="18" fill="#DC143C"/>
+  <!-- 花蕊柱(突出) -->
+  <line x1="128" y1="80" x2="128" y2="45" stroke="#C0392B" stroke-width="4"/>
+  <circle cx="128" cy="42" r="5" fill="#FFD700"/>
+  <circle cx="125" cy="50" r="2.5" fill="#FFD700"/>
+  <circle cx="131" cy="50" r="2.5" fill="#FFD700"/>
+  <circle cx="124" cy="56" r="2" fill="#FFD700"/>
+  <circle cx="132" cy="56" r="2" fill="#FFD700"/>
+  <!-- 叶子 -->
+  <ellipse cx="90" cy="160" rx="24" ry="11" fill="#228B22" transform="rotate(-35 90 160)"/>
+  <ellipse cx="166" cy="160" rx="24" ry="11" fill="#228B22" transform="rotate(35 166 160)"/>
+</svg>

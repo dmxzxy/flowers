@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- 向日葵-开花 -->
+  <path d="M128 200 Q120 150 128 120" stroke="#228B22" stroke-width="8" fill="none"/>
+  <!-- 花瓣 -->
+  <ellipse cx="128" cy="40" rx="15" ry="35" fill="#FFD700"/>
+  <ellipse cx="128" cy="120" rx="15" ry="35" fill="#FFD700"/>
+  <ellipse cx="68" cy="80" rx="15" ry="35" fill="#FFD700" transform="rotate(-60 68 80)"/>
+  <ellipse cx="188" cy="80" rx="15" ry="35" fill="#FFD700" transform="rotate(60 188 80)"/>
+  <ellipse cx="88" cy="50" rx="15" ry="35" fill="#FFA500" transform="rotate(-30 88 50)"/>
+  <ellipse cx="168" cy="50" rx="15" ry="35" fill="#FFA500" transform="rotate(30 168 50)"/>
+  <ellipse cx="88" cy="110" rx="15" ry="35" fill="#FFA500" transform="rotate(30 88 110)"/>
+  <ellipse cx="168" cy="110" rx="15" ry="35" fill="#FFA500" transform="rotate(-30 168 110)"/>
+  <!-- 花心 -->
+  <circle cx="128" cy="80" r="30" fill="#8B4513"/>
+  <circle cx="118" cy="70" r="4" fill="#D2691E"/>
+  <circle cx="138" cy="70" r="4" fill="#D2691E"/>
+  <circle cx="128" cy="80" r="4" fill="#D2691E"/>
+  <circle cx="118" cy="90" r="4" fill="#D2691E"/>
+  <circle cx="138" cy="90" r="4" fill="#D2691E"/>
+  <!-- 叶子 -->
+  <ellipse cx="90" cy="150" rx="25" ry="12" fill="#228B22" transform="rotate(-40 90 150)"/>
+  <ellipse cx="166" cy="150" rx="25" ry="12" fill="#228B22" transform="rotate(40 166 150)"/>
+</svg>

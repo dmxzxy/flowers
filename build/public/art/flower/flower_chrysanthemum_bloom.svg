@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- 菊花-开花: 放射状细长花瓣 -->
+  <path d="M128 200 Q122 150 128 115" stroke="#228B22" stroke-width="5" fill="none"/>
+  <!-- 外圈花瓣(16条放射) -->
+  <ellipse cx="128" cy="42" rx="5" ry="22" fill="#DDA0DD"/>
+  <ellipse cx="128" cy="42" rx="5" ry="22" fill="#D8BFD8" transform="rotate(22.5 128 80)"/>
+  <ellipse cx="128" cy="42" rx="5" ry="22" fill="#DDA0DD" transform="rotate(45 128 80)"/>
+  <ellipse cx="128" cy="42" rx="5" ry="22" fill="#D8BFD8" transform="rotate(67.5 128 80)"/>
+  <ellipse cx="128" cy="42" rx="5" ry="22" fill="#DDA0DD" transform="rotate(90 128 80)"/>
+  <ellipse cx="128" cy="42" rx="5" ry="22" fill="#D8BFD8" transform="rotate(112.5 128 80)"/>
+  <ellipse cx="128" cy="42" rx="5" ry="22" fill="#DDA0DD" transform="rotate(135 128 80)"/>
+  <ellipse cx="128" cy="42" rx="5" ry="22" fill="#D8BFD8" transform="rotate(157.5 128 80)"/>
+  <ellipse cx="128" cy="42" rx="5" ry="22" fill="#DDA0DD" transform="rotate(180 128 80)"/>
+  <ellipse cx="128" cy="42" rx="5" ry="22" fill="#D8BFD8" transform="rotate(202.5 128 80)"/>
+  <ellipse cx="128" cy="42" rx="5" ry="22" fill="#DDA0DD" transform="rotate(225 128 80)"/>
+  <ellipse cx="128" cy="42" rx="5" ry="22" fill="#D8BFD8" transform="rotate(247.5 128 80)"/>
+  <ellipse cx="128" cy="42" rx="5" ry="22" fill="#DDA0DD" transform="rotate(270 128 80)"/>
+  <ellipse cx="128" cy="42" rx="5" ry="22" fill="#D8BFD8" transform="rotate(292.5 128 80)"/>
+  <ellipse cx="128" cy="42" rx="5" ry="22" fill="#DDA0DD" transform="rotate(315 128 80)"/>
+  <ellipse cx="128" cy="42" rx="5" ry="22" fill="#D8BFD8" transform="rotate(337.5 128 80)"/>
+  <!-- 花心 -->
+  <circle cx="128" cy="80" r="14" fill="#9C27B0"/>
+  <circle cx="124" cy="76" r="3" fill="#FFD700"/>
+  <circle cx="132" cy="76" r="3" fill="#FFD700"/>
+  <circle cx="128" cy="84" r="3" fill="#FFD700"/>
+  <!-- 叶子 -->
+  <ellipse cx="92" cy="155" rx="20" ry="9" fill="#228B22" transform="rotate(-30 92 155)"/>
+  <ellipse cx="164" cy="155" rx="20" ry="9" fill="#228B22" transform="rotate(30 164 155)"/>
+</svg>
