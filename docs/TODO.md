@@ -1,6 +1,6 @@
 # 🌸 花园种植游戏 — 待办事项清单
 
-> 最后更新：2026-03-01
+> 最后更新：2026-03-02
 
 ---
 
@@ -10,46 +10,35 @@
 |------|-------------|------|
 | 核心玩法 | 12 / 12 | ✅ |
 | 经济系统 | 8 / 8 | ✅ |
-| UI 面板 | 9 / 9 | ✅ |
+| UI 面板 | 10 / 10 | ✅ |
 | 存档 & 校验 | 6 / 6 | ✅ |
 | 特效动画 | 8 / 8 | ✅ |
 | 批量操作 | 3 / 3 | ✅ |
 | Bug 修复 | 3 / 3 | ✅ |
 | 代码健壮性 | 3 / 3 | ✅ |
 | 体验优化 | 5 / 5 | ✅ |
-| 工程构建 | 4 / 5 | 🟡 |
-| 素材补全 | 0 / 6 | 🔴 需美术 |
-| 内容扩展 | 0 / 3 | ⚪ 未来 |
-| UI 打磨 | 1 / 4 | 🟡 |
+| 工程构建 | 5 / 5 | ✅ |
+| 素材补全 | 30 / 30 | ✅ |
+| 成就系统 | 1 / 1 | ✅ |
+| 温室氛围 | 1 / 1 | ✅ |
+| 内容扩展 | 0 / 2 | ⚪ 未来 |
+| UI 打磨 | 1 / 3 | 🟡 |
 
 ---
 
 ## 一、待办项（按优先级排列）
 
-### P0 — 素材缺失（阻塞完整体验）
+### P0 — 无阻塞项 ✅
 
-**3.1 种子图标缺少 6 种花**
-
-`build/public/art/ui/` 中仅有 4 种种子图标，其余 6 种使用通用占位：
-
-| 花朵 | 文件名 | 状态 |
-|------|--------|------|
-| 薰衣草 lavender | `icon_seed_lavender.svg` | ❌ 缺失 |
-| 兰花 orchid | `icon_seed_orchid.svg` | ❌ 缺失 |
-| 牡丹 peony | `icon_seed_peony.svg` | ❌ 缺失 |
-| 康乃馨 carnation | `icon_seed_carnation.svg` | ❌ 缺失 |
-| 菊花 chrysanthemum | `icon_seed_chrysanthemum.svg` | ❌ 缺失 |
-| 扶桑 hibiscus | `icon_seed_hibiscus.svg` | ❌ 缺失 |
-
-> 参考已有图标风格制作，详见 `art/ui/README.md`
+~~**种子图标缺失**~~：全部 30 种花朵的种子图标 `icon_seed_*.svg` 已补全，无遗留。
 
 ---
 
-### P1 — 工程优化
+### P1 — 工程优化 ✅
 
-- [ ] **配置编辑器导入**：`/__editor` 目前不支持导入已有项目配置，仅手动编辑 state
-- [ ] **`.editor-state.json` 加入 `.gitignore`**：`build/src/config/.editor-state.json` 是编辑器运行时产物，不应被版本控制
-- [ ] **策划文档同步**：`design/game-design.md` §8.2 仍写"随机一种花"，实际已支持 1~3 种花组合订单
+- [x] **配置编辑器导入**：`tools/config-editor/index.html` 已支持 JSON 文本粘贴导入 + 文件上传导入
+- [x] **`.editor-state.json` 加入 `.gitignore`**：`build/.gitignore` 已包含 `src/config/.editor-state.json`
+- [x] **策划文档同步**：`design/game-design.md` §8.2 已修正为"1~3 种花组合（每种 2~5 朵），总计 3~10 朵"
 
 ---
 
@@ -60,15 +49,9 @@
 - [ ] 建议价格梯度：500 / 1000 / 2000 / 5000
 
 #### 6.2 中后期目标
-- [ ] 玩家 Lv.5 后不再解锁新花朵，Lv.6~10 无内容激励
-- [ ] 建议方案：
-  - 成就系统（首次种满 28 盆、收割 100 次、集齐所有花等）
-  - 高级皮肤绑定玩家等级解锁
-  - 花园装饰物 / 背景主题切换
-
-#### 6.3 花朵品种扩展
-- [ ] 目前 10 种花朵，配置编辑器已支持新增
-- [ ] 建议后续批次：百合 lily、樱花 sakura、紫罗兰 violet 等
+- [x] ~~成就系统~~ **已完成** → 28 个成就，5 大分类，独立面板 + 奖励领取 + Toast 通知
+- [ ] 高级皮肤绑定玩家等级解锁
+- [ ] 花园装饰物 / 背景主题切换（部分已实现：温室氛围系统）
 
 ---
 
@@ -106,7 +89,30 @@
 ## 二、已完成项归档
 
 <details>
-<summary>点击展开全部已完成项（2026-03-01）</summary>
+<summary>点击展开全部已完成项（2026-03-02）</summary>
+
+### 成就系统 ✅（2026-03-02 新增）
+- [x] 28 个成就定义，5 大分类（种植/经济/收藏/里程碑/特殊）
+- [x] `achievement.config.ts` 配置文件 + 类型定义
+- [x] `useAchievements` Hook — 累计统计、自动检测、localStorage 持久化
+- [x] `AchievementPanel` 组件 — 分类筛选、统计栏、奖励领取
+- [x] `AchievementToastUI` — 解锁 Toast 通知动画
+- [x] 成就追踪回调：播种/收获/订单/金币自动计入
+- [x] 特殊隐藏成就：雨天收获、夜晚收获（联动天气/昼夜系统）
+- [x] Toolbar 🏆 按钮 + 未领取红点提示
+- [x] useGameState 胶水层集成（tracked callbacks 模式）
+
+### 温室氛围系统 ✅（2026-03-01 新增）
+- [x] 昼夜循环 + 天气效果 + 装饰物
+- [x] `useAtmosphere` hook + `GreenhouseAtmosphere` 组件
+
+### P1 工程优化 ✅
+- [x] 配置编辑器导入功能（JSON 粘贴 + 文件上传）
+- [x] .editor-state.json → .gitignore
+- [x] game-design.md §8.2 同步
+
+### P0 素材补全 ✅
+- [x] 全部 30 种花朵的种子图标已生成（icon_seed_*.svg）
 
 ### Bug 修复 ✅
 - [x] `INITIAL_COINS` / `INITIAL_WATER` 配置已与策划文档对齐
@@ -131,21 +137,23 @@
 
 ### 工程 ✅
 - [x] GitHub 仓库：`dmxzxy/flowers`（main 分支）
-- [x] 生产构建通过：CSS 47KB + JS 202KB（gzip ~72KB）
-- [x] 配置编辑器（独立 HTML + Vite 插件 HMR）
-- [x] .gitignore 修复（node_modules 不再跟踪）
+- [x] 生产构建通过：CSS 56KB + JS 223KB（gzip ~79KB）
+- [x] 配置编辑器（独立 HTML + Vite 插件 HMR + 导入/导出）
+- [x] .gitignore 完善
 
 ### 核心功能 ✅ （全部实现）
 - 花盆状态机（empty→seeded→growing→blooming→cooling）
-- 10 种花朵 × 20 级升级 + 花卉之魂系统
+- 30 种花朵 × 20 级升级 + 花卉之魂系统
 - 金币 / 水量经济 + 采购任务 + 收购订单（多花种组合）
-- 玩家等级系统（Lv.1~10 解锁内容）
+- 玩家等级系统（Lv.1~20 解锁内容）
 - 花盆皮肤 + 花朵图鉴面板
 - 批量浇水 / 收割 / 播种
 - 拖拽播种 + 触摸交互适配
 - 8 种特效粒子动画
 - 个人资料菜单 + 存档管理
 - 收购订单多花种 + 红点达成提示
+- 成就系统（28 成就 + 5 分类 + 奖励领取 + 隐藏成就）
+- 温室氛围（昼夜循环 + 天气系统 + 装饰物）
 
 </details>
 
@@ -155,16 +163,18 @@
 
 ```
 build/src/
-├── components/    25 个组件（含 ErrorBoundary）
-├── hooks/         15 个领域 Hook（useGameState 统筹）
-├── config/        game / flower / task 配置层
+├── components/    26 个组件（含 ErrorBoundary + AchievementPanel）
+├── hooks/         16 个领域 Hook（useGameState 统筹）
+├── config/        game / flower / task / achievement 配置层
 ├── types/         TypeScript 类型定义
 └── data/          静态数据（花朵 / 资产 / 任务）
 ```
 
 **状态机**：`empty → seeded → growing(5s) → blooming → cooling → blooming … → empty`
 **持久化**：localStorage，启动时校验 + 迁移 + 离线补偿
+**成就系统**：独立 localStorage key `flowers_achievements`，28 成就 × 5 分类
 
 **核心功能完成度：100%**
-**Bug + 健壮性 + 体验优化：100%** — 所有可通过代码解决的待办已完成。
-**剩余项目**：缺失素材（需美术）、内容扩展（策划驱动）、UI 打磨（长期优化）。
+**Bug + 健壮性 + 体验优化：100%**
+**P0 + P1 全部清零 ✅**
+**剩余项目**：皮肤扩展（策划驱动）、音效（需素材）、新手引导、长屏适配。

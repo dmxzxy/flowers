@@ -4,3 +4,4 @@
 export * from './game.config';
 export * from './flower.config';
 export * from './task.config';
+export * from './achievement.config';

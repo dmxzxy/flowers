@@ -10,6 +10,8 @@ interface ToolbarProps {
   buyOrderFulfillable: boolean;
   onOpenPotSkins: () => void;
   onOpenProfile: () => void;
+  onOpenAchievements: () => void;
+  achievementUnclaimedCount: number;
 }
 
 export const Toolbar: FC<ToolbarProps> = ({
@@ -22,6 +24,8 @@ export const Toolbar: FC<ToolbarProps> = ({
   buyOrderFulfillable,
   onOpenPotSkins,
   onOpenProfile,
+  onOpenAchievements,
+  achievementUnclaimedCount,
 }) => {
   // 新订单到达时按钮弹跳动画
   const prevCountRef = useRef(buyOrderCount);
@@ -86,6 +90,16 @@ export const Toolbar: FC<ToolbarProps> = ({
           title="花盆皮肤"
         >
           <span className="toolbar-icon">🪴</span>
+        </div>
+        <div
+          className="toolbar-tool toolbar-tool-achievements"
+          onClick={onOpenAchievements}
+          title="成就"
+        >
+          <span className="toolbar-icon">🏆</span>
+          {achievementUnclaimedCount > 0 && (
+            <span className="toolbar-badge">{achievementUnclaimedCount}</span>
+          )}
         </div>
         <div
           className="toolbar-tool toolbar-tool-profile"

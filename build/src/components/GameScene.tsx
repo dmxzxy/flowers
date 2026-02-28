@@ -22,6 +22,7 @@ import { BuyOrderPanel } from './BuyOrderPanel';
 import { PotSkinPanel } from './PotSkinPanel';
 import { ProfileMenu } from './ProfileMenu';
 import { GreenhouseAtmosphere } from './GreenhouseAtmosphere';
+import { AchievementPanel, AchievementToastUI } from './AchievementPanel';
 import { useGameState } from '../hooks/useGameState';
 import { useCooldown } from '../hooks/useCooldown';
 import { assets } from '../data/assets';
@@ -76,6 +77,11 @@ export const GameScene: FC = () => {
     selectSkin,
     unlockSkin,
     isSkinUnlocked,
+    achievements,
+    achievementToasts,
+    dismissAchievementToast,
+    claimAchievement,
+    setAchievementAtmosphere,
     saveNow,
     resetGame,
     saveInfo,
@@ -93,6 +99,17 @@ export const GameScene: FC = () => {
   const [showBuyOrders, setShowBuyOrders] = useState(false);
   const [showPotSkins, setShowPotSkins] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [showAchievements, setShowAchievements] = useState(false);
+
+  // 同步天气/时间到成就系统（用于雨天/夜晚收获检测）
+  useEffect(() => {
+    setAchievementAtmosphere(atmosphere.timeOfDay, atmosphere.weather);
+  }, [atmosphere.timeOfDay, atmosphere.weather, setAchievementAtmosphere]);
+
+  // 计算未领取成就数（用于 Toolbar 红点）
+  const achievementUnclaimedCount = achievements.unlocked.filter(
+    id => !achievements.claimed.includes(id)
+  ).length;
 
   const potImage = getSkinImage();
   const [dragState, setDragState] = useState({
@@ -321,6 +338,8 @@ export const GameScene: FC = () => {
           buyOrderFulfillable={hasAnyFulfillableBuyOrder}
           onOpenPotSkins={togglePotSkins}
           onOpenProfile={() => setShowProfile(true)}
+          onOpenAchievements={() => setShowAchievements(true)}
+          achievementUnclaimedCount={achievementUnclaimedCount}
         />
         <div className="garden-container">
           <PotGrid pots={pots} onPotClick={handlePotClickGuarded} potImage={potImage} />
@@ -486,6 +505,25 @@ export const GameScene: FC = () => {
         onSaveNow={saveNow}
         onResetGame={resetGame}
       />
+
+      {/* 成就面板 */}
+      <AchievementPanel
+        isOpen={showAchievements}
+        onClose={() => setShowAchievements(false)}
+        unlocked={achievements.unlocked}
+        claimed={achievements.claimed}
+        stats={achievements.stats}
+        onClaim={claimAchievement}
+      />
+
+      {/* 成就 Toast 通知 */}
+      {achievementToasts.map(t => (
+        <AchievementToastUI
+          key={t.id}
+          achievementId={t.achievementId}
+          onDismiss={() => dismissAchievementToast(t.id)}
+        />
+      ))}
     </div>
   );
 };

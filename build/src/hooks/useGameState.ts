@@ -17,6 +17,7 @@ import { usePickers } from './usePickers';
 import { useBuyOrders } from './useBuyOrder';
 import { usePurchaseTasks } from './usePurchaseTasks';
 import { usePotSkins } from './usePotSkins';
+import { useAchievements } from './useAchievements';
 import { loadSave, clearSave, useSaveGame, SaveData } from './useSaveGame';
 import { MAX_WATER, WATER_REGEN_INTERVAL_MS, WATER_REGEN_AMOUNT } from '../config';
 
@@ -89,7 +90,40 @@ export const useGameState = () => {
     initialSave?.pots
   );
 
-  // 8. Picker 面板（依赖 pots + 操作函数）
+  // 8. 成就系统（依赖 pots + flowerLevels + playerLevel + addCoins；需先于 Picker 以便传入 tracked 回调）
+  const {
+    achievements,
+    toasts: achievementToasts,
+    dismissToast: dismissAchievementToast,
+    claimReward: claimAchievement,
+    recordPlant,
+    recordHarvest,
+    recordCoinsEarned,
+    recordOrderCompleted,
+    setAtmosphere: setAchievementAtmosphere,
+  } = useAchievements(pots, flowerLevels, playerLevel, addCoins);
+
+  // 包装 plantSeed — 追踪播种成就
+  const plantSeedTracked = useCallback(
+    (potId: number, flowerType: import('../types').FlowerType) => {
+      const pot = pots.find(p => p.id === potId);
+      if (pot && pot.state === 'empty') recordPlant();
+      plantSeed(potId, flowerType);
+    },
+    [pots, plantSeed, recordPlant]
+  );
+
+  // 包装 harvestPot — 追踪收获成就
+  const harvestPotTracked = useCallback(
+    (potId: number) => {
+      const pot = pots.find(p => p.id === potId);
+      if (pot && pot.state === 'blooming') recordHarvest();
+      harvestPot(potId);
+    },
+    [pots, harvestPot, recordHarvest]
+  );
+
+  // 9. Picker 面板（使用 tracked 回调以便追踪成就）
   const {
     showFlowerPicker,
     showWaterPicker,
@@ -104,19 +138,33 @@ export const useGameState = () => {
     batchPlantAll,
     batchWaterAll,
     batchHarvestAll,
-  } = usePickers(pots, plantSeed, waterPot, harvestPot);
+  } = usePickers(pots, plantSeedTracked, waterPot, harvestPotTracked);
 
-  // 9. 随机收购订单（依赖 removeFlowers + addCoins + pushEffect）
+  // 10. 随机收购订单（依赖 removeFlowers + addCoins + pushEffect）
   const { buyOrders, acceptBuyOrder, dismissBuyOrder, canFulfillOrder, hasAnyFulfillable } = useBuyOrders(
     removeFlowers,
     addCoins,
     pushEffect
   );
 
+  // 包装 acceptBuyOrder — 追踪订单成就 + 金币统计
+  const acceptBuyOrderTracked = useCallback(
+    (orderId: number): boolean => {
+      const order = buyOrders.find(o => o.id === orderId);
+      const success = acceptBuyOrder(orderId);
+      if (success && order) {
+        recordOrderCompleted();
+        recordCoinsEarned(order.totalPrice);
+      }
+      return success;
+    },
+    [buyOrders, acceptBuyOrder, recordOrderCompleted, recordCoinsEarned]
+  );
+
   /** 是否有可完成的收购订单（用于红点提示） */
   const hasAnyFulfillableBuyOrder = hasAnyFulfillable(inventory);
 
-  // 10. 采购任务（依赖 inventory + currency + 扣减函数 + pushEffect + addXP）
+  // 11. 采购任务（依赖 inventory + currency + 扣减函数 + pushEffect + addXP）
   const {
     tasks: purchaseTasks,
     canCompleteTask,
@@ -135,14 +183,14 @@ export const useGameState = () => {
     addXP
   );
 
-  // 11. 花盆皮肤（依赖 spendCoins）
+  // 12. 花盆皮肤（依赖 spendCoins）
   const { activeSkin, unlockedSkins, getSkinImage, selectSkin, unlockSkin, isSkinUnlocked } = usePotSkins(
     spendCoins,
     initialSave?.activeSkin,
     initialSave?.unlockedSkins
   );
 
-  // 12. 自动存档系统
+  // 13. 自动存档系统
   const { saveNow } = useSaveGame(
     currency,
     inventory,
@@ -172,9 +220,9 @@ export const useGameState = () => {
     setPots,
     gridCols,
     gridRows,
-    plantSeed,
+    plantSeed: plantSeedTracked,
     waterPot,
-    harvestPot,
+    harvestPot: harvestPotTracked,
 
     // Picker
     showFlowerPicker,
@@ -225,7 +273,7 @@ export const useGameState = () => {
 
     // 收购订单
     buyOrders,
-    acceptBuyOrder,
+    acceptBuyOrder: acceptBuyOrderTracked,
     dismissBuyOrder,
     canFulfillOrder,
     hasAnyFulfillableBuyOrder,
@@ -236,6 +284,13 @@ export const useGameState = () => {
     selectSkin,
     unlockSkin,
     isSkinUnlocked,
+
+    // 成就
+    achievements,
+    achievementToasts,
+    dismissAchievementToast,
+    claimAchievement,
+    setAchievementAtmosphere,
 
     // 存档
     saveNow,
