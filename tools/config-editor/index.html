@@ -110,6 +110,13 @@ tr:hover td { background: #FFF5F8; }
 .toast-success { background: var(--green); }
 .toast-error { background: var(--red); }
 @keyframes toastIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+
+/* ==================== Connection Status ==================== */
+.conn-badge { padding: 6px 12px; font-size: 12px; font-weight: 600; border-radius: 8px; text-align: center; margin: 0 16px 4px; transition: all 0.3s; }
+.conn-badge.connected { background: #C8E6C9; color: #2E7D32; }
+.conn-badge.disconnected { background: #FFF3E0; color: #E65100; }
+.conn-badge.saving { background: #E3F2FD; color: #1565C0; animation: pulse 1s infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
 </style>
 </head>
 <body>
@@ -118,6 +125,7 @@ tr:hover td { background: #FFF5F8; }
   <!-- Sidebar -->
   <div class="sidebar">
     <h1><span>🌸</span> 配置编辑器</h1>
+    <div id="conn-badge" class="conn-badge disconnected">⚡ 离线模式</div>
     <div class="nav">
       <button class="nav-item active" data-tab="game"><span class="nav-icon">⚙️</span>全局配置</button>
       <button class="nav-item" data-tab="flowers"><span class="nav-icon">🌷</span>花朵品种</button>
@@ -128,6 +136,7 @@ tr:hover td { background: #FFF5F8; }
       <button class="nav-item" data-tab="export"><span class="nav-icon">📦</span>导出配置</button>
     </div>
     <div class="sidebar-footer">
+      <button id="btn-apply" class="btn btn-pink btn-block" onclick="saveToServer()" style="display:none">🚀 保存并应用</button>
       <button class="btn btn-green btn-block" onclick="saveToLocalStorage()">💾 暂存</button>
       <button class="btn btn-outline btn-block" onclick="loadFromLocalStorage()">📂 读取暂存</button>
     </div>
@@ -1178,6 +1187,78 @@ function switchExportTab(el) {
 // ==================== Helpers ====================
 function $(sel) { return document.querySelector(sel); }
 
+// ==================== Server Connection ====================
+let isConnected = false;
+
+async function detectConnection() {
+  try {
+    const resp = await fetch('/__api/config');
+    if (!resp.ok) return;
+    isConnected = true;
+
+    // 更新界面状态
+    const badge = document.getElementById('conn-badge');
+    badge.className = 'conn-badge connected';
+    badge.textContent = '🔗 已连接 Vite 服务';
+    document.getElementById('btn-apply').style.display = '';
+
+    // 从服务器加载已保存的状态
+    const data = await resp.json();
+    if (!data._empty) {
+      Object.assign(state, data);
+      syncGameToUI();
+      syncTaskToUI();
+      renderFlowers();
+      renderLevels();
+      renderPlayerLevels();
+      renderSkins();
+      toast('✅ 已从服务器加载配置');
+      return true; // 已加载，跳过 localStorage 提示
+    }
+  } catch (e) {
+    // 独立模式，忽略连接错误
+  }
+  return false;
+}
+
+async function saveToServer() {
+  if (!isConnected) { toast('未连接到 Vite 服务', 'error'); return; }
+
+  syncGameFromUI();
+  syncTaskFromUI();
+
+  const badge = document.getElementById('conn-badge');
+  badge.className = 'conn-badge saving';
+  badge.textContent = '⏳ 保存中...';
+
+  const files = {
+    'game.config.ts': generateGameConfig(),
+    'flower.config.ts': generateFlowerConfig(),
+    'types/index.ts': generateTypes(),
+  };
+
+  try {
+    const resp = await fetch('/__api/config', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ state, files }),
+    });
+    const result = await resp.json();
+    badge.className = 'conn-badge connected';
+    badge.textContent = '🔗 已连接 Vite 服务';
+
+    if (result.ok) {
+      toast('🚀 已保存！Vite HMR 将自动热更新游戏');
+    } else {
+      toast('保存失败: ' + result.message, 'error');
+    }
+  } catch (e) {
+    badge.className = 'conn-badge connected';
+    badge.textContent = '🔗 已连接 Vite 服务';
+    toast('保存失败: ' + e.message, 'error');
+  }
+}
+
 // ==================== Init ====================
 renderFlowers();
 renderLevels();
@@ -1186,11 +1267,14 @@ renderSkins();
 syncGameToUI();
 syncTaskToUI();
 
-// Try auto-load from localStorage
-if (localStorage.getItem(LS_KEY)) {
-  const autoLoad = confirm('发现暂存数据，是否加载？');
-  if (autoLoad) loadFromLocalStorage();
-}
+// 检测是否在 Vite 开发服务下运行
+detectConnection().then(loaded => {
+  // 仅在未从服务器加载时才提示 localStorage
+  if (!loaded && localStorage.getItem(LS_KEY)) {
+    const autoLoad = confirm('发现暂存数据，是否加载？');
+    if (autoLoad) loadFromLocalStorage();
+  }
+});
 </script>
 </body>
 </html>

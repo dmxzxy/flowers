@@ -1,0 +1,5 @@
+node_modules/
+dist/
+
+# 配置编辑器本地状态
+src/config/.editor-state.json
