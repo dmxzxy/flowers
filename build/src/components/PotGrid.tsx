@@ -5,9 +5,10 @@ import { Pot } from './Pot';
 interface PotGridProps {
   pots: PotData[];
   onPotClick: (id: number) => void;
+  potImage: string;
 }
 
-export const PotGrid: FC<PotGridProps> = ({ pots, onPotClick }) => {
+export const PotGrid: FC<PotGridProps> = ({ pots, onPotClick, potImage }) => {
   return (
     <div className="pot-grid-wrapper">
       <div className="pot-grid">
@@ -16,6 +17,7 @@ export const PotGrid: FC<PotGridProps> = ({ pots, onPotClick }) => {
             key={pot.id} 
             pot={pot} 
             onClick={onPotClick}
+            potImage={potImage}
           />
         ))}
       </div>

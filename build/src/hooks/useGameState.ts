@@ -8,10 +8,13 @@ import { useEffects } from './useEffects';
 import { useCurrency } from './useCurrency';
 import { useInventory } from './useInventory';
 import { useFlowerLevels } from './useFlowerLevels';
+import { useFlowerSouls } from './useFlowerSouls';
+import { usePlayerLevel } from './usePlayerLevel';
 import { usePots } from './usePots';
 import { usePickers } from './usePickers';
-import { useBuyOrder } from './useBuyOrder';
+import { useBuyOrders } from './useBuyOrder';
 import { usePurchaseTasks } from './usePurchaseTasks';
+import { usePotSkins } from './usePotSkins';
 
 export const useGameState = () => {
   // 1. 特效队列（无依赖，最先初始化）
@@ -22,27 +25,39 @@ export const useGameState = () => {
     currency,
     noWaterWarning,
     maxWater,
+    waterRegenCountdown,
     spendWater,
     spendCoins,
     addCoins,
-    addRewards,
   } = useCurrency();
 
   // 3. 仓库
   const { inventory, addFlower, removeFlowers, removeAnyFlowers } = useInventory();
 
-  // 4. 花朵等级（依赖 spendCoins + pushEffect）
-  const { flowerLevels, upgradeFlower } = useFlowerLevels(spendCoins, pushEffect);
+  // 4. 花卉之魂（依赖 pushEffect）
+  const { flowerSouls, tryDropSoul, spendSouls } = useFlowerSouls(pushEffect);
 
-  // 5. 花盆操作（依赖 flowerLevels + spendWater + addFlower + pushEffect）
+  // 5. 花朵等级（依赖 spendCoins + spendSouls + pushEffect）
+  const { flowerLevels, upgradeFlower, canUpgradeFlower } = useFlowerLevels(
+    spendCoins,
+    spendSouls,
+    pushEffect
+  );
+
+  // 6. 玩家等级（依赖 pushEffect）
+  const { playerLevel, addXP } = usePlayerLevel(pushEffect);
+
+  // 7. 花盆操作（依赖 flowerLevels + spendWater + addFlower + pushEffect + addXP + tryDropSoul）
   const { pots, setPots, plantSeed, waterPot, harvestPot, gridCols, gridRows } = usePots(
     flowerLevels,
     spendWater,
     addFlower,
-    pushEffect
+    pushEffect,
+    addXP,
+    tryDropSoul
   );
 
-  // 6. Picker 面板（依赖 pots + 操作函数）
+  // 8. Picker 面板（依赖 pots + 操作函数）
   const {
     showFlowerPicker,
     showWaterPicker,
@@ -56,23 +71,34 @@ export const useGameState = () => {
     closeHarvestPicker,
   } = usePickers(pots, plantSeed, waterPot, harvestPot);
 
-  // 7. 随机收购订单（依赖 removeFlowers + addCoins + pushEffect）
-  const { activeBuyOrder, acceptBuyOrder, dismissBuyOrder } = useBuyOrder(
+  // 9. 随机收购订单（依赖 removeFlowers + addCoins + pushEffect）
+  const { buyOrders, acceptBuyOrder, dismissBuyOrder } = useBuyOrders(
     removeFlowers,
     addCoins,
     pushEffect
   );
 
-  // 8. 采购任务（依赖 inventory + currency + 扣减函数 + pushEffect）
-  const { canCompleteTask, completePurchaseTask } = usePurchaseTasks(
+  // 10. 采购任务（依赖 inventory + currency + 扣减函数 + pushEffect + addXP）
+  const {
+    tasks: purchaseTasks,
+    canCompleteTask,
+    completePurchaseTask,
+    isTaskOnCooldown,
+    getTaskCooldownRemaining,
+    refreshTasks,
+  } = usePurchaseTasks(
     inventory,
     currency,
     spendCoins,
-    addRewards,
+    addCoins,
     removeAnyFlowers,
     removeFlowers,
-    pushEffect
+    pushEffect,
+    addXP
   );
+
+  // 11. 花盆皮肤（依赖 spendCoins）
+  const { activeSkin, getSkinImage, selectSkin, unlockSkin, isSkinUnlocked } = usePotSkins(spendCoins);
 
   return {
     // 花盆
@@ -103,22 +129,41 @@ export const useGameState = () => {
     currency,
     noWaterWarning,
     maxWater,
+    waterRegenCountdown,
 
-    // 等级
+    // 花朵等级
     flowerLevels,
     upgradeFlower,
+    canUpgradeFlower,
+
+    // 花卉之魂
+    flowerSouls,
+
+    // 玩家等级
+    playerLevel,
 
     // 特效
     effects,
     removeEffect,
 
     // 采购任务
+    purchaseTasks,
     canCompleteTask,
     completePurchaseTask,
+    isTaskOnCooldown,
+    getTaskCooldownRemaining,
+    refreshTasks,
 
     // 收购订单
-    activeBuyOrder,
+    buyOrders,
     acceptBuyOrder,
     dismissBuyOrder,
+
+    // 花盆皮肤
+    activeSkin,
+    getSkinImage,
+    selectSkin,
+    unlockSkin,
+    isSkinUnlocked,
   };
 };

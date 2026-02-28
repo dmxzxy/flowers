@@ -1785,6 +1785,7 @@
   flex-direction: column;
   align-items: center;
   width: 50px;
+  flex-shrink: 0;
 }
 
 .level-flower-icon {
@@ -1804,39 +1805,95 @@
   min-width: 0;
 }
 
+.level-header-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
 .level-badge {
   font-weight: bold;
   font-size: 14px;
   color: #EC407A;
-  margin-bottom: 2px;
 }
 
-.level-detail {
-  font-size: 11px;
-  color: #999;
+.level-stage {
+  font-size: 9px;
+  color: #fff;
+  padding: 1px 6px;
+  border-radius: 6px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
+
+/* 等级进度条 */
+.level-progress-bar {
+  position: relative;
+  width: 100%;
+  height: 10px;
+  background: #F3E5F5;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.level-progress-fill {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.4s ease;
+  min-width: 2px;
+}
+
+.level-progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 8px;
+  font-weight: 700;
+  color: rgba(0,0,0,0.5);
+  text-shadow: 0 0 2px rgba(255,255,255,0.8);
+  white-space: nowrap;
+}
+
+/* level-detail 样式 */
 
 .level-max-badge {
   padding: 6px 10px;
-  background: linear-gradient(135deg, #F48FB1, #EC407A);
+  background: linear-gradient(135deg, #FFD54F, #FF6F00);
   color: #fff;
   font-weight: bold;
   font-size: 12px;
   border-radius: 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .level-upgrade-btn {
-  padding: 6px 12px;
+  padding: 6px 10px;
   border: none;
   border-radius: 14px;
   background: linear-gradient(135deg, #CE93D8, #AB47BC);
   color: #fff;
   font-weight: 600;
-  font-size: 12px;
+  font-size: 11px;
   cursor: pointer;
   transition: all 0.2s;
   white-space: nowrap;
   box-shadow: 0 2px 8px rgba(171,71,188,0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.upgrade-cost-line {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 11px;
 }
 
 .level-upgrade-btn:hover:not(:disabled) {
@@ -2388,4 +2445,580 @@
 .buy-order-dismiss:hover {
   background: rgba(0,0,0,0.15);
   color: #666;
+}
+
+/* ==================== 玩家等级条 ==================== */
+.player-level-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 auto 8px;
+  padding: 4px 14px;
+  max-width: 320px;
+}
+
+.player-level-badge {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  background: linear-gradient(135deg, #FFD54F, #FFB300);
+  padding: 3px 10px;
+  border-radius: 16px;
+  font-weight: bold;
+  font-size: 13px;
+  color: #5D4037;
+  box-shadow: 0 1px 6px rgba(255,179,0,0.3);
+  white-space: nowrap;
+}
+
+.player-level-icon {
+  font-size: 14px;
+}
+
+.player-level-num {
+  font-size: 12px;
+}
+
+.player-xp-track {
+  flex: 1;
+  height: 14px;
+  background: rgba(255,235,238,0.7);
+  border-radius: 7px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(236,64,122,0.12);
+}
+
+.player-xp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #F48FB1, #EC407A);
+  border-radius: 7px;
+  transition: width 0.5s ease;
+}
+
+.player-xp-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 9px;
+  font-weight: 600;
+  color: #880E4F;
+  text-shadow: 0 0 3px rgba(255,255,255,0.8);
+}
+
+/* ==================== 花卉之魂相关 ==================== */
+.inline-soul {
+  font-size: 14px;
+  margin-right: 2px;
+}
+
+.level-soul-count {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 11px;
+  color: #9C27B0;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.level-detail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  font-size: 11px;
+  color: #999;
+}
+
+.level-next-hint {
+  font-size: 10px;
+  color: #AB47BC;
+  margin-top: 2px;
+  font-style: italic;
+}
+
+/* ==================== 锁定花朵 ==================== */
+.picker-flower-btn.picker-locked {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(0.6);
+}
+
+.picker-flower-btn.picker-locked .picker-flower-icon {
+  background-color: #ddd !important;
+}
+
+/* ==================== XP 获取特效 ==================== */
+.xp-gain-effect {
+  position: fixed;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  pointer-events: none;
+  animation: xpGainFloat 1.2s ease-out forwards;
+}
+
+.xp-gain-text {
+  display: inline-block;
+  padding: 4px 14px;
+  background: linear-gradient(135deg, #FFD54F, #FFB300);
+  color: #5D4037;
+  font-weight: bold;
+  font-size: 14px;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(255,179,0,0.4);
+}
+
+@keyframes xpGainFloat {
+  0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-40px); }
+}
+
+/* ==================== 花卉之魂掉落特效 ==================== */
+.soul-drop-effect {
+  position: fixed;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  pointer-events: none;
+  animation: soulDropFloat 1.5s ease-out forwards;
+}
+
+.soul-drop-text {
+  display: inline-block;
+  padding: 6px 16px;
+  background: linear-gradient(135deg, #CE93D8, #9C27B0);
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+  border-radius: 16px;
+  box-shadow: 0 2px 10px rgba(156,39,176,0.4);
+}
+
+@keyframes soulDropFloat {
+  0% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(-15px) scale(1.1); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-50px) scale(0.9); }
+}
+
+/* ==================== 玩家等级提升特效 ==================== */
+.player-levelup-effect {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(255,215,0,0.15), transparent 70%);
+  animation: playerLevelUpBg 2s ease-out forwards;
+}
+
+.player-levelup-content {
+  text-align: center;
+  animation: playerLevelUpPop 2s ease-out forwards;
+}
+
+.player-levelup-icon {
+  font-size: 48px;
+  margin-bottom: 8px;
+}
+
+.player-levelup-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #EC407A;
+  text-shadow: 0 2px 8px rgba(236,64,122,0.3);
+  margin-bottom: 4px;
+}
+
+.player-levelup-level {
+  font-size: 36px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #FFD54F, #FF6F00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes playerLevelUpBg {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes playerLevelUpPop {
+  0% { opacity: 0; transform: scale(0.5); }
+  20% { opacity: 1; transform: scale(1.1); }
+  40% { transform: scale(1); }
+  80% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.8); }
+}
+
+/* ==================== 水滴恢复倒计时 ==================== */
+.water-regen-timer {
+  font-size: 10px;
+  color: #4FC3F7;
+  font-weight: 500;
+  margin-left: 4px;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.85;
+}
+
+/* ==================== 采购任务 增强样式 ==================== */
+.panel-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.refresh-tasks-btn {
+  padding: 4px 10px;
+  border: 1.5px solid #F8BBD0;
+  border-radius: 12px;
+  background: #FFF5F8;
+  color: #AD1457;
+  font-size: 12px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+
+.refresh-tasks-btn:hover {
+  background: #FCE4EC;
+}
+
+.task-card.task-cooldown {
+  opacity: 0.5;
+  filter: grayscale(0.3);
+}
+
+.task-cd-badge {
+  padding: 6px 12px;
+  border-radius: 12px;
+  background: #F3E5F5;
+  color: #7B1FA2;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.cost-enough {
+  color: #388E3C;
+}
+
+.cost-short {
+  color: #D32F2F;
+  font-weight: 600;
+}
+
+/* ==================== 收购订单面板 ==================== */
+.buy-order-panel {
+  background: linear-gradient(160deg, #FFFAF5, #FFF5F8);
+  border-radius: 22px;
+  width: 90%;
+  max-width: 400px;
+  max-height: 80vh;
+  box-shadow: 0 12px 48px rgba(183,110,121,0.2), 0 0 0 1px rgba(183,110,121,0.06);
+  animation: panelPop 0.25s ease-out;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.order-slot-count {
+  font-size: 12px;
+  color: #AD1457;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: #FCE4EC;
+}
+
+.empty-orders {
+  text-align: center;
+  padding: 32px 16px;
+  color: #999;
+  font-size: 14px;
+}
+
+.order-card {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1.5px solid #F3E5F5;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.order-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-flower-name {
+  font-weight: 700;
+  font-size: 15px;
+  color: #AD1457;
+}
+
+.order-timer {
+  font-size: 12px;
+  color: #e65100;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.order-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  color: #555;
+}
+
+.order-demand strong {
+  color: #333;
+}
+
+.order-stock {
+  margin-left: 6px;
+  font-size: 11px;
+}
+
+.stock-enough {
+  color: #388E3C;
+}
+
+.stock-short {
+  color: #D32F2F;
+}
+
+.order-price {
+  color: #996515;
+  font-weight: 600;
+}
+
+.order-price strong {
+  font-size: 15px;
+  color: #b8860b;
+}
+
+.order-price small {
+  font-size: 11px;
+  color: #aaa;
+  font-weight: normal;
+}
+
+.order-card-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.order-accept-btn {
+  padding: 6px 20px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #F48FB1, #EC407A);
+  color: white;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(236,64,122,0.3);
+  transition: all 0.2s;
+}
+
+.order-accept-btn:hover:not(.btn-disabled) {
+  background: linear-gradient(135deg, #EC407A, #D81B60);
+  transform: translateY(-1px);
+}
+
+.order-accept-btn.btn-disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.order-dismiss-btn {
+  padding: 6px 14px;
+  border: 1.5px solid #E0E0E0;
+  border-radius: 14px;
+  background: #fafafa;
+  color: #888;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.order-dismiss-btn:hover {
+  background: #f0f0f0;
+  color: #666;
+}
+
+@keyframes buyOrderShakeCard {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
+}
+
+.order-card.buy-order-shake {
+  animation: buyOrderShakeCard 0.4s ease-in-out;
+}
+
+/* ==================== 花盆皮肤面板 ==================== */
+.pot-skin-panel {
+  background: linear-gradient(160deg, #FFFAF5, #FFF5F8);
+  border-radius: 22px;
+  width: 90%;
+  max-width: 400px;
+  max-height: 80vh;
+  box-shadow: 0 12px 48px rgba(183,110,121,0.2), 0 0 0 1px rgba(183,110,121,0.06);
+  animation: panelPop 0.25s ease-out;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.pot-skin-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pot-skin-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: #fff;
+  border: 2px solid #F3E5F5;
+  transition: all 0.2s;
+}
+
+.pot-skin-card.skin-active {
+  border-color: #EC407A;
+  background: #FFF5F8;
+  box-shadow: 0 0 0 2px rgba(236,64,122,0.12);
+}
+
+.pot-skin-card.skin-locked {
+  opacity: 0.7;
+}
+
+.skin-preview {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.skin-pot-image {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  filter: drop-shadow(1px 2px 3px rgba(0,0,0,0.2));
+}
+
+.skin-active-badge {
+  position: absolute;
+  bottom: -2px;
+  right: -4px;
+  background: #EC407A;
+  color: #fff;
+  font-size: 8px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.skin-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.skin-name {
+  font-weight: 700;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 2px;
+}
+
+.skin-desc {
+  font-size: 11px;
+  color: #999;
+  line-height: 1.3;
+}
+
+.skin-action {
+  flex-shrink: 0;
+}
+
+.skin-equipped {
+  font-size: 12px;
+  color: #EC407A;
+  font-weight: 600;
+}
+
+.skin-select-btn {
+  padding: 6px 16px;
+  border: 1.5px solid #EC407A;
+  border-radius: 14px;
+  background: #FFF5F8;
+  color: #EC407A;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.skin-select-btn:hover {
+  background: #FCE4EC;
+}
+
+.skin-unlock-btn {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #FFD54F, #FFB300);
+  color: #5D4037;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+  box-shadow: 0 2px 6px rgba(255,179,0,0.3);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.skin-unlock-btn:hover:not(.btn-disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(255,179,0,0.4);
+}
+
+.skin-unlock-btn.btn-disabled {
+  background: #ccc;
+  color: #888;
+  cursor: not-allowed;
+  box-shadow: none;
 }

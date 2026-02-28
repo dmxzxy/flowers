@@ -4,7 +4,7 @@
  */
 import { useState, useCallback } from 'react';
 import { PotData, FlowerType, FlowerLevels, EffectState } from '../types';
-import { GRID_COLS, GRID_ROWS, getLevelConfig } from '../config';
+import { GRID_COLS, GRID_ROWS, getLevelConfig, XP_PER_HARVEST } from '../config';
 
 const createInitialPots = (): PotData[] => {
   const pots: PotData[] = [];
@@ -20,7 +20,9 @@ export const usePots = (
   flowerLevels: FlowerLevels,
   spendWater: (amount?: number) => boolean,
   addFlower: (flowerType: FlowerType, count?: number) => void,
-  pushEffect: (e: Omit<EffectState, 'id'>) => void
+  pushEffect: (e: Omit<EffectState, 'id'>) => void,
+  addXP: (amount: number) => void,
+  tryDropSoul: (flowerType: FlowerType) => boolean
 ) => {
   const [pots, setPots] = useState<PotData[]>(createInitialPots);
 
@@ -94,10 +96,18 @@ export const usePots = (
         })
       );
 
-      addFlower(flowerType);
+      // 根据等级产量添加花朵
+      const yield_ = levelConfig.yieldPerHarvest;
+      addFlower(flowerType, yield_);
       pushEffect({ type: 'harvest', flowerType, potId });
+
+      // 收割赚取经验值
+      addXP(XP_PER_HARVEST);
+
+      // 尝试掉落花卉之魂
+      tryDropSoul(flowerType);
     },
-    [pots, flowerLevels, addFlower, pushEffect]
+    [pots, flowerLevels, addFlower, pushEffect, addXP, tryDropSoul]
   );
 
   return {

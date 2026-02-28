@@ -76,7 +76,10 @@ export const useCurrency = () => {
     updateCurrency(() => currencyRef.current);
   }, [updateCurrency]);
 
-  // 水量自动恢复
+  // 水量自动恢复 + 倒计时
+  const [waterRegenCountdown, setWaterRegenCountdown] = useState(WATER_REGEN_INTERVAL_MS / 1000);
+  const regenTimestampRef = useRef(Date.now() + WATER_REGEN_INTERVAL_MS);
+
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrency(prev => {
@@ -85,8 +88,18 @@ export const useCurrency = () => {
         currencyRef.current = next;
         return next;
       });
+      regenTimestampRef.current = Date.now() + WATER_REGEN_INTERVAL_MS;
     }, WATER_REGEN_INTERVAL_MS);
     return () => clearInterval(timer);
+  }, []);
+
+  // 每秒更新倒计时显示
+  useEffect(() => {
+    const tick = setInterval(() => {
+      const remaining = Math.max(0, Math.ceil((regenTimestampRef.current - Date.now()) / 1000));
+      setWaterRegenCountdown(remaining);
+    }, 1000);
+    return () => clearInterval(tick);
   }, []);
 
   return {
@@ -94,6 +107,7 @@ export const useCurrency = () => {
     currencyRef,
     noWaterWarning,
     maxWater: MAX_WATER,
+    waterRegenCountdown,
     spendWater,
     spendCoins,
     addCoins,

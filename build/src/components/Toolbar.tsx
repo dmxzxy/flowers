@@ -5,6 +5,9 @@ interface ToolbarProps {
   inventoryTotal: number;
   onOpenPurchase: () => void;
   onOpenLevels: () => void;
+  onOpenBuyOrders: () => void;
+  buyOrderCount: number;
+  onOpenPotSkins: () => void;
 }
 
 export const Toolbar: FC<ToolbarProps> = ({
@@ -12,6 +15,9 @@ export const Toolbar: FC<ToolbarProps> = ({
   inventoryTotal,
   onOpenPurchase,
   onOpenLevels,
+  onOpenBuyOrders,
+  buyOrderCount,
+  onOpenPotSkins,
 }) => {
   return (
     <div className="toolbar">
@@ -34,11 +40,28 @@ export const Toolbar: FC<ToolbarProps> = ({
           <span className="toolbar-icon">🛒</span>
         </div>
         <div
+          className="toolbar-tool toolbar-tool-buyorders"
+          onClick={onOpenBuyOrders}
+          title="收购订单"
+        >
+          <span className="toolbar-icon">🛍️</span>
+          {buyOrderCount > 0 && (
+            <span className="toolbar-badge">{buyOrderCount}</span>
+          )}
+        </div>
+        <div
           className="toolbar-tool toolbar-tool-levels"
           onClick={onOpenLevels}
           title="花朵升级"
         >
           <span className="toolbar-icon">⬆️</span>
+        </div>
+        <div
+          className="toolbar-tool toolbar-tool-potskins"
+          onClick={onOpenPotSkins}
+          title="花盆皮肤"
+        >
+          <span className="toolbar-icon">🪴</span>
         </div>
       </div>
     </div>

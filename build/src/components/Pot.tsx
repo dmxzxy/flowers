@@ -1,16 +1,16 @@
 import { FC, useMemo, useCallback, useEffect, useRef, useState } from 'react';
 import { PotData } from '../types';
 import { getFlowerConfig } from '../data/flowers';
-import { assets } from '../data/assets';
 import { getFlowerImage } from '../hooks/useFlower';
 import { getCooldownRemaining } from '../hooks/useCooldown';
 
 interface PotProps {
   pot: PotData;
   onClick: (id: number) => void;
+  potImage: string;
 }
 
-export const Pot: FC<PotProps> = ({ pot, onClick }) => {
+export const Pot: FC<PotProps> = ({ pot, onClick, potImage }) => {
   const flowerConfig = useMemo(() => {
     if (!pot.flowerType) return undefined;
     return getFlowerConfig(pot.flowerType);
@@ -71,7 +71,7 @@ export const Pot: FC<PotProps> = ({ pot, onClick }) => {
         )}
         {/* 花盆 */}
         <img
-          src={assets.pot}
+          src={potImage}
           alt="花盆"
           className="pot-base"
           draggable={false}

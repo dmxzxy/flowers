@@ -1,6 +1,7 @@
 /**
  * 花朵等级 Hook
  * 管理每种花的等级 + 升级逻辑
+ * 升级消耗花卉之魂 + 金币
  */
 import { useState, useCallback } from 'react';
 import { FlowerType, FlowerLevels } from '../types';
@@ -11,26 +12,45 @@ const createInitialFlowerLevels = (): FlowerLevels =>
 
 export const useFlowerLevels = (
   spendCoins: (amount: number) => boolean,
+  spendSouls: (flowerType: FlowerType, amount: number) => boolean,
   pushEffect: (e: { type: 'levelup'; flowerType: FlowerType }) => void
 ) => {
   const [flowerLevels, setFlowerLevels] = useState<FlowerLevels>(createInitialFlowerLevels);
 
   const upgradeFlower = useCallback(
-    (flowerType: FlowerType): boolean => {
+    (flowerType: FlowerType, currentCoins: number, currentSouls: number): boolean => {
       const currentLevel = flowerLevels[flowerType] || 1;
       if (currentLevel >= MAX_FLOWER_LEVEL) return false;
 
       const levelConfig = getLevelConfig(currentLevel);
-      const cost = levelConfig.upgradeCostCoins;
+      const coinCost = levelConfig.upgradeCostCoins;
+      const soulCost = levelConfig.upgradeCostSouls;
 
-      if (!spendCoins(cost)) return false;
+      // 预检查资源是否足够
+      if (currentCoins < coinCost || currentSouls < soulCost) return false;
+
+      // 扣除花卉之魂
+      if (!spendSouls(flowerType, soulCost)) return false;
+      // 扣除金币
+      if (!spendCoins(coinCost)) return false;
 
       setFlowerLevels(prev => ({ ...prev, [flowerType]: currentLevel + 1 }));
       pushEffect({ type: 'levelup', flowerType });
       return true;
     },
-    [flowerLevels, spendCoins, pushEffect]
+    [flowerLevels, spendCoins, spendSouls, pushEffect]
   );
 
-  return { flowerLevels, upgradeFlower };
+  /** 检查是否有足够资源升级（UI展示用） */
+  const canUpgradeFlower = useCallback(
+    (flowerType: FlowerType, coins: number, souls: number): boolean => {
+      const currentLevel = flowerLevels[flowerType] || 1;
+      if (currentLevel >= MAX_FLOWER_LEVEL) return false;
+      const levelConfig = getLevelConfig(currentLevel);
+      return coins >= levelConfig.upgradeCostCoins && souls >= levelConfig.upgradeCostSouls;
+    },
+    [flowerLevels]
+  );
+
+  return { flowerLevels, upgradeFlower, canUpgradeFlower };
 };

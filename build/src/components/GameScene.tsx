@@ -10,11 +10,16 @@ import { HarvestEffect } from './HarvestEffect';
 import { CurrencyBar } from './CurrencyBar';
 import { PurchasePanel } from './PurchasePanel';
 import { FlowerLevelPanel } from './FlowerLevelPanel';
+import { PlayerLevelBar } from './PlayerLevelBar';
 import { SeedEffect } from './SeedEffect';
 import { WaterEffect } from './WaterEffect';
 import { LevelUpEffect } from './LevelUpEffect';
 import { TaskCompleteEffect } from './TaskCompleteEffect';
-import { BuyOrderBanner } from './BuyOrderBanner';
+import { XpGainEffect } from './XpGainEffect';
+import { SoulDropEffect } from './SoulDropEffect';
+import { PlayerLevelUpEffect } from './PlayerLevelUpEffect';
+import { BuyOrderPanel } from './BuyOrderPanel';
+import { PotSkinPanel } from './PotSkinPanel';
 import { useGameState } from '../hooks/useGameState';
 import { useCooldown } from '../hooks/useCooldown';
 import { assets } from '../data/assets';
@@ -30,6 +35,8 @@ export const GameScene: FC = () => {
     inventory,
     currency,
     flowerLevels,
+    flowerSouls,
+    playerLevel,
     effects,
     removeEffect,
     noWaterWarning,
@@ -46,10 +53,20 @@ export const GameScene: FC = () => {
     upgradeFlower,
     canCompleteTask,
     completePurchaseTask,
-    activeBuyOrder,
+    purchaseTasks,
+    isTaskOnCooldown,
+    getTaskCooldownRemaining,
+    refreshTasks,
+    buyOrders,
     acceptBuyOrder,
     dismissBuyOrder,
     maxWater,
+    waterRegenCountdown,
+    activeSkin,
+    getSkinImage,
+    selectSkin,
+    unlockSkin,
+    isSkinUnlocked,
   } = useGameState();
 
   // 冷却计时器
@@ -58,6 +75,10 @@ export const GameScene: FC = () => {
   const [showInventory, setShowInventory] = useState(false);
   const [showPurchase, setShowPurchase] = useState(false);
   const [showLevels, setShowLevels] = useState(false);
+  const [showBuyOrders, setShowBuyOrders] = useState(false);
+  const [showPotSkins, setShowPotSkins] = useState(false);
+
+  const potImage = getSkinImage();
   const [dragState, setDragState] = useState({
     isDragging: false,
     tool: 'none' as 'none' | 'seed' | 'water' | 'harvest',
@@ -211,6 +232,8 @@ export const GameScene: FC = () => {
   const toggleInventory = useCallback(() => setShowInventory(p => !p), []);
   const togglePurchase = useCallback(() => setShowPurchase(p => !p), []);
   const toggleLevels = useCallback(() => setShowLevels(p => !p), []);
+  const toggleBuyOrders = useCallback(() => setShowBuyOrders(p => !p), []);
+  const togglePotSkins = useCallback(() => setShowPotSkins(p => !p), []);
 
   const handleStartDragFromPicker = useCallback((flowerType: FlowerType, e: React.MouseEvent | React.TouchEvent) => {
     e.stopPropagation();
@@ -264,15 +287,19 @@ export const GameScene: FC = () => {
     <div className="game-scene" onDragStart={e => e.preventDefault()}>
       <img src={assets.background} alt="背景" className="game-background" draggable={false} />
       <div className="game-content">
-        <CurrencyBar currency={currency} maxWater={maxWater} noWaterWarning={noWaterWarning} />
+        <CurrencyBar currency={currency} maxWater={maxWater} noWaterWarning={noWaterWarning} waterRegenCountdown={waterRegenCountdown} />
+        <PlayerLevelBar playerLevel={playerLevel} />
         <Toolbar
           onToggleInventory={toggleInventory}
           inventoryTotal={inventory.total}
           onOpenPurchase={togglePurchase}
           onOpenLevels={toggleLevels}
+          onOpenBuyOrders={toggleBuyOrders}
+          buyOrderCount={buyOrders.length}
+          onOpenPotSkins={togglePotSkins}
         />
         <div className="garden-container">
-          <PotGrid pots={pots} onPotClick={handlePotClickGuarded} />
+          <PotGrid pots={pots} onPotClick={handlePotClickGuarded} potImage={potImage} />
         </div>
         <div className="game-hint">
           {dragState.tool === 'seed' && '🌱 拖拽到空花盆进行播种'}
@@ -291,6 +318,7 @@ export const GameScene: FC = () => {
             onSelect={handleFlowerSelect}
             onClose={closeFlowerPicker}
             onStartDrag={handleStartDragFromPicker}
+            playerLevel={playerLevel.level}
           />
         )}
         {showWaterPicker && (
@@ -319,15 +347,29 @@ export const GameScene: FC = () => {
         onClose={() => setShowPurchase(false)}
         inventory={inventory}
         currency={currency}
+        tasks={purchaseTasks}
         canCompleteTask={canCompleteTask}
         onCompleteTask={completePurchaseTask}
+        isTaskOnCooldown={isTaskOnCooldown}
+        getTaskCooldownRemaining={getTaskCooldownRemaining}
+        onRefreshTasks={refreshTasks}
       />
       <FlowerLevelPanel
         isOpen={showLevels}
         onClose={() => setShowLevels(false)}
         flowerLevels={flowerLevels}
+        flowerSouls={flowerSouls}
         coins={currency.coins}
         onUpgrade={upgradeFlower}
+      />
+      <PotSkinPanel
+        isOpen={showPotSkins}
+        onClose={() => setShowPotSkins(false)}
+        activeSkin={activeSkin}
+        isSkinUnlocked={isSkinUnlocked}
+        onSelectSkin={selectSkin}
+        onUnlockSkin={unlockSkin}
+        coins={currency.coins}
       />
 
       {/* 所有特效并行渲染 */}
@@ -364,20 +406,44 @@ export const GameScene: FC = () => {
                 onComplete={() => removeEffect(eff.id)}
               />
             );
+          case 'xpgain':
+            return (
+              <XpGainEffect
+                key={eff.id}
+                xpAmount={eff.xpAmount}
+                onComplete={() => removeEffect(eff.id)}
+              />
+            );
+          case 'souldrop':
+            return (
+              <SoulDropEffect
+                key={eff.id}
+                soulFlowerType={eff.soulFlowerType}
+                onComplete={() => removeEffect(eff.id)}
+              />
+            );
+          case 'playerlevelup':
+            return (
+              <PlayerLevelUpEffect
+                key={eff.id}
+                newPlayerLevel={eff.newPlayerLevel}
+                onComplete={() => removeEffect(eff.id)}
+              />
+            );
           default:
             return null;
         }
       })}
 
-      {/* 随机收购订单 */}
-      {activeBuyOrder && (
-        <BuyOrderBanner
-          order={activeBuyOrder}
-          currentStock={inventory.flowers[activeBuyOrder.flowerType] || 0}
-          onAccept={acceptBuyOrder}
-          onDismiss={dismissBuyOrder}
-        />
-      )}
+      {/* 收购订单面板 */}
+      <BuyOrderPanel
+        isOpen={showBuyOrders}
+        onClose={() => setShowBuyOrders(false)}
+        buyOrders={buyOrders}
+        inventory={inventory}
+        onAccept={acceptBuyOrder}
+        onDismiss={dismissBuyOrder}
+      />
     </div>
   );
 };

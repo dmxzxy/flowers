@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- 青花瓷花盆 -->
+  <!-- 底座阴影 -->
+  <ellipse cx="128" cy="222" rx="88" ry="24" fill="#3A5F8A" opacity="0.7"/>
+  <!-- 盆身 -->
+  <path d="M52 100 Q52 220 82 220 L174 220 Q204 220 204 100 Z" fill="#E8EFF5"/>
+  <!-- 盆身渐变装饰线 -->
+  <path d="M58 130 Q58 200 86 210 L170 210 Q198 200 198 130" fill="none" stroke="#4A7FB5" stroke-width="1.5" opacity="0.4"/>
+  <!-- 青花纹样 - 中间腰带 -->
+  <rect x="56" y="145" width="144" height="18" rx="3" fill="none" stroke="#2E5C8A" stroke-width="1.5"/>
+  <line x1="68" y1="150" x2="188" y2="150" stroke="#4A7FB5" stroke-width="0.8" opacity="0.6"/>
+  <line x1="68" y1="157" x2="188" y2="157" stroke="#4A7FB5" stroke-width="0.8" opacity="0.6"/>
+  <!-- 青花小花纹 -->
+  <circle cx="90" cy="154" r="4" fill="none" stroke="#2E5C8A" stroke-width="1.2"/>
+  <circle cx="128" cy="154" r="4" fill="none" stroke="#2E5C8A" stroke-width="1.2"/>
+  <circle cx="166" cy="154" r="4" fill="none" stroke="#2E5C8A" stroke-width="1.2"/>
+  <circle cx="90" cy="154" r="1.5" fill="#2E5C8A"/>
+  <circle cx="128" cy="154" r="1.5" fill="#2E5C8A"/>
+  <circle cx="166" cy="154" r="1.5" fill="#2E5C8A"/>
+  <!-- 盆沿 -->
+  <ellipse cx="128" cy="100" rx="78" ry="20" fill="#D6E4F0"/>
+  <ellipse cx="128" cy="100" rx="70" ry="15" fill="#3A5F8A"/>
+  <!-- 盆沿装饰 -->
+  <ellipse cx="128" cy="100" rx="76" ry="18" fill="none" stroke="#4A7FB5" stroke-width="1.5"/>
+  <!-- 青花盆身下方花纹 -->
+  <path d="M85 180 Q107 190 128 180 Q149 190 171 180" fill="none" stroke="#2E5C8A" stroke-width="1.5" opacity="0.6"/>
+  <!-- 高光 -->
+  <path d="M72 120 Q72 175 87 180" stroke="#B0CCE4" stroke-width="3" fill="none" opacity="0.5"/>
+  <path d="M76 115 Q76 135 80 140" stroke="#FFFFFF" stroke-width="2" fill="none" opacity="0.35"/>
+</svg>
