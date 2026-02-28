@@ -25,20 +25,22 @@ export const FlowerPicker: FC<FlowerPickerProps> = ({ onSelect, onClose, onStart
   }, [onSelect, batchMode, onBatchPlant]);
 
   const handleDragStart = useCallback((flowerType: FlowerType, e: React.MouseEvent | React.TouchEvent) => {
+    // 一键种花模式下不拖拽，让 click 处理批量种植
+    if (batchMode) return;
     // mousedown 时阻止后续 click
     if (!('touches' in e)) e.preventDefault();
     setSelectedFlower(flowerType);
     onStartDrag?.(flowerType, e);
     // 鼠标：立即关闭 picker；触摸：由 GameScene 在移动阈值后关闭
     if (!('touches' in e)) onClose();
-  }, [onStartDrag, onClose]);
+  }, [onStartDrag, onClose, batchMode]);
 
   return (
     <div className="picker-overlay" onClick={onClose}>
       <div className="picker-modal picker-flower-modal" onClick={e => e.stopPropagation()}>
         <div className="picker-header">
           <h2 className="picker-title">选择花朵</h2>
-          <span className="picker-hint">点击选择 / 拖拽直接播种</span>
+          <span className="picker-hint">{batchMode ? '点击选择花朵，种满所有空盆' : '点击选择 / 拖拽直接播种'}</span>
         </div>
         <label className="batch-checkbox">
           <input
