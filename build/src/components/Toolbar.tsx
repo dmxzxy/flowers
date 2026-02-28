@@ -54,9 +54,9 @@ export const Toolbar: FC<ToolbarProps> = ({
         <div
           className="toolbar-tool toolbar-tool-levels"
           onClick={onOpenLevels}
-          title="花朵升级"
+          title="花朵图鉴"
         >
-          <span className="toolbar-icon">⬆️</span>
+          <span className="toolbar-icon">🌸</span>
         </div>
         <div
           className="toolbar-tool toolbar-tool-potskins"

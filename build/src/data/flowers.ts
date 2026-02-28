@@ -7,4 +7,5 @@ export {
   getLevelConfig,
   flowers,
   getFlowerConfig,
+  getFlowerPrice,
 } from '../config/flower.config';

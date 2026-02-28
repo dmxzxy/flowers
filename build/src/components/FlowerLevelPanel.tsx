@@ -1,6 +1,6 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { FlowerType, FlowerLevels, FlowerSouls } from '../types';
-import { flowers, getLevelConfig, MAX_FLOWER_LEVEL } from '../data/flowers';
+import { flowers, getLevelConfig, MAX_FLOWER_LEVEL, getFlowerPrice } from '../data/flowers';
 
 const CoinIcon: FC = () => <span className="inline-coin">$</span>;
 const SoulIcon: FC = () => <span className="inline-soul">👻</span>;
@@ -36,91 +36,127 @@ export const FlowerLevelPanel: FC<FlowerLevelPanelProps> = ({
   coins,
   onUpgrade,
 }) => {
+  const [selectedId, setSelectedId] = useState<FlowerType>('rose');
+
   if (!isOpen) return null;
+
+  const selected = flowers.find(f => f.id === selectedId) || flowers[0];
+  const ft = selected.id as FlowerType;
+  const level = flowerLevels[ft] || 1;
+  const config = getLevelConfig(level);
+  const isMax = level >= MAX_FLOWER_LEVEL;
+  const souls = flowerSouls[ft] || 0;
+  const canAfford = !isMax
+    && coins >= config.upgradeCostCoins
+    && souls >= config.upgradeCostSouls;
+  const progressPct = ((level - 1) / (MAX_FLOWER_LEVEL - 1)) * 100;
+  const stageColor = getStageColor(level);
+  const price = getFlowerPrice(ft);
 
   return (
     <div className="panel-overlay" onClick={onClose}>
-      <div className="flower-level-panel" onClick={e => e.stopPropagation()}>
+      <div className="fp-panel" onClick={e => e.stopPropagation()}>
         <div className="panel-header">
-          <h3>⬆️ 花朵升级</h3>
+          <h3>🌸 花朵图鉴</h3>
           <button className="panel-close" onClick={onClose}>✕</button>
         </div>
-        <div className="panel-body">
-          {flowers.map(flower => {
-            const ft = flower.id as FlowerType;
-            const level = flowerLevels[ft] || 1;
-            const config = getLevelConfig(level);
-            const isMax = level >= MAX_FLOWER_LEVEL;
-            const souls = flowerSouls[ft] || 0;
-            const canAfford = !isMax
-              && coins >= config.upgradeCostCoins
-              && souls >= config.upgradeCostSouls;
 
-            const progressPct = ((level - 1) / (MAX_FLOWER_LEVEL - 1)) * 100;
-            const stageColor = getStageColor(level);
+        <div className="fp-body">
+          {/* 左侧：花朵列表 */}
+          <div className="fp-list">
+            {flowers.map(flower => {
+              const fLevel = flowerLevels[flower.id as FlowerType] || 1;
+              const fStageColor = getStageColor(fLevel);
+              return (
+                <button
+                  key={flower.id}
+                  className={`fp-list-item ${flower.id === selectedId ? 'fp-list-active' : ''}`}
+                  onClick={() => setSelectedId(flower.id as FlowerType)}
+                >
+                  <img src={flower.states.bloom} alt={flower.name} className="fp-list-icon" draggable={false} />
+                  <div className="fp-list-info">
+                    <span className="fp-list-name">{flower.name}</span>
+                    <span className="fp-list-lv" style={{ color: fStageColor }}>Lv.{fLevel}</span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
 
-            return (
-              <div key={flower.id} className="level-card">
-                {/* 左侧：花朵图标 + 名称 + 魂数 */}
-                <div className="level-flower-info">
-                  <img
-                    src={flower.states.bloom}
-                    alt={flower.name}
-                    className="level-flower-icon"
-                    draggable={false}
-                  />
-                  <div className="level-flower-name">{flower.name}</div>
-                  <div className="level-soul-count">
-                    <SoulIcon /> {souls}
-                  </div>
-                </div>
+          {/* 右侧：花朵详情 */}
+          <div className="fp-detail">
+            {/* 大图 */}
+            <div className="fp-bloom-wrap">
+              <img
+                src={selected.states.bloom}
+                alt={selected.name}
+                className="fp-bloom-img"
+                draggable={false}
+              />
+            </div>
 
-                {/* 中间：等级信息 + 进度条 */}
-                <div className="level-stats">
-                  <div className="level-header-row">
-                    <span className="level-badge" style={{ color: stageColor }}>
-                      Lv.{level}
-                    </span>
-                    <span className="level-stage" style={{ background: stageColor }}>
-                      {getStageName(level)}
-                    </span>
-                  </div>
-                  {/* 经验进度条 */}
-                  <div className="level-progress-bar">
-                    <div
-                      className="level-progress-fill"
-                      style={{ width: `${progressPct}%`, background: stageColor }}
-                    />
-                    <span className="level-progress-text">{level}/{MAX_FLOWER_LEVEL}</span>
-                  </div>
-                  <div className="level-detail">
-                    <span>🌾{config.maxHarvests}次</span>
-                    <span>🌸×{config.yieldPerHarvest}</span>
-                    {config.cooldownSeconds > 0 && <span>⏱{config.cooldownSeconds}s</span>}
-                  </div>
-                  {!isMax && config.upgradeLabel && (
-                    <div className="level-next-hint">
-                      下一级: {config.upgradeLabel}
-                    </div>
+            {/* 名称 + 等级 */}
+            <div className="fp-name-row">
+              <span className="fp-name">{selected.name}</span>
+              <span className="fp-lv-badge" style={{ color: stageColor }}>Lv.{level}</span>
+              <span className="fp-stage-tag" style={{ background: stageColor }}>{getStageName(level)}</span>
+            </div>
+
+            {/* 进度条 */}
+            <div className="level-progress-bar" style={{ marginBottom: 10 }}>
+              <div className="level-progress-fill" style={{ width: `${progressPct}%`, background: stageColor }} />
+              <span className="level-progress-text">{level}/{MAX_FLOWER_LEVEL}</span>
+            </div>
+
+            {/* 属性 */}
+            <div className="fp-attrs">
+              <div className="fp-attr">
+                <span className="fp-attr-icon">🌾</span>
+                <span className="fp-attr-label">收割次数</span>
+                <span className="fp-attr-val">{config.maxHarvests}</span>
+              </div>
+              <div className="fp-attr">
+                <span className="fp-attr-icon">🌸</span>
+                <span className="fp-attr-label">每次产量</span>
+                <span className="fp-attr-val">×{config.yieldPerHarvest}</span>
+              </div>
+              <div className="fp-attr">
+                <span className="fp-attr-icon">⏱️</span>
+                <span className="fp-attr-label">冷却时间</span>
+                <span className="fp-attr-val">{config.cooldownSeconds > 0 ? `${config.cooldownSeconds}s` : '无'}</span>
+              </div>
+              <div className="fp-attr">
+                <span className="fp-attr-icon">💰</span>
+                <span className="fp-attr-label">单价</span>
+                <span className="fp-attr-val">{price}</span>
+              </div>
+              <div className="fp-attr">
+                <span className="fp-attr-icon">👻</span>
+                <span className="fp-attr-label">持有魂</span>
+                <span className="fp-attr-val">{souls}</span>
+              </div>
+            </div>
+
+            {/* 升级区域 */}
+            <div className="fp-upgrade-area">
+              {isMax ? (
+                <div className="level-max-badge">✨ 已满级</div>
+              ) : (
+                <>
+                  {config.upgradeLabel && (
+                    <div className="fp-next-hint">下一级: {config.upgradeLabel}</div>
                   )}
-                </div>
-
-                {/* 右侧：升级按钮或 MAX */}
-                {isMax ? (
-                  <div className="level-max-badge">✨ MAX</div>
-                ) : (
                   <button
-                    className={`level-upgrade-btn ${canAfford ? '' : 'btn-disabled'}`}
+                    className={`fp-upgrade-btn ${canAfford ? '' : 'btn-disabled'}`}
                     disabled={!canAfford}
                     onClick={() => onUpgrade(ft, coins, souls)}
                   >
-                    <div className="upgrade-cost-line"><SoulIcon />{config.upgradeCostSouls}</div>
-                    <div className="upgrade-cost-line"><CoinIcon />{config.upgradeCostCoins}</div>
+                    升级 <SoulIcon />{config.upgradeCostSouls} <CoinIcon />{config.upgradeCostCoins}
                   </button>
-                )}
-              </div>
-            );
-          })}
+                </>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>
