@@ -64,6 +64,8 @@ export const GameScene: FC = () => {
     buyOrders,
     acceptBuyOrder,
     dismissBuyOrder,
+    canFulfillOrder,
+    hasAnyFulfillableBuyOrder,
     maxWater,
     waterRegenCountdown,
     activeSkin,
@@ -304,6 +306,7 @@ export const GameScene: FC = () => {
           onOpenLevels={toggleLevels}
           onOpenBuyOrders={toggleBuyOrders}
           buyOrderCount={buyOrders.length}
+          buyOrderFulfillable={hasAnyFulfillableBuyOrder}
           onOpenPotSkins={togglePotSkins}
           onOpenProfile={() => setShowProfile(true)}
         />
@@ -455,6 +458,7 @@ export const GameScene: FC = () => {
         inventory={inventory}
         onAccept={acceptBuyOrder}
         onDismiss={dismissBuyOrder}
+        canFulfillOrder={canFulfillOrder}
       />
 
       {/* 个人中心面板 */}

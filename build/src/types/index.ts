@@ -126,13 +126,13 @@ export interface EffectState {
   newPlayerLevel?: number;
 }
 
-/** 随机收购订单 */
+/** 随机收购订单（支持多花种） */
 export interface BuyOrder {
   id: number;
-  flowerType: FlowerType;
-  flowerName: string;
-  amount: number;
-  pricePerFlower: number;
+  /** 需求花朵明细 { rose: 3, tulip: 2 } */
+  costFlowers: Partial<Record<FlowerType, number>>;
+  /** 订单描述（如 "玫瑰×3 + 郁金香×2"） */
+  description: string;
   totalPrice: number;
   expiresAt: number; // Date.now() + duration
 }

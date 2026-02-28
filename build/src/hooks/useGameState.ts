@@ -83,11 +83,14 @@ export const useGameState = () => {
   } = usePickers(pots, plantSeed, waterPot, harvestPot);
 
   // 9. 随机收购订单（依赖 removeFlowers + addCoins + pushEffect）
-  const { buyOrders, acceptBuyOrder, dismissBuyOrder } = useBuyOrders(
+  const { buyOrders, acceptBuyOrder, dismissBuyOrder, canFulfillOrder, hasAnyFulfillable } = useBuyOrders(
     removeFlowers,
     addCoins,
     pushEffect
   );
+
+  /** 是否有可完成的收购订单（用于红点提示） */
+  const hasAnyFulfillableBuyOrder = hasAnyFulfillable(inventory);
 
   // 10. 采购任务（依赖 inventory + currency + 扣减函数 + pushEffect + addXP）
   const {
@@ -200,6 +203,8 @@ export const useGameState = () => {
     buyOrders,
     acceptBuyOrder,
     dismissBuyOrder,
+    canFulfillOrder,
+    hasAnyFulfillableBuyOrder,
 
     // 花盆皮肤
     activeSkin,

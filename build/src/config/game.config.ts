@@ -14,7 +14,7 @@ export const GRID_TOTAL = GRID_COLS * GRID_ROWS;
 
 // ==================== 货币：水量 ====================
 /** 初始水量 */
-export const INITIAL_WATER = 101;
+export const INITIAL_WATER = 100;
 /** 水量上限 */
 export const MAX_WATER = 100;
 /** 水量自动恢复间隔（毫秒） */
@@ -28,7 +28,7 @@ export const NO_WATER_WARNING_MS = 2000;
 
 // ==================== 货币：金币 ====================
 /** 初始金币 */
-export const INITIAL_COINS = 1000;
+export const INITIAL_COINS = 0;
 
 // ==================== 收购订单 ====================
 /** 收购订单生成间隔（毫秒） */

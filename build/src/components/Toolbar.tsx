@@ -7,6 +7,7 @@ interface ToolbarProps {
   onOpenLevels: () => void;
   onOpenBuyOrders: () => void;
   buyOrderCount: number;
+  buyOrderFulfillable: boolean;
   onOpenPotSkins: () => void;
   onOpenProfile: () => void;
 }
@@ -18,6 +19,7 @@ export const Toolbar: FC<ToolbarProps> = ({
   onOpenLevels,
   onOpenBuyOrders,
   buyOrderCount,
+  buyOrderFulfillable,
   onOpenPotSkins,
   onOpenProfile,
 }) => {
@@ -49,6 +51,9 @@ export const Toolbar: FC<ToolbarProps> = ({
           <span className="toolbar-icon">🛍️</span>
           {buyOrderCount > 0 && (
             <span className="toolbar-badge">{buyOrderCount}</span>
+          )}
+          {buyOrderFulfillable && (
+            <span className="toolbar-red-dot" />
           )}
         </div>
         <div
