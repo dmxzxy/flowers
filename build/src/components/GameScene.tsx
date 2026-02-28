@@ -48,6 +48,9 @@ export const GameScene: FC = () => {
     closeFlowerPicker,
     closeWaterPicker,
     closeHarvestPicker,
+    batchPlantAll,
+    batchWaterAll,
+    batchHarvestAll,
     plantSeed,
     waterPot,
     harvestPot,
@@ -325,6 +328,7 @@ export const GameScene: FC = () => {
             onClose={closeFlowerPicker}
             onStartDrag={handleStartDragFromPicker}
             playerLevel={playerLevel.level}
+            onBatchPlant={batchPlantAll}
           />
         )}
         {showWaterPicker && (
@@ -332,6 +336,7 @@ export const GameScene: FC = () => {
             onSelect={handleWaterFromPicker}
             onClose={closeWaterPicker}
             onStartDrag={handleStartDragWater}
+            onBatchWater={batchWaterAll}
           />
         )}
         {showHarvestPicker && (
@@ -339,6 +344,7 @@ export const GameScene: FC = () => {
             onSelect={harvestFromPicker}
             onClose={closeHarvestPicker}
             onStartDrag={handleStartDragHarvest}
+            onBatchHarvest={batchHarvestAll}
           />
         )}
       </div>

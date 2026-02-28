@@ -4,9 +4,10 @@ interface HarvestPickerProps {
   onSelect: () => void;
   onClose: () => void;
   onStartDrag?: (e: React.MouseEvent | React.TouchEvent) => void;
+  onBatchHarvest?: () => void;
 }
 
-export const HarvestPicker: FC<HarvestPickerProps> = ({ onSelect, onClose, onStartDrag }) => {
+export const HarvestPicker: FC<HarvestPickerProps> = ({ onSelect, onClose, onStartDrag, onBatchHarvest }) => {
   const handleDragStart = useCallback((e: React.MouseEvent | React.TouchEvent) => {
     e.stopPropagation();
     onStartDrag?.(e);
@@ -18,7 +19,7 @@ export const HarvestPicker: FC<HarvestPickerProps> = ({ onSelect, onClose, onSta
     <div className="picker-overlay" onClick={onClose}>
       <div className="picker-modal picker-modal-small" onClick={(e) => e.stopPropagation()}>
         <h2 className="picker-title">选择操作</h2>
-        <div className="picker-options">
+        <div className="picker-options picker-options-batch">
           <button
             className="picker-option picker-option-harvest"
             onClick={onSelect}
@@ -28,6 +29,14 @@ export const HarvestPicker: FC<HarvestPickerProps> = ({ onSelect, onClose, onSta
             <span className="picker-icon picker-icon-harvest">🌾</span>
             <span className="picker-name">收获</span>
             <span className="picker-hint">点击 / 拖拽</span>
+          </button>
+          <button
+            className="picker-option picker-option-batch"
+            onClick={() => { onBatchHarvest?.(); }}
+          >
+            <span className="picker-icon picker-icon-batch">🌾</span>
+            <span className="picker-name">一键收获</span>
+            <span className="picker-hint">所有可收获花盆</span>
           </button>
         </div>
         <button className="picker-cancel" onClick={onClose}>

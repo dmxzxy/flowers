@@ -637,7 +637,7 @@
 
 /* Small action pickers (water / harvest) */
 .picker-modal-small {
-  max-width: 260px;
+  max-width: 320px;
 }
 
 .picker-modal-small .picker-options {
@@ -681,6 +681,44 @@
 
 .picker-cancel:hover {
   background: #d0d0d0;
+}
+
+/* --- 一键操作 batch styles --- */
+.batch-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  margin: 0 0 8px 0;
+  font-size: 13px;
+  color: #666;
+  cursor: pointer;
+  user-select: none;
+  background: rgba(255,255,255,0.5);
+  border-radius: 8px;
+}
+.batch-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #e91e63;
+  cursor: pointer;
+}
+
+.picker-options-batch {
+  grid-template-columns: 1fr 1fr !important;
+}
+
+.picker-option-batch {
+  border-color: #a5d6a7;
+  background: #e8f5e9;
+}
+.picker-option-batch:hover {
+  border-color: #388e3c;
+  background: #a5d6a7;
+}
+.picker-icon-batch {
+  background: transparent;
+  font-size: 28px;
 }
 
 /* Responsive */

@@ -5,9 +5,10 @@ interface WaterPickerProps {
   onSelect: () => void;
   onClose: () => void;
   onStartDrag?: (e: React.MouseEvent | React.TouchEvent) => void;
+  onBatchWater?: () => void;
 }
 
-export const WaterPicker: FC<WaterPickerProps> = ({ onSelect, onClose, onStartDrag }) => {
+export const WaterPicker: FC<WaterPickerProps> = ({ onSelect, onClose, onStartDrag, onBatchWater }) => {
   const handleDragStart = useCallback((e: React.MouseEvent | React.TouchEvent) => {
     e.stopPropagation();
     onStartDrag?.(e);
@@ -19,7 +20,7 @@ export const WaterPicker: FC<WaterPickerProps> = ({ onSelect, onClose, onStartDr
     <div className="picker-overlay" onClick={onClose}>
       <div className="picker-modal picker-modal-small" onClick={(e) => e.stopPropagation()}>
         <h2 className="picker-title">选择操作</h2>
-        <div className="picker-options">
+        <div className="picker-options picker-options-batch">
           <button
             className="picker-option picker-option-water"
             onClick={onSelect}
@@ -34,6 +35,14 @@ export const WaterPicker: FC<WaterPickerProps> = ({ onSelect, onClose, onStartDr
             />
             <span className="picker-name">浇水</span>
             <span className="picker-hint">点击 / 拖拽</span>
+          </button>
+          <button
+            className="picker-option picker-option-batch"
+            onClick={() => { onBatchWater?.(); }}
+          >
+            <span className="picker-icon picker-icon-batch">💧</span>
+            <span className="picker-name">一键浇水</span>
+            <span className="picker-hint">所有待浇花盆</span>
           </button>
         </div>
         <button className="picker-cancel" onClick={onClose}>

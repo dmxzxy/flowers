@@ -77,6 +77,9 @@ export const useGameState = () => {
     closeFlowerPicker,
     closeWaterPicker,
     closeHarvestPicker,
+    batchPlantAll,
+    batchWaterAll,
+    batchHarvestAll,
   } = usePickers(pots, plantSeed, waterPot, harvestPot);
 
   // 9. 随机收购订单（依赖 removeFlowers + addCoins + pushEffect）
@@ -157,6 +160,9 @@ export const useGameState = () => {
     closeFlowerPicker,
     closeWaterPicker,
     closeHarvestPicker,
+    batchPlantAll,
+    batchWaterAll,
+    batchHarvestAll,
 
     // 仓库
     inventory,

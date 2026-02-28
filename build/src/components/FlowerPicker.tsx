@@ -8,15 +8,21 @@ interface FlowerPickerProps {
   onClose: () => void;
   onStartDrag?: (flowerType: FlowerType, e: React.MouseEvent | React.TouchEvent) => void;
   playerLevel?: number;
+  onBatchPlant?: (flowerType: FlowerType) => void;
 }
 
-export const FlowerPicker: FC<FlowerPickerProps> = ({ onSelect, onClose, onStartDrag, playerLevel = 99 }) => {
+export const FlowerPicker: FC<FlowerPickerProps> = ({ onSelect, onClose, onStartDrag, playerLevel = 99, onBatchPlant }) => {
   const [selectedFlower, setSelectedFlower] = useState<FlowerType | null>(null);
+  const [batchMode, setBatchMode] = useState(false);
 
   const handleClick = useCallback((flowerType: FlowerType) => {
     setSelectedFlower(flowerType);
-    onSelect(flowerType);
-  }, [onSelect]);
+    if (batchMode && onBatchPlant) {
+      onBatchPlant(flowerType);
+    } else {
+      onSelect(flowerType);
+    }
+  }, [onSelect, batchMode, onBatchPlant]);
 
   const handleDragStart = useCallback((flowerType: FlowerType, e: React.MouseEvent | React.TouchEvent) => {
     // mousedown 时阻止后续 click
@@ -34,6 +40,14 @@ export const FlowerPicker: FC<FlowerPickerProps> = ({ onSelect, onClose, onStart
           <h2 className="picker-title">选择花朵</h2>
           <span className="picker-hint">点击选择 / 拖拽直接播种</span>
         </div>
+        <label className="batch-checkbox">
+          <input
+            type="checkbox"
+            checked={batchMode}
+            onChange={e => setBatchMode(e.target.checked)}
+          />
+          <span>一键种花（所有空盆）</span>
+        </label>
         <div className="picker-grid">
           {flowers.map((flower) => {
             const ft = flower.id as FlowerType;
