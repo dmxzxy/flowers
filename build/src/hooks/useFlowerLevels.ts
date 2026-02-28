@@ -13,9 +13,10 @@ const createInitialFlowerLevels = (): FlowerLevels =>
 export const useFlowerLevels = (
   spendCoins: (amount: number) => boolean,
   spendSouls: (flowerType: FlowerType, amount: number) => boolean,
-  pushEffect: (e: { type: 'levelup'; flowerType: FlowerType }) => void
+  pushEffect: (e: { type: 'levelup'; flowerType: FlowerType }) => void,
+  savedLevels?: FlowerLevels
 ) => {
-  const [flowerLevels, setFlowerLevels] = useState<FlowerLevels>(createInitialFlowerLevels);
+  const [flowerLevels, setFlowerLevels] = useState<FlowerLevels>(savedLevels ?? createInitialFlowerLevels);
 
   const upgradeFlower = useCallback(
     (flowerType: FlowerType, currentCoins: number, currentSouls: number): boolean => {

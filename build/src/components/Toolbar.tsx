@@ -8,6 +8,7 @@ interface ToolbarProps {
   onOpenBuyOrders: () => void;
   buyOrderCount: number;
   onOpenPotSkins: () => void;
+  onOpenProfile: () => void;
 }
 
 export const Toolbar: FC<ToolbarProps> = ({
@@ -18,6 +19,7 @@ export const Toolbar: FC<ToolbarProps> = ({
   onOpenBuyOrders,
   buyOrderCount,
   onOpenPotSkins,
+  onOpenProfile,
 }) => {
   return (
     <div className="toolbar">
@@ -62,6 +64,13 @@ export const Toolbar: FC<ToolbarProps> = ({
           title="花盆皮肤"
         >
           <span className="toolbar-icon">🪴</span>
+        </div>
+        <div
+          className="toolbar-tool toolbar-tool-profile"
+          onClick={onOpenProfile}
+          title="个人中心"
+        >
+          <span className="toolbar-icon">👤</span>
         </div>
       </div>
     </div>

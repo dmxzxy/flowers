@@ -22,9 +22,10 @@ export const usePots = (
   addFlower: (flowerType: FlowerType, count?: number) => void,
   pushEffect: (e: Omit<EffectState, 'id'>) => void,
   addXP: (amount: number) => void,
-  tryDropSoul: (flowerType: FlowerType) => boolean
+  tryDropSoul: (flowerType: FlowerType) => boolean,
+  savedPots?: PotData[]
 ) => {
-  const [pots, setPots] = useState<PotData[]>(createInitialPots);
+  const [pots, setPots] = useState<PotData[]>(savedPots ?? createInitialPots);
 
   const plantSeed = useCallback(
     (potId: number, flowerType: FlowerType) => {

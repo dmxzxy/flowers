@@ -20,6 +20,7 @@ import { SoulDropEffect } from './SoulDropEffect';
 import { PlayerLevelUpEffect } from './PlayerLevelUpEffect';
 import { BuyOrderPanel } from './BuyOrderPanel';
 import { PotSkinPanel } from './PotSkinPanel';
+import { ProfileMenu } from './ProfileMenu';
 import { useGameState } from '../hooks/useGameState';
 import { useCooldown } from '../hooks/useCooldown';
 import { assets } from '../data/assets';
@@ -67,6 +68,9 @@ export const GameScene: FC = () => {
     selectSkin,
     unlockSkin,
     isSkinUnlocked,
+    saveNow,
+    resetGame,
+    saveInfo,
   } = useGameState();
 
   // 冷却计时器
@@ -77,6 +81,7 @@ export const GameScene: FC = () => {
   const [showLevels, setShowLevels] = useState(false);
   const [showBuyOrders, setShowBuyOrders] = useState(false);
   const [showPotSkins, setShowPotSkins] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
 
   const potImage = getSkinImage();
   const [dragState, setDragState] = useState({
@@ -297,6 +302,7 @@ export const GameScene: FC = () => {
           onOpenBuyOrders={toggleBuyOrders}
           buyOrderCount={buyOrders.length}
           onOpenPotSkins={togglePotSkins}
+          onOpenProfile={() => setShowProfile(true)}
         />
         <div className="garden-container">
           <PotGrid pots={pots} onPotClick={handlePotClickGuarded} potImage={potImage} />
@@ -443,6 +449,20 @@ export const GameScene: FC = () => {
         inventory={inventory}
         onAccept={acceptBuyOrder}
         onDismiss={dismissBuyOrder}
+      />
+
+      {/* 个人中心面板 */}
+      <ProfileMenu
+        isOpen={showProfile}
+        onClose={() => setShowProfile(false)}
+        playerLevel={playerLevel}
+        currency={currency}
+        inventory={inventory}
+        flowerSouls={flowerSouls}
+        maxWater={maxWater}
+        saveInfo={saveInfo}
+        onSaveNow={saveNow}
+        onResetGame={resetGame}
       />
     </div>
   );

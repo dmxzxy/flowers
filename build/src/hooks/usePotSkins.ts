@@ -7,11 +7,15 @@ import { PotSkinId } from '../types';
 import { POT_SKINS, getPotSkinConfig } from '../config';
 
 export const usePotSkins = (
-  spendCoins: (amount: number) => boolean
+  spendCoins: (amount: number) => boolean,
+  savedActiveSkin?: PotSkinId,
+  savedUnlockedSkins?: PotSkinId[]
 ) => {
   // 默认皮肤免费已解锁
-  const [unlockedSkins, setUnlockedSkins] = useState<Set<PotSkinId>>(new Set(['default']));
-  const [activeSkin, setActiveSkin] = useState<PotSkinId>('default');
+  const [unlockedSkins, setUnlockedSkins] = useState<Set<PotSkinId>>(
+    () => new Set(savedUnlockedSkins ?? ['default'])
+  );
+  const [activeSkin, setActiveSkin] = useState<PotSkinId>(savedActiveSkin ?? 'default');
 
   /** 获取当前皮肤图片路径 */
   const getSkinImage = useCallback((): string => {

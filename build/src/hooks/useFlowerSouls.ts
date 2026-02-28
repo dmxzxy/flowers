@@ -11,10 +11,11 @@ const createInitialSouls = (): FlowerSouls =>
   Object.fromEntries(ALL_FLOWERS.map(f => [f, 0])) as FlowerSouls;
 
 export const useFlowerSouls = (
-  pushEffect: (e: Omit<EffectState, 'id'>) => void
+  pushEffect: (e: Omit<EffectState, 'id'>) => void,
+  savedSouls?: FlowerSouls
 ) => {
-  const [flowerSouls, setFlowerSouls] = useState<FlowerSouls>(createInitialSouls);
-  const soulsRef = useRef<FlowerSouls>(createInitialSouls());
+  const [flowerSouls, setFlowerSouls] = useState<FlowerSouls>(savedSouls ?? createInitialSouls);
+  const soulsRef = useRef<FlowerSouls>(savedSouls ? { ...savedSouls } : createInitialSouls());
 
   const updateSouls = useCallback((fn: (prev: FlowerSouls) => FlowerSouls) => {
     setFlowerSouls(prev => {

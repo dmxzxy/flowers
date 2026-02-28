@@ -14,15 +14,13 @@ import {
   WATER_COST_PER_USE,
 } from '../config';
 
-export const useCurrency = () => {
-  const [currency, setCurrency] = useState<Currency>({
-    coins: INITIAL_COINS,
-    water: INITIAL_WATER,
-  });
+export const useCurrency = (savedCurrency?: Currency) => {
+  const initCurrency: Currency = savedCurrency ?? { coins: INITIAL_COINS, water: INITIAL_WATER };
+  const [currency, setCurrency] = useState<Currency>(initCurrency);
   const [noWaterWarning, setNoWaterWarning] = useState(false);
 
   // 同步 ref 跟踪货币，避免 setState updater 异步导致判断失败
-  const currencyRef = useRef<Currency>({ coins: INITIAL_COINS, water: INITIAL_WATER });
+  const currencyRef = useRef<Currency>({ ...initCurrency });
 
   const updateCurrency = useCallback((fn: (prev: Currency) => Currency) => {
     setCurrency(prev => {

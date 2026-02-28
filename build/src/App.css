@@ -3022,3 +3022,147 @@
   cursor: not-allowed;
   box-shadow: none;
 }
+
+/* ==================== 个人中心面板 ==================== */
+.profile-panel {
+  background: linear-gradient(160deg, #FFFAF5, #FFF5F8);
+  border-radius: 22px;
+  width: 90%;
+  max-width: 400px;
+  max-height: 80vh;
+  box-shadow: 0 12px 48px rgba(183,110,121,0.2), 0 0 0 1px rgba(183,110,121,0.06);
+  animation: panelPop 0.25s ease-out;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.profile-section {
+  background: rgba(255,255,255,0.6);
+  border-radius: 14px;
+  padding: 14px 16px;
+  border: 1px solid rgba(236,64,122,0.08);
+}
+
+.profile-section-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #AD1457;
+  margin-bottom: 12px;
+}
+
+.profile-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.profile-info-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.profile-label {
+  font-size: 12px;
+  color: #999;
+}
+
+.profile-value {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.profile-save-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.profile-save-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profile-auto-save {
+  color: #4CAF50 !important;
+  font-size: 13px !important;
+}
+
+.profile-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.profile-btn {
+  width: 100%;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.profile-btn-save {
+  background: linear-gradient(135deg, #E1BEE7, #CE93D8);
+  color: #4A148C;
+  box-shadow: 0 2px 8px rgba(156,39,176,0.2);
+}
+
+.profile-btn-save:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(156,39,176,0.3);
+}
+
+.profile-btn-save:active {
+  transform: translateY(0);
+}
+
+.profile-btn-delete {
+  background: linear-gradient(135deg, #FFCDD2, #EF9A9A);
+  color: #B71C1C;
+  box-shadow: 0 2px 8px rgba(244,67,54,0.15);
+}
+
+.profile-btn-delete:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(244,67,54,0.25);
+}
+
+.profile-btn-confirm {
+  background: linear-gradient(135deg, #F44336, #D32F2F) !important;
+  color: #fff !important;
+  animation: pulse-warning 0.8s infinite alternate;
+}
+
+@keyframes pulse-warning {
+  from { box-shadow: 0 2px 8px rgba(244,67,54,0.3); }
+  to { box-shadow: 0 4px 16px rgba(244,67,54,0.5); }
+}
+
+.profile-btn-cancel {
+  background: #F5F5F5;
+  color: #666;
+}
+
+.profile-btn-cancel:hover {
+  background: #EEEEEE;
+}
+
+.toolbar-tool-profile {
+  background: linear-gradient(135deg, #E1BEE7, #CE93D8);
+}
+
+.toolbar-tool-profile:hover {
+  background: linear-gradient(135deg, #CE93D8, #BA68C8);
+}

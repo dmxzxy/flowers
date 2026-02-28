@@ -16,9 +16,10 @@ const createInitialState = (): PlayerLevelState => ({
 });
 
 export const usePlayerLevel = (
-  pushEffect: (e: Omit<EffectState, 'id'>) => void
+  pushEffect: (e: Omit<EffectState, 'id'>) => void,
+  savedLevel?: PlayerLevelState
 ) => {
-  const [playerLevel, setPlayerLevel] = useState<PlayerLevelState>(createInitialState);
+  const [playerLevel, setPlayerLevel] = useState<PlayerLevelState>(savedLevel ?? createInitialState);
 
   const addXP = useCallback(
     (amount: number) => {
