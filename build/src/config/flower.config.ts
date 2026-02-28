@@ -7,6 +7,8 @@ import { FlowerConfig, FlowerType, FlowerLevelConfig, PlayerLevelConfig, FlowerU
 // ==================== 全部花朵 ID 列表 ====================
 export const ALL_FLOWERS: FlowerType[] = [
   'rose', 'tulip', 'daisy', 'sunflower', 'lavender', 'orchid', 'peony', 'carnation', 'chrysanthemum', 'hibiscus',
+  'lily', 'sakura', 'violet', 'jasmine', 'iris', 'camellia', 'magnolia', 'gardenia', 'wisteria', 'plumeria',
+  'lotus', 'azalea', 'hydrangea', 'freesia', 'anemone', 'dahlia', 'marigold', 'zinnia', 'bluebell', 'moonflower',
 ];
 
 // ==================== 花朵等级配置 ====================
@@ -132,6 +134,187 @@ export const flowers: FlowerConfig[] = [
       bloom: '/art/flower/flower_hibiscus_bloom.svg',
     },
   },
+  // ---- 第二批花朵（Lv.6~15 解锁）----
+  {
+    id: 'lily', name: '百合', color: '#F48FB1', basePrice: 20,
+    states: {
+      seed: '/art/flower/flower_lily_seed.svg',
+      sprout: '/art/flower/flower_lily_sprout.svg',
+      growing: '/art/flower/flower_lily_growing.svg',
+      bloom: '/art/flower/flower_lily_bloom.svg',
+    },
+  },
+  {
+    id: 'sakura', name: '樱花', color: '#FFB7C5', basePrice: 22,
+    states: {
+      seed: '/art/flower/flower_sakura_seed.svg',
+      sprout: '/art/flower/flower_sakura_sprout.svg',
+      growing: '/art/flower/flower_sakura_growing.svg',
+      bloom: '/art/flower/flower_sakura_bloom.svg',
+    },
+  },
+  {
+    id: 'violet', name: '紫罗兰', color: '#9575CD', basePrice: 22,
+    states: {
+      seed: '/art/flower/flower_violet_seed.svg',
+      sprout: '/art/flower/flower_violet_sprout.svg',
+      growing: '/art/flower/flower_violet_growing.svg',
+      bloom: '/art/flower/flower_violet_bloom.svg',
+    },
+  },
+  {
+    id: 'jasmine', name: '茉莉', color: '#FFF9C4', basePrice: 25,
+    states: {
+      seed: '/art/flower/flower_jasmine_seed.svg',
+      sprout: '/art/flower/flower_jasmine_sprout.svg',
+      growing: '/art/flower/flower_jasmine_growing.svg',
+      bloom: '/art/flower/flower_jasmine_bloom.svg',
+    },
+  },
+  {
+    id: 'iris', name: '鸢尾', color: '#42A5F5', basePrice: 25,
+    states: {
+      seed: '/art/flower/flower_iris_seed.svg',
+      sprout: '/art/flower/flower_iris_sprout.svg',
+      growing: '/art/flower/flower_iris_growing.svg',
+      bloom: '/art/flower/flower_iris_bloom.svg',
+    },
+  },
+  {
+    id: 'camellia', name: '山茶', color: '#E53935', basePrice: 28,
+    states: {
+      seed: '/art/flower/flower_camellia_seed.svg',
+      sprout: '/art/flower/flower_camellia_sprout.svg',
+      growing: '/art/flower/flower_camellia_growing.svg',
+      bloom: '/art/flower/flower_camellia_bloom.svg',
+    },
+  },
+  {
+    id: 'magnolia', name: '玉兰', color: '#FFE0B2', basePrice: 28,
+    states: {
+      seed: '/art/flower/flower_magnolia_seed.svg',
+      sprout: '/art/flower/flower_magnolia_sprout.svg',
+      growing: '/art/flower/flower_magnolia_growing.svg',
+      bloom: '/art/flower/flower_magnolia_bloom.svg',
+    },
+  },
+  {
+    id: 'gardenia', name: '栀子', color: '#FFFACD', basePrice: 30,
+    states: {
+      seed: '/art/flower/flower_gardenia_seed.svg',
+      sprout: '/art/flower/flower_gardenia_sprout.svg',
+      growing: '/art/flower/flower_gardenia_growing.svg',
+      bloom: '/art/flower/flower_gardenia_bloom.svg',
+    },
+  },
+  {
+    id: 'wisteria', name: '紫藤', color: '#AB47BC', basePrice: 30,
+    states: {
+      seed: '/art/flower/flower_wisteria_seed.svg',
+      sprout: '/art/flower/flower_wisteria_sprout.svg',
+      growing: '/art/flower/flower_wisteria_growing.svg',
+      bloom: '/art/flower/flower_wisteria_bloom.svg',
+    },
+  },
+  {
+    id: 'plumeria', name: '鸡蛋花', color: '#FFE082', basePrice: 35,
+    states: {
+      seed: '/art/flower/flower_plumeria_seed.svg',
+      sprout: '/art/flower/flower_plumeria_sprout.svg',
+      growing: '/art/flower/flower_plumeria_growing.svg',
+      bloom: '/art/flower/flower_plumeria_bloom.svg',
+    },
+  },
+  {
+    id: 'lotus', name: '莲花', color: '#F06292', basePrice: 35,
+    states: {
+      seed: '/art/flower/flower_lotus_seed.svg',
+      sprout: '/art/flower/flower_lotus_sprout.svg',
+      growing: '/art/flower/flower_lotus_growing.svg',
+      bloom: '/art/flower/flower_lotus_bloom.svg',
+    },
+  },
+  {
+    id: 'azalea', name: '杜鹃', color: '#FF4081', basePrice: 38,
+    states: {
+      seed: '/art/flower/flower_azalea_seed.svg',
+      sprout: '/art/flower/flower_azalea_sprout.svg',
+      growing: '/art/flower/flower_azalea_growing.svg',
+      bloom: '/art/flower/flower_azalea_bloom.svg',
+    },
+  },
+  {
+    id: 'hydrangea', name: '绣球', color: '#64B5F6', basePrice: 38,
+    states: {
+      seed: '/art/flower/flower_hydrangea_seed.svg',
+      sprout: '/art/flower/flower_hydrangea_sprout.svg',
+      growing: '/art/flower/flower_hydrangea_growing.svg',
+      bloom: '/art/flower/flower_hydrangea_bloom.svg',
+    },
+  },
+  {
+    id: 'freesia', name: '小苍兰', color: '#FFD54F', basePrice: 40,
+    states: {
+      seed: '/art/flower/flower_freesia_seed.svg',
+      sprout: '/art/flower/flower_freesia_sprout.svg',
+      growing: '/art/flower/flower_freesia_growing.svg',
+      bloom: '/art/flower/flower_freesia_bloom.svg',
+    },
+  },
+  {
+    id: 'anemone', name: '银莲花', color: '#EF5350', basePrice: 40,
+    states: {
+      seed: '/art/flower/flower_anemone_seed.svg',
+      sprout: '/art/flower/flower_anemone_sprout.svg',
+      growing: '/art/flower/flower_anemone_growing.svg',
+      bloom: '/art/flower/flower_anemone_bloom.svg',
+    },
+  },
+  {
+    id: 'dahlia', name: '大丽花', color: '#FF7043', basePrice: 45,
+    states: {
+      seed: '/art/flower/flower_dahlia_seed.svg',
+      sprout: '/art/flower/flower_dahlia_sprout.svg',
+      growing: '/art/flower/flower_dahlia_growing.svg',
+      bloom: '/art/flower/flower_dahlia_bloom.svg',
+    },
+  },
+  {
+    id: 'marigold', name: '万寿菊', color: '#FFB300', basePrice: 45,
+    states: {
+      seed: '/art/flower/flower_marigold_seed.svg',
+      sprout: '/art/flower/flower_marigold_sprout.svg',
+      growing: '/art/flower/flower_marigold_growing.svg',
+      bloom: '/art/flower/flower_marigold_bloom.svg',
+    },
+  },
+  {
+    id: 'zinnia', name: '百日草', color: '#EC407A', basePrice: 50,
+    states: {
+      seed: '/art/flower/flower_zinnia_seed.svg',
+      sprout: '/art/flower/flower_zinnia_sprout.svg',
+      growing: '/art/flower/flower_zinnia_growing.svg',
+      bloom: '/art/flower/flower_zinnia_bloom.svg',
+    },
+  },
+  {
+    id: 'bluebell', name: '风信子', color: '#7986CB', basePrice: 50,
+    states: {
+      seed: '/art/flower/flower_bluebell_seed.svg',
+      sprout: '/art/flower/flower_bluebell_sprout.svg',
+      growing: '/art/flower/flower_bluebell_growing.svg',
+      bloom: '/art/flower/flower_bluebell_bloom.svg',
+    },
+  },
+  {
+    id: 'moonflower', name: '月光花', color: '#C5CAE9', basePrice: 60,
+    states: {
+      seed: '/art/flower/flower_moonflower_seed.svg',
+      sprout: '/art/flower/flower_moonflower_sprout.svg',
+      growing: '/art/flower/flower_moonflower_growing.svg',
+      bloom: '/art/flower/flower_moonflower_bloom.svg',
+    },
+  },
 ];
 
 export const getFlowerConfig = (id: string): FlowerConfig | undefined => {
@@ -162,16 +345,26 @@ export const SOUL_DROP_CHANCE = 0.3;
 
 // ==================== 玩家等级配置 ====================
 export const PLAYER_LEVEL_CONFIGS: PlayerLevelConfig[] = [
-  { level: 1, xpRequired: 0, unlockedFlowers: ['rose', 'tulip', 'daisy'] },
-  { level: 2, xpRequired: 20, unlockedFlowers: ['sunflower', 'lavender'] },
-  { level: 3, xpRequired: 50, unlockedFlowers: ['orchid', 'peony'] },
-  { level: 4, xpRequired: 100, unlockedFlowers: ['carnation', 'chrysanthemum'] },
-  { level: 5, xpRequired: 200, unlockedFlowers: ['hibiscus'] },
-  { level: 6, xpRequired: 350, unlockedFlowers: [] },
-  { level: 7, xpRequired: 550, unlockedFlowers: [] },
-  { level: 8, xpRequired: 800, unlockedFlowers: [] },
-  { level: 9, xpRequired: 1100, unlockedFlowers: [] },
-  { level: 10, xpRequired: 1500, unlockedFlowers: [] },
+  { level: 1,  xpRequired: 0,     unlockedFlowers: ['rose', 'tulip', 'daisy'] },
+  { level: 2,  xpRequired: 20,    unlockedFlowers: ['sunflower', 'lavender'] },
+  { level: 3,  xpRequired: 50,    unlockedFlowers: ['orchid', 'peony'] },
+  { level: 4,  xpRequired: 100,   unlockedFlowers: ['carnation', 'chrysanthemum'] },
+  { level: 5,  xpRequired: 200,   unlockedFlowers: ['hibiscus'] },
+  { level: 6,  xpRequired: 350,   unlockedFlowers: ['lily', 'sakura'] },
+  { level: 7,  xpRequired: 550,   unlockedFlowers: ['violet', 'jasmine'] },
+  { level: 8,  xpRequired: 800,   unlockedFlowers: ['iris', 'camellia'] },
+  { level: 9,  xpRequired: 1100,  unlockedFlowers: ['magnolia', 'gardenia'] },
+  { level: 10, xpRequired: 1500,  unlockedFlowers: ['wisteria', 'plumeria'] },
+  { level: 11, xpRequired: 2000,  unlockedFlowers: ['lotus', 'azalea'] },
+  { level: 12, xpRequired: 2600,  unlockedFlowers: ['hydrangea', 'freesia'] },
+  { level: 13, xpRequired: 3300,  unlockedFlowers: ['anemone', 'dahlia'] },
+  { level: 14, xpRequired: 4200,  unlockedFlowers: ['marigold', 'zinnia'] },
+  { level: 15, xpRequired: 5300,  unlockedFlowers: ['bluebell', 'moonflower'] },
+  { level: 16, xpRequired: 6600,  unlockedFlowers: [] },
+  { level: 17, xpRequired: 8100,  unlockedFlowers: [] },
+  { level: 18, xpRequired: 9800,  unlockedFlowers: [] },
+  { level: 19, xpRequired: 11800, unlockedFlowers: [] },
+  { level: 20, xpRequired: 14000, unlockedFlowers: [] },
 ];
 
 export const MAX_PLAYER_LEVEL = PLAYER_LEVEL_CONFIGS.length;

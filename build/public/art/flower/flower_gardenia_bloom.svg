@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- 栀子-开花 -->
+  <path d="M128 200 Q131 150 128 117" stroke="#228B22" stroke-width="6" fill="none"/>
+  <ellipse cx="128" cy="85" rx="35" ry="25" fill="#FFFFF0"/>
+  <ellipse cx="128" cy="65" rx="28" ry="30" fill="#FFFACD"/>
+  <path d="M100 85 Q108 110 128 115 Q148 110 156 85" fill="#FFFFF0"/>
+  <ellipse cx="115" cy="60" rx="18" ry="22" fill="#FFFFF0" transform="rotate(-15 115 60)"/>
+  <ellipse cx="141" cy="60" rx="18" ry="22" fill="#FFFFF0" transform="rotate(15 141 60)"/>
+  <circle cx="128" cy="70" r="8" fill="#FFD54F"/>
+  <circle cx="125" cy="68" r="2" fill="#FFFFF0"/>
+  <circle cx="131" cy="68" r="2" fill="#FFFFF0"/>
+  <ellipse cx="102" cy="152" rx="20" ry="10" fill="#228B22" transform="rotate(-30 102 152)"/>
+  <ellipse cx="148" cy="152" rx="20" ry="10" fill="#228B22" transform="rotate(30 148 152)"/>
+</svg>

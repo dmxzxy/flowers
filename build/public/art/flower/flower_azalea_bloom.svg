@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- 杜鹃-开花 -->
+  <path d="M128 200 Q127 150 128 121" stroke="#228B22" stroke-width="7" fill="none"/>
+  <ellipse cx="128" cy="45" rx="14" ry="30" fill="#FF80AB"/>
+  <ellipse cx="128" cy="115" rx="14" ry="30" fill="#FF80AB"/>
+  <ellipse cx="78" cy="80" rx="14" ry="30" fill="#FF4081" transform="rotate(-60 78 80)"/>
+  <ellipse cx="178" cy="80" rx="14" ry="30" fill="#FF4081" transform="rotate(60 178 80)"/>
+  <ellipse cx="93" cy="52" rx="14" ry="28" fill="#FF80AB" transform="rotate(-30 93 52)"/>
+  <ellipse cx="163" cy="52" rx="14" ry="28" fill="#FF80AB" transform="rotate(30 163 52)"/>
+  <circle cx="128" cy="80" r="16" fill="#C51162"/>
+  <circle cx="123" cy="76" r="3" fill="#FF4081"/>
+  <circle cx="133" cy="76" r="3" fill="#FF4081"/>
+  <circle cx="128" cy="84" r="3" fill="#FF4081"/>
+  <ellipse cx="96" cy="156" rx="20" ry="10" fill="#228B22" transform="rotate(-30 96 156)"/>
+  <ellipse cx="154" cy="156" rx="20" ry="10" fill="#228B22" transform="rotate(30 154 156)"/>
+</svg>

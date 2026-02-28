@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- 银莲花-开花 -->
+  <path d="M128 200 Q130 150 128 124" stroke="#228B22" stroke-width="7" fill="none"/>
+  <ellipse cx="128" cy="55" rx="20" ry="35" fill="#EF9A9A"/>
+  <ellipse cx="105" cy="75" rx="25" ry="20" fill="#EF5350" transform="rotate(-25 105 75)"/>
+  <ellipse cx="151" cy="75" rx="25" ry="20" fill="#EF5350" transform="rotate(25 151 75)"/>
+  <path d="M108 65 Q128 45 148 65 Q138 90 128 95 Q118 90 108 65Z" fill="#EF9A9A"/>
+  <ellipse cx="128" cy="70" rx="12" ry="18" fill="#EF5350"/>
+  <circle cx="128" cy="65" r="6" fill="#B71C1C"/>
+  <circle cx="125" cy="63" r="2" fill="#EF9A9A"/>
+  <circle cx="131" cy="63" r="2" fill="#EF9A9A"/>
+  <ellipse cx="99" cy="159" rx="20" ry="10" fill="#228B22" transform="rotate(-30 99 159)"/>
+  <ellipse cx="151" cy="159" rx="20" ry="10" fill="#228B22" transform="rotate(30 151 159)"/>
+</svg>

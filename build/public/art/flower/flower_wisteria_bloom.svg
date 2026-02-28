@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- 紫藤-开花 -->
+  <path d="M128 200 Q124 150 128 118" stroke="#228B22" stroke-width="7" fill="none"/>
+  <!-- cluster left -->
+  <circle cx="108" cy="75" r="15" fill="#CE93D8"/>
+  <circle cx="108" cy="75" r="8" fill="#AB47BC"/>
+  <circle cx="108" cy="75" r="4" fill="#7B1FA2"/>
+  <!-- cluster center -->
+  <circle cx="128" cy="65" r="18" fill="#AB47BC"/>
+  <circle cx="128" cy="65" r="10" fill="#CE93D8"/>
+  <circle cx="128" cy="65" r="5" fill="#7B1FA2"/>
+  <!-- cluster right -->
+  <circle cx="148" cy="75" r="15" fill="#CE93D8"/>
+  <circle cx="148" cy="75" r="8" fill="#AB47BC"/>
+  <circle cx="148" cy="75" r="4" fill="#7B1FA2"/>
+  <!-- cluster top -->
+  <circle cx="118" cy="55" r="12" fill="#AB47BC"/>
+  <circle cx="118" cy="55" r="6" fill="#CE93D8"/>
+  <circle cx="138" cy="55" r="12" fill="#AB47BC"/>
+  <circle cx="138" cy="55" r="6" fill="#CE93D8"/>
+  <ellipse cx="103" cy="153" rx="20" ry="10" fill="#228B22" transform="rotate(-30 103 153)"/>
+  <ellipse cx="147" cy="153" rx="20" ry="10" fill="#228B22" transform="rotate(30 147 153)"/>
+</svg>

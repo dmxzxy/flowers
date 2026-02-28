@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- 紫罗兰-开花 -->
+  <path d="M128 200 Q126 150 128 112" stroke="#228B22" stroke-width="7" fill="none"/>
+  <ellipse cx="128" cy="85" rx="35" ry="25" fill="#B39DDB"/>
+  <ellipse cx="128" cy="65" rx="28" ry="30" fill="#9575CD"/>
+  <path d="M100 85 Q108 110 128 115 Q148 110 156 85" fill="#B39DDB"/>
+  <ellipse cx="115" cy="60" rx="18" ry="22" fill="#B39DDB" transform="rotate(-15 115 60)"/>
+  <ellipse cx="141" cy="60" rx="18" ry="22" fill="#B39DDB" transform="rotate(15 141 60)"/>
+  <circle cx="128" cy="70" r="8" fill="#5E35B1"/>
+  <circle cx="125" cy="68" r="2" fill="#B39DDB"/>
+  <circle cx="131" cy="68" r="2" fill="#B39DDB"/>
+  <ellipse cx="97" cy="147" rx="20" ry="10" fill="#228B22" transform="rotate(-30 97 147)"/>
+  <ellipse cx="153" cy="147" rx="20" ry="10" fill="#228B22" transform="rotate(30 153 147)"/>
+</svg>

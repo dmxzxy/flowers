@@ -1,4 +1,10 @@
-export type FlowerType = 'rose' | 'tulip' | 'daisy' | 'sunflower' | 'lavender' | 'orchid' | 'peony' | 'carnation' | 'chrysanthemum' | 'hibiscus';
+export type FlowerType =
+  | 'rose' | 'tulip' | 'daisy' | 'sunflower' | 'lavender'
+  | 'orchid' | 'peony' | 'carnation' | 'chrysanthemum' | 'hibiscus'
+  | 'lily' | 'sakura' | 'violet' | 'jasmine' | 'iris'
+  | 'camellia' | 'magnolia' | 'gardenia' | 'wisteria' | 'plumeria'
+  | 'lotus' | 'azalea' | 'hydrangea' | 'freesia' | 'anemone'
+  | 'dahlia' | 'marigold' | 'zinnia' | 'bluebell' | 'moonflower';
 
 export type PotState = 'empty' | 'seeded' | 'growing' | 'blooming' | 'cooling';
 
