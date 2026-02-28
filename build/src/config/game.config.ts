@@ -48,6 +48,10 @@ export const BUY_ORDER_MAX_SLOTS = 3;
 /** 触摸拖拽判定阈值（px） */
 export const DRAG_THRESHOLD_PX = 8;
 
+// ==================== 生长阶段 ====================
+/** 浇水后嫩芽生长时间（毫秒），生长结束后进入开花状态 */
+export const GROWING_DURATION_MS = 5000;
+
 // ==================== 花盆皮肤 ====================
 import { PotSkinConfig } from '../types';
 

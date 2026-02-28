@@ -18,9 +18,33 @@ import { useBuyOrders } from './useBuyOrder';
 import { usePurchaseTasks } from './usePurchaseTasks';
 import { usePotSkins } from './usePotSkins';
 import { loadSave, clearSave, useSaveGame, SaveData } from './useSaveGame';
+import { MAX_WATER, WATER_REGEN_INTERVAL_MS, WATER_REGEN_AMOUNT } from '../config';
 
-// 启动时读一次存档
-const initialSave: SaveData | null = loadSave();
+// 启动时读一次存档，并进行离线补偿
+const initialSave: SaveData | null = (() => {
+  const save = loadSave();
+  if (!save) return null;
+
+  const now = Date.now();
+  const elapsed = now - save.savedAt;
+  if (elapsed <= 0) return save;
+
+  // 离线水量恢复补偿
+  if (save.currency.water < MAX_WATER) {
+    const regenTicks = Math.floor(elapsed / WATER_REGEN_INTERVAL_MS);
+    if (regenTicks > 0) {
+      save.currency = {
+        ...save.currency,
+        water: Math.min(save.currency.water + regenTicks * WATER_REGEN_AMOUNT, MAX_WATER),
+      };
+    }
+  }
+
+  // 花盆冷却 / 生长计时器是基于时间戳的，useCooldown 会自动在首次 tick 处理
+  // 无需额外补偿
+
+  return save;
+})();
 
 export const useGameState = () => {
   // 1. 特效队列（无依赖，最先初始化）

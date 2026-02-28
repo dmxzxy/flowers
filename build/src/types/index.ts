@@ -1,6 +1,6 @@
 export type FlowerType = 'rose' | 'tulip' | 'daisy' | 'sunflower' | 'lavender' | 'orchid' | 'peony' | 'carnation' | 'chrysanthemum' | 'hibiscus';
 
-export type PotState = 'empty' | 'seeded' | 'growing' | 'blooming' | 'cooling' | 'harvested';
+export type PotState = 'empty' | 'seeded' | 'growing' | 'blooming' | 'cooling';
 
 export type ToolType = 'none' | 'seed' | 'water' | 'harvest';
 
@@ -38,6 +38,10 @@ export interface PotData {
   flowerType?: FlowerType;
   harvestsRemaining?: number;
   cooldownUntil?: number;
+  /** 冷却总时长（毫秒），用于进度条计算 */
+  cooldownTotalMs?: number;
+  /** 嫩芽生长结束时间戳（growing→blooming） */
+  growingUntil?: number;
 }
 
 export interface GameMode {

@@ -2,7 +2,7 @@ import { FC, useMemo, useCallback, useEffect, useRef, useState } from 'react';
 import { PotData } from '../types';
 import { getFlowerConfig } from '../data/flowers';
 import { getFlowerImage } from '../hooks/useFlower';
-import { getCooldownRemaining } from '../hooks/useCooldown';
+import { getCooldownRemaining, getGrowingRemaining } from '../hooks/useCooldown';
 
 interface PotProps {
   pot: PotData;
@@ -28,10 +28,16 @@ export const Pot: FC<PotProps> = ({ pot, onClick, potImage }) => {
 
   const isBlooming = pot.state === 'blooming' && prevStateRef.current !== 'blooming';
   const isCooling = pot.state === 'cooling';
+  const isGrowing = pot.state === 'growing';
 
-  // 本地每秒刷新倒计时
+  // 本地每秒刷新冷却倒计时
   const [cooldownSec, setCooldownSec] = useState(() =>
     isCooling ? getCooldownRemaining(pot) : 0
+  );
+
+  // 本地每秒刷新生长倒计时
+  const [growingSec, setGrowingSec] = useState(() =>
+    isGrowing ? getGrowingRemaining(pot) : 0
   );
 
   useEffect(() => {
@@ -39,7 +45,6 @@ export const Pot: FC<PotProps> = ({ pot, onClick, potImage }) => {
       setCooldownSec(0);
       return;
     }
-    // 立即计算一次
     setCooldownSec(getCooldownRemaining(pot));
     const timer = setInterval(() => {
       const remaining = getCooldownRemaining(pot);
@@ -48,6 +53,20 @@ export const Pot: FC<PotProps> = ({ pot, onClick, potImage }) => {
     }, 1000);
     return () => clearInterval(timer);
   }, [isCooling, pot.cooldownUntil]);
+
+  useEffect(() => {
+    if (!isGrowing) {
+      setGrowingSec(0);
+      return;
+    }
+    setGrowingSec(getGrowingRemaining(pot));
+    const timer = setInterval(() => {
+      const remaining = getGrowingRemaining(pot);
+      setGrowingSec(remaining);
+      if (remaining <= 0) clearInterval(timer);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [isGrowing, pot.growingUntil]);
 
   useEffect(() => {
     prevStateRef.current = pot.state;
@@ -65,7 +84,7 @@ export const Pot: FC<PotProps> = ({ pot, onClick, potImage }) => {
           <img
             src={flowerImage}
             alt={flowerConfig?.name}
-            className={`pot-flower-image ${isBlooming ? 'blooming' : ''} ${pot.state === 'blooming' ? 'bloom-float' : ''}`}
+            className={`pot-flower-image ${isBlooming ? 'blooming' : ''} ${pot.state === 'blooming' ? 'bloom-float' : ''} ${isGrowing ? 'growing-sprout' : ''}`}
             draggable={false}
           />
         )}
@@ -80,12 +99,27 @@ export const Pot: FC<PotProps> = ({ pot, onClick, potImage }) => {
         {pot.state === 'seeded' && (
           <div className="pot-status pot-status-seeded">种子</div>
         )}
+        {isGrowing && (
+          <div className="pot-status pot-status-growing">🌱 {growingSec}s</div>
+        )}
         {pot.state === 'blooming' && (
           <div className={`pot-status pot-status-bloomed ${isBlooming ? 'bloomed' : ''}`}>🌸</div>
         )}
-        {/* 冷却倒计时 */}
+        {/* 冷却进度条 + 倒计时 */}
         {isCooling && (
-          <div className="pot-cooldown">{cooldownSec}s</div>
+          <>
+            <div className="pot-cooldown-bar">
+              <div
+                className="pot-cooldown-fill"
+                style={{
+                  width: pot.cooldownTotalMs
+                    ? `${Math.max(0, Math.min(100, (1 - (cooldownSec * 1000) / pot.cooldownTotalMs) * 100))}%`
+                    : '0%',
+                }}
+              />
+            </div>
+            <div className="pot-cooldown">{cooldownSec}s</div>
+          </>
         )}
         {/* 剩余收割次数 */}
         {pot.harvestsRemaining && pot.harvestsRemaining > 1 && pot.state === 'blooming' && (

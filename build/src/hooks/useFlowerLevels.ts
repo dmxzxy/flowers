@@ -30,10 +30,10 @@ export const useFlowerLevels = (
       // 预检查资源是否足够
       if (currentCoins < coinCost || currentSouls < soulCost) return false;
 
-      // 扣除花卉之魂
-      if (!spendSouls(flowerType, soulCost)) return false;
-      // 扣除金币
+      // 先扣金币（失败则不动魂）
       if (!spendCoins(coinCost)) return false;
+      // 再扣花卉之魂（金币已扣，魂不足理论上不会发生——预检查已保证）
+      if (!spendSouls(flowerType, soulCost)) return false;
 
       setFlowerLevels(prev => ({ ...prev, [flowerType]: currentLevel + 1 }));
       pushEffect({ type: 'levelup', flowerType });

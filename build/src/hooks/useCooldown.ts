@@ -7,8 +7,16 @@ export const getCooldownRemaining = (pot: PotData): number => {
   return Math.max(0, Math.ceil((pot.cooldownUntil - Date.now()) / 1000));
 };
 
+/** 纯函数：获取生长剩余秒数 */
+export const getGrowingRemaining = (pot: PotData): number => {
+  if (pot.state !== 'growing' || !pot.growingUntil) return 0;
+  return Math.max(0, Math.ceil((pot.growingUntil - Date.now()) / 1000));
+};
+
 /**
- * 每秒扫描所有 cooling 花盆，当冷却结束时转回 blooming 状态。
+ * 每秒扫描所有花盆：
+ * - growing → blooming（生长完成）
+ * - cooling → blooming（冷却结束）
  */
 export const useCooldown = (
   _pots: PotData[],
@@ -20,15 +28,23 @@ export const useCooldown = (
     intervalRef.current = setInterval(() => {
       const now = Date.now();
       setPots(prev => {
-        const hasCooling = prev.some(
-          p => p.state === 'cooling' && p.cooldownUntil && now >= p.cooldownUntil
+        const hasTransition = prev.some(
+          p =>
+            (p.state === 'cooling' && p.cooldownUntil && now >= p.cooldownUntil) ||
+            (p.state === 'growing' && p.growingUntil && now >= p.growingUntil)
         );
-        if (!hasCooling) return prev;
-        return prev.map(p =>
-          p.state === 'cooling' && p.cooldownUntil && now >= p.cooldownUntil
-            ? { ...p, state: 'blooming' as const, cooldownUntil: undefined }
-            : p
-        );
+        if (!hasTransition) return prev;
+        return prev.map(p => {
+          // growing → blooming
+          if (p.state === 'growing' && p.growingUntil && now >= p.growingUntil) {
+            return { ...p, state: 'blooming' as const, growingUntil: undefined };
+          }
+          // cooling → blooming
+          if (p.state === 'cooling' && p.cooldownUntil && now >= p.cooldownUntil) {
+            return { ...p, state: 'blooming' as const, cooldownUntil: undefined };
+          }
+          return p;
+        });
       });
     }, 1000);
 

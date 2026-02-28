@@ -25,6 +25,7 @@ import { useGameState } from '../hooks/useGameState';
 import { useCooldown } from '../hooks/useCooldown';
 import { assets } from '../data/assets';
 import { FlowerType } from '../types';
+import { DRAG_THRESHOLD_PX } from '../config';
 
 export const GameScene: FC = () => {
   const {
@@ -160,7 +161,7 @@ export const GameScene: FC = () => {
 
   // 稳定的事件处理器 — 不依赖变化的回调，通过 ref 读取最新逻辑
   useEffect(() => {
-    const DRAG_THRESHOLD = 8; // px
+    const DRAG_THRESHOLD = DRAG_THRESHOLD_PX;
 
     const onMouseMove = (e: MouseEvent) => {
       if (isDraggingRef.current) updateDragRef.current(e.clientX, e.clientY);

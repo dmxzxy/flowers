@@ -110,7 +110,19 @@ const TaskCard: FC<{
         <div className="task-reward">奖励: {rewardParts.map((p, i) => <span key={i}>{i > 0 && ' + '}{p}</span>)}</div>
       </div>
       {onCooldown ? (
-        <div className="task-cd-badge">⏱ {cdSec}s</div>
+        <div className="task-cd-wrapper">
+          <div className="task-cd-badge">⏱ {cdSec}s</div>
+          {task.cooldownMs > 0 && (
+            <div className="task-cd-bar">
+              <div
+                className="task-cd-fill"
+                style={{
+                  width: `${Math.max(0, Math.min(100, (1 - (cdSec * 1000) / task.cooldownMs) * 100))}%`,
+                }}
+              />
+            </div>
+          )}
+        </div>
       ) : (
         <button
           className="task-btn"

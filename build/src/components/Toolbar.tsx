@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 
 interface ToolbarProps {
   onToggleInventory: () => void;
@@ -23,6 +23,23 @@ export const Toolbar: FC<ToolbarProps> = ({
   onOpenPotSkins,
   onOpenProfile,
 }) => {
+  // 新订单到达时按钮弹跳动画
+  const prevCountRef = useRef(buyOrderCount);
+  const [orderBounce, setOrderBounce] = useState(false);
+
+  useEffect(() => {
+    if (buyOrderCount > prevCountRef.current) {
+      setOrderBounce(true);
+      const timer = setTimeout(() => setOrderBounce(false), 600);
+      return () => clearTimeout(timer);
+    }
+    prevCountRef.current = buyOrderCount;
+  }, [buyOrderCount]);
+
+  useEffect(() => {
+    prevCountRef.current = buyOrderCount;
+  }, [buyOrderCount]);
+
   return (
     <div className="toolbar">
       <div className="toolbar-section">
@@ -44,7 +61,7 @@ export const Toolbar: FC<ToolbarProps> = ({
           <span className="toolbar-icon">🛒</span>
         </div>
         <div
-          className="toolbar-tool toolbar-tool-buyorders"
+          className={`toolbar-tool toolbar-tool-buyorders ${orderBounce ? 'toolbar-tool-bounce' : ''}`}
           onClick={onOpenBuyOrders}
           title="收购订单"
         >
