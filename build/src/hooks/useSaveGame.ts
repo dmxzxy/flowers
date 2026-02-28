@@ -43,10 +43,17 @@ export const loadSave = (): SaveData | null => {
   }
 };
 
+/** 是否已请求重置（阻止 beforeunload 回写存档） */
+let _resetRequested = false;
+
 /** 清除存档 */
 export const clearSave = () => {
+  _resetRequested = true;
   localStorage.removeItem(SAVE_KEY);
 };
+
+/** 检查是否处于重置状态 */
+export const isResetRequested = () => _resetRequested;
 
 /** 存档到 localStorage */
 const writeSave = (data: SaveData) => {
@@ -95,8 +102,9 @@ export const useSaveGame = (
     unlockedSkins,
   };
 
-  /** 立即保存 */
+  /** 立即保存（如果重置已请求则跳过） */
   const saveNow = useCallback(() => {
+    if (_resetRequested) return;
     const s = stateRef.current;
     writeSave({
       version: 1,

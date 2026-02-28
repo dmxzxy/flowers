@@ -1,6 +1,7 @@
 /**
  * 全局游戏配置
  * 所有可调数值集中在此，方便策划调整
+ * ⚠️ 由配置编辑器生成，请勿手动修改
  */
 
 // ==================== 花盆网格 ====================
@@ -13,11 +14,11 @@ export const GRID_TOTAL = GRID_COLS * GRID_ROWS;
 
 // ==================== 货币：水量 ====================
 /** 初始水量 */
-export const INITIAL_WATER = 100;
+export const INITIAL_WATER = 101;
 /** 水量上限 */
 export const MAX_WATER = 100;
 /** 水量自动恢复间隔（毫秒） */
-export const WATER_REGEN_INTERVAL_MS = 10_000;
+export const WATER_REGEN_INTERVAL_MS = 10000;
 /** 每次恢复水量 */
 export const WATER_REGEN_AMOUNT = 1;
 /** 浇水消耗水量 */
@@ -27,15 +28,15 @@ export const NO_WATER_WARNING_MS = 2000;
 
 // ==================== 货币：金币 ====================
 /** 初始金币 */
-export const INITIAL_COINS = 0;
+export const INITIAL_COINS = 1000;
 
 // ==================== 收购订单 ====================
 /** 收购订单生成间隔（毫秒） */
-export const BUY_ORDER_INTERVAL_MS = 45_000;
+export const BUY_ORDER_INTERVAL_MS = 45000;
 /** 收购订单有效期（毫秒） */
-export const BUY_ORDER_DURATION_MS = 60_000;
+export const BUY_ORDER_DURATION_MS = 60000;
 /** 首次收购订单延迟（毫秒） */
-export const BUY_ORDER_FIRST_DELAY_MS = 10_000;
+export const BUY_ORDER_FIRST_DELAY_MS = 10000;
 /** 收购数量区间 [min, max]（更大量） */
 export const BUY_ORDER_AMOUNT_RANGE: [number, number] = [3, 10];
 /** 收购单价加成倍率（基于花朵 basePrice） */
@@ -64,7 +65,7 @@ export const POT_SKINS: PotSkinConfig[] = [
     description: '典雅的青花瓷花盆，别具一格',
     image: '/art/pot/pot_ceramic_blue.svg',
     unlockCost: 500,
-  },
+  }
 ];
 
 export const getPotSkinConfig = (skinId: string): PotSkinConfig => {
