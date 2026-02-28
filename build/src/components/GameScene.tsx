@@ -296,7 +296,8 @@ export const GameScene: FC = () => {
 
   return (
     <div className="game-scene" onDragStart={e => e.preventDefault()}>
-      <img src={assets.background} alt="背景" className="game-background" draggable={false} />
+      <img src={assets.background.sky} alt="天空" className="game-bg-sky" draggable={false} />
+      <img src={assets.background.frame} alt="温室" className="game-bg-frame" draggable={false} />
       <div className="game-content">
         <CurrencyBar currency={currency} maxWater={maxWater} noWaterWarning={noWaterWarning} waterRegenCountdown={waterRegenCountdown} />
         <PlayerLevelBar playerLevel={playerLevel} />

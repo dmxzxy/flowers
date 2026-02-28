@@ -1,5 +1,8 @@
 export const assets = {
-  background: '/art/background/bg_greenhouse.svg',
+  background: {
+    sky: '/art/background/bg_sky.svg',
+    frame: '/art/background/bg_greenhouse_frame.svg',
+  },
   pot: '/art/pot/pot_default.svg',
   ui: {
     water: '/art/ui/icon_water.svg',

@@ -34,14 +34,21 @@
   pointer-events: none;
 }
 
-.game-background {
+/* ---------- 多层背景 ---------- */
+.game-bg-sky {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: center top;
+  z-index: 0;
+}
+.game-bg-frame {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center top;
   z-index: 0;
 }
 
