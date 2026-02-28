@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- Lycoris bloom - spider lily with swept-back thin petals -->
+  <!-- Stem -->
+  <path d="M128 220 Q126 170 128 110" stroke="#228B22" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <!-- Leaves -->
+  <ellipse cx="112" cy="175" rx="22" ry="7" fill="#228B22" transform="rotate(-30 112 175)"/>
+  <ellipse cx="144" cy="160" rx="20" ry="6" fill="#228B22" transform="rotate(25 144 160)"/>
+  <!-- Spider lily petals - long, thin, curving outward and backward -->
+  <path d="M128 95 Q115 60 95 40" stroke="#FF4500" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M128 95 Q140 60 160 40" stroke="#FF4500" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M128 95 Q100 75 80 65" stroke="#FF6347" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <path d="M128 95 Q156 75 176 65" stroke="#FF6347" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <path d="M128 95 Q108 55 100 30" stroke="#FF4500" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M128 95 Q148 55 156 30" stroke="#FF4500" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- Extra curving petals for fullness -->
+  <path d="M128 95 Q90 80 70 55" stroke="#FF6347" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M128 95 Q166 80 186 55" stroke="#FF6347" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- Long stamens -->
+  <path d="M128 95 Q120 65 110 45" stroke="#FFD700" stroke-width="1.5" fill="none"/>
+  <circle cx="110" cy="45" r="3" fill="#FFD700"/>
+  <path d="M128 95 Q136 65 146 45" stroke="#FFD700" stroke-width="1.5" fill="none"/>
+  <circle cx="146" cy="45" r="3" fill="#FFD700"/>
+  <path d="M128 95 Q128 60 128 35" stroke="#FFD700" stroke-width="1.5" fill="none"/>
+  <circle cx="128" cy="35" r="3" fill="#FFD700"/>
+  <!-- Center -->
+  <circle cx="128" cy="95" r="6" fill="#CC3700"/>
+</svg>

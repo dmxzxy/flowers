@@ -101,6 +101,7 @@ export const useGameState = () => {
     recordCoinsEarned,
     recordOrderCompleted,
     setAtmosphere: setAchievementAtmosphere,
+    achievementUnlockedFlowers,
   } = useAchievements(pots, flowerLevels, playerLevel, addCoins);
 
   // 包装 plantSeed — 追踪播种成就
@@ -291,6 +292,7 @@ export const useGameState = () => {
     dismissAchievementToast,
     claimAchievement,
     setAchievementAtmosphere,
+    achievementUnlockedFlowers,
 
     // 存档
     saveNow,

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- Snow lotus sprout -->
+  <path d="M128 210 Q127 195 128 175" stroke="#6B8E6B" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <ellipse cx="128" cy="170" rx="6" ry="12" fill="#C8E6C8"/>
+  <ellipse cx="124" cy="172" rx="5" ry="10" fill="#D5EED5" transform="rotate(-8 124 172)"/>
+  <!-- Frost sparkles -->
+  <circle cx="130" cy="168" r="1.5" fill="#F0F8FF" opacity="0.7"/>
+  <circle cx="125" cy="175" r="1" fill="#F0F8FF" opacity="0.6"/>
+  <ellipse cx="128" cy="215" rx="30" ry="6" fill="#D0E8FF" opacity="0.3"/>
+</svg>

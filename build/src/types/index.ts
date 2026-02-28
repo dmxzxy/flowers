@@ -4,7 +4,8 @@ export type FlowerType =
   | 'lily' | 'sakura' | 'violet' | 'jasmine' | 'iris'
   | 'camellia' | 'magnolia' | 'gardenia' | 'wisteria' | 'plumeria'
   | 'lotus' | 'azalea' | 'hydrangea' | 'freesia' | 'anemone'
-  | 'dahlia' | 'marigold' | 'zinnia' | 'bluebell' | 'moonflower';
+  | 'dahlia' | 'marigold' | 'zinnia' | 'bluebell' | 'moonflower'
+  | 'lycoris' | 'snowlotus' | 'datura' | 'lilyvalley' | 'birdofparadise';
 
 export type PotState = 'empty' | 'seeded' | 'growing' | 'blooming' | 'cooling';
 

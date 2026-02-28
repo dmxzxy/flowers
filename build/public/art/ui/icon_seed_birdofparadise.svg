@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <circle cx="32" cy="32" r="24" fill="#FF8C00"/>
+  <circle cx="32" cy="32" r="18" fill="#CC7000"/>
+  <path d="M32 20 L32 44" stroke="#FFA500" stroke-width="2"/>
+  <path d="M20 32 L44 32" stroke="#FFA500" stroke-width="2"/>
+  <!-- Blue accent -->
+  <circle cx="36" cy="36" r="4" fill="#1E90FF" opacity="0.6"/>
+</svg>

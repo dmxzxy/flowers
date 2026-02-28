@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- Bird of paradise seed -->
+  <ellipse cx="128" cy="180" rx="14" ry="16" fill="#8B4513"/>
+  <ellipse cx="128" cy="180" rx="10" ry="12" fill="#A0652D"/>
+  <path d="M128 170 Q130 177 128 188" stroke="#6B3000" stroke-width="1.5" fill="none"/>
+  <!-- Orange tint -->
+  <ellipse cx="128" cy="178" rx="6" ry="8" fill="#FF8C00" opacity="0.3"/>
+  <ellipse cx="128" cy="200" rx="30" ry="6" fill="#5C4033" opacity="0.3"/>
+</svg>

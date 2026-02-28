@@ -82,6 +82,7 @@ export const GameScene: FC = () => {
     dismissAchievementToast,
     claimAchievement,
     setAchievementAtmosphere,
+    achievementUnlockedFlowers,
     saveNow,
     resetGame,
     saveInfo,
@@ -363,6 +364,7 @@ export const GameScene: FC = () => {
             onStartDrag={handleStartDragFromPicker}
             playerLevel={playerLevel.level}
             onBatchPlant={batchPlantAll}
+            achievementUnlockedFlowers={achievementUnlockedFlowers}
           />
         )}
         {showWaterPicker && (

@@ -3,6 +3,8 @@
  * 定义所有成就及其解锁条件
  */
 
+import type { FlowerType } from '../types';
+
 export type AchievementId =
   | 'first_seed'
   | 'first_harvest'
@@ -43,6 +45,8 @@ export interface AchievementDef {
   category: AchievementCategory;
   /** 成就完成给予的金币奖励 */
   rewardCoins: number;
+  /** 成就完成解锁的花朵（可选） */
+  rewardFlower?: FlowerType;
   /** 成就是否隐藏（未达成前不显示描述） */
   hidden?: boolean;
 }
@@ -52,16 +56,16 @@ export const ACHIEVEMENT_DEFS: AchievementDef[] = [
   { id: 'first_seed',      name: '初次播种',     description: '播下你的第一颗种子',           icon: '🌱', category: 'growing',    rewardCoins: 10 },
   { id: 'first_harvest',   name: '初次收获',     description: '收获你的第一朵花',             icon: '🌸', category: 'growing',    rewardCoins: 20 },
   { id: 'plant_50',        name: '播种达人',     description: '累计播种 50 次',               icon: '🌿', category: 'growing',    rewardCoins: 200 },
-  { id: 'plant_200',       name: '播种大师',     description: '累计播种 200 次',              icon: '🌳', category: 'growing',    rewardCoins: 1000 },
+  { id: 'plant_200',       name: '播种大师',     description: '累计播种 200 次',              icon: '🌳', category: 'growing',    rewardCoins: 1000, rewardFlower: 'lilyvalley' },
   { id: 'harvest_10',      name: '小小花农',     description: '累计收获 10 次',               icon: '🧑‍🌾', category: 'growing',    rewardCoins: 50 },
-  { id: 'harvest_100',     name: '勤劳花匠',     description: '累计收获 100 次',              icon: '👨‍🌾', category: 'growing',    rewardCoins: 500 },
+  { id: 'harvest_100',     name: '勤劳花匠',     description: '累计收获 100 次',              icon: '👨‍🌾', category: 'growing',    rewardCoins: 500, rewardFlower: 'lycoris' },
   { id: 'harvest_500',     name: '花园传奇',     description: '累计收获 500 次',              icon: '👑', category: 'growing',    rewardCoins: 3000 },
   { id: 'fill_all_pots',   name: '满园春色',     description: '同时种满全部 28 个花盆',       icon: '🏡', category: 'growing',    rewardCoins: 500 },
 
   // ===== 经济 =====
   { id: 'coins_1000',      name: '小有积蓄',     description: '累计获得 1,000 金币',          icon: '💰', category: 'economy',    rewardCoins: 100 },
   { id: 'coins_10000',     name: '万贯家财',     description: '累计获得 10,000 金币',         icon: '💎', category: 'economy',    rewardCoins: 500 },
-  { id: 'coins_100000',    name: '花园富翁',     description: '累计获得 100,000 金币',        icon: '🏆', category: 'economy',    rewardCoins: 5000 },
+  { id: 'coins_100000',    name: '花园富翁',     description: '累计获得 100,000 金币',        icon: '🏆', category: 'economy',    rewardCoins: 5000, rewardFlower: 'birdofparadise' },
   { id: 'order_1',         name: '首笔订单',     description: '完成第一个收购订单',           icon: '📜', category: 'economy',    rewardCoins: 50 },
   { id: 'order_10',        name: '商业新星',     description: '累计完成 10 个收购订单',       icon: '📊', category: 'economy',    rewardCoins: 300 },
   { id: 'order_50',        name: '花卉商人',     description: '累计完成 50 个收购订单',       icon: '🤝', category: 'economy',    rewardCoins: 2000 },
@@ -83,8 +87,8 @@ export const ACHIEVEMENT_DEFS: AchievementDef[] = [
   { id: 'level_20',        name: '花园大师',     description: '玩家等级达到 Lv.20',           icon: '🎖️', category: 'milestone',   rewardCoins: 10000 },
 
   // ===== 特殊 =====
-  { id: 'rainy_harvest',   name: '雨中收获',     description: '在雨天收获花朵',               icon: '🌧️', category: 'special',    rewardCoins: 100, hidden: true },
-  { id: 'night_harvest',   name: '月下采花',     description: '在夜晚收获花朵',               icon: '🌙', category: 'special',    rewardCoins: 100, hidden: true },
+  { id: 'rainy_harvest',   name: '雨中收获',     description: '在雨天收获花朵',               icon: '🌧️', category: 'special',    rewardCoins: 100, rewardFlower: 'snowlotus', hidden: true },
+  { id: 'night_harvest',   name: '月下采花',     description: '在夜晚收获花朵',               icon: '🌙', category: 'special',    rewardCoins: 100, rewardFlower: 'datura', hidden: true },
 ];
 
 export const ACHIEVEMENT_CATEGORIES: { id: AchievementCategory; name: string; icon: string }[] = [

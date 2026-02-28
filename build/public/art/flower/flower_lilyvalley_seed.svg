@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- Lily of the valley seed -->
+  <ellipse cx="128" cy="180" rx="10" ry="14" fill="#8FBC8F"/>
+  <ellipse cx="128" cy="180" rx="7" ry="10" fill="#B0D9B0"/>
+  <path d="M128 172 Q129 178 128 190" stroke="#6B8E6B" stroke-width="1.5" fill="none"/>
+  <ellipse cx="128" cy="200" rx="30" ry="6" fill="#5C4033" opacity="0.3"/>
+</svg>

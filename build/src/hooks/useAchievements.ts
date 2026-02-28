@@ -7,7 +7,9 @@ import {
   AchievementId,
   getAchievementDef,
 } from '../config/achievement.config';
-import type { PotData, FlowerLevels, PlayerLevelState } from '../types';
+import { ACHIEVEMENT_DEFS } from '../config/achievement.config';
+import { ACHIEVEMENT_FLOWERS } from '../config/flower.config';
+import type { PotData, FlowerLevels, PlayerLevelState, FlowerType } from '../types';
 import type { TimeOfDay, Weather } from './useAtmosphere';
 
 /* ========== 累计统计 ========== */
@@ -193,19 +195,25 @@ export function useAchievements(
     if (!has('flower_level_10') && maxFlowerLevel >= 10) unlock('flower_level_10');
     if (!has('flower_level_20') && maxFlowerLevel >= 20) unlock('flower_level_20');
 
-    // --- 花朵种类解锁数（使用 flowerLevels — 所有出现在 flowerLevels 的花种都算解锁） ---
-    // 实际上用 playerLevel 解锁数更合理
-    // 这里我们用 "曾种过 = totalPlanted > 0" 或 "等级解锁花朵数"
-    // 简化：用 playerLevel 的 unlockedFlowers 总数
-    // 但更好的方式：某花 ever planted？我们没追踪每种花的种植数。
-    // 用 flowerLevels 中 level >= 1 的数量 (所有花 level 初始=1, 但只有解锁的可以种)
-    // 最简单：用 playerLevel 匹配到的解锁数
-    const unlockedCount = plevel >= 20 ? 30 : plevel >= 15 ? 30 : getUnlockedCount(plevel);
+    // --- 花朵种类解锁数（等级解锁 + 成就解锁） ---
+    const levelUnlockedCount = getUnlockedCount(plevel);
+    // 成就已领取且有 rewardFlower 的花朵数
+    const achFlowerCount = ACHIEVEMENT_FLOWERS.filter(f => {
+      const achDef = ACHIEVEMENT_DEFS.find(a => a.rewardFlower === f);
+      return achDef && save.claimed.includes(achDef.id);
+    }).length;
+    const unlockedCount = levelUnlockedCount + achFlowerCount;
     if (!has('collect_5_types') && unlockedCount >= 5) unlock('collect_5_types');
     if (!has('collect_10_types') && unlockedCount >= 10) unlock('collect_10_types');
     if (!has('collect_20_types') && unlockedCount >= 20) unlock('collect_20_types');
     if (!has('collect_30_types') && unlockedCount >= 30) unlock('collect_30_types');
   }, [save, pots, flowerLevels, playerLevel, unlock]);
+
+  // 计算成就已解锁的花朵列表（已领取奖励 = claimed 的成就中包含 rewardFlower）
+  const achievementUnlockedFlowers: FlowerType[] = ACHIEVEMENT_FLOWERS.filter(f => {
+    const achDef = ACHIEVEMENT_DEFS.find(a => a.rewardFlower === f);
+    return achDef && save.claimed.includes(achDef.id);
+  });
 
   return {
     achievements: save,
@@ -217,14 +225,19 @@ export function useAchievements(
     recordCoinsEarned,
     recordOrderCompleted,
     setAtmosphere,
+    achievementUnlockedFlowers,
   };
 }
 
-/** 根据玩家等级计算已解锁花朵数 */
+/** 根据玩家等级计算已解锁花朵数（仅等级解锁部分，不含成就花朵） */
 function getUnlockedCount(level: number): number {
-  // Lv1: 5, Lv2: 5, Lv3: 6, Lv4: 7, Lv5: 8, Lv6-15: +2 each
+  // Lv1~2: 5(rose,tulip,daisy,sunflower,lavender)
+  // Lv3: +2=7, Lv4: +2=9, Lv5: +1=10
+  // Lv6~15: +2 each = 10+20=30
+  if (level <= 1) return 3;
   if (level <= 2) return 5;
-  if (level <= 5) return 5 + (level - 2);
-  // Lv6+: 8 + (level-5)*2
-  return Math.min(8 + (level - 5) * 2, 30);
+  if (level <= 4) return 5 + (level - 2) * 2;
+  if (level <= 5) return 9 + 1; // Lv5: hibiscus
+  // Lv6+: 10 + (level-5)*2
+  return Math.min(10 + (level - 5) * 2, 30);
 }

@@ -1,6 +1,6 @@
 import { FC, useCallback, useState } from 'react';
 import { flowers } from '../data/flowers';
-import { getFlowerUnlockLevel } from '../config';
+import { getFlowerUnlockLevel, isAchievementFlower } from '../config';
 import { FlowerType } from '../types';
 
 interface FlowerPickerProps {
@@ -9,9 +9,11 @@ interface FlowerPickerProps {
   onStartDrag?: (flowerType: FlowerType, e: React.MouseEvent | React.TouchEvent) => void;
   playerLevel?: number;
   onBatchPlant?: (flowerType: FlowerType) => void;
+  /** 通过成就已解锁的花朵 ID 列表 */
+  achievementUnlockedFlowers?: FlowerType[];
 }
 
-export const FlowerPicker: FC<FlowerPickerProps> = ({ onSelect, onClose, onStartDrag, playerLevel = 99, onBatchPlant }) => {
+export const FlowerPicker: FC<FlowerPickerProps> = ({ onSelect, onClose, onStartDrag, playerLevel = 99, onBatchPlant, achievementUnlockedFlowers = [] }) => {
   const [selectedFlower, setSelectedFlower] = useState<FlowerType | null>(null);
   const [batchMode, setBatchMode] = useState(false);
 
@@ -53,8 +55,12 @@ export const FlowerPicker: FC<FlowerPickerProps> = ({ onSelect, onClose, onStart
         <div className="picker-grid">
           {flowers.map((flower) => {
             const ft = flower.id as FlowerType;
+            const isAchFlower = isAchievementFlower(ft);
             const unlockLevel = getFlowerUnlockLevel(ft);
-            const locked = playerLevel < unlockLevel;
+            const locked = isAchFlower
+              ? !achievementUnlockedFlowers.includes(ft)
+              : playerLevel < unlockLevel;
+            const lockLabel = isAchFlower ? '🏆成就解锁' : `Lv.${unlockLevel}解锁`;
 
             return (
               <button
@@ -72,7 +78,7 @@ export const FlowerPicker: FC<FlowerPickerProps> = ({ onSelect, onClose, onStart
                   {locked ? '🔒' : flower.name.charAt(0)}
                 </div>
                 <span className="picker-flower-name">
-                  {locked ? `Lv.${unlockLevel}解锁` : flower.name}
+                  {locked ? lockLabel : flower.name}
                 </span>
               </button>
             );

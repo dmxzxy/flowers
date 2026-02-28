@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- Datura sprout -->
+  <path d="M128 210 Q127 195 128 172" stroke="#2E7D32" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <!-- Two cotyledons -->
+  <ellipse cx="120" cy="168" rx="12" ry="6" fill="#388E3C" transform="rotate(-25 120 168)"/>
+  <ellipse cx="136" cy="168" rx="12" ry="6" fill="#388E3C" transform="rotate(25 136 168)"/>
+  <ellipse cx="128" cy="215" rx="30" ry="6" fill="#5C4033" opacity="0.3"/>
+</svg>

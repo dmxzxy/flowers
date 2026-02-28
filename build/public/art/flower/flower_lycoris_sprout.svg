@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- Lycoris sprout - thin stem emerging -->
+  <path d="M128 210 Q127 190 128 170" stroke="#228B22" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <ellipse cx="128" cy="165" rx="5" ry="10" fill="#32CD32" transform="rotate(-5 128 165)"/>
+  <ellipse cx="132" cy="168" rx="4" ry="8" fill="#2ECC71" transform="rotate(10 132 168)"/>
+  <!-- Soil -->
+  <ellipse cx="128" cy="215" rx="30" ry="6" fill="#5C4033" opacity="0.3"/>
+</svg>

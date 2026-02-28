@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- Lily of the valley growing - arching stem with buds -->
+  <!-- Main stem -->
+  <path d="M128 210 Q125 175 126 130" stroke="#228B22" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <!-- Broad leaves -->
+  <ellipse cx="108" cy="170" rx="12" ry="30" fill="#228B22" transform="rotate(-15 108 170)"/>
+  <ellipse cx="148" cy="165" rx="11" ry="28" fill="#228B22" transform="rotate(12 148 165)"/>
+  <!-- Flower stem arching -->
+  <path d="M126 130 Q122 115 118 105 Q112 95 108 90" stroke="#228B22" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- Small round buds along arch -->
+  <circle cx="120" cy="108" r="5" fill="#E8F5E8" stroke="#90EE90" stroke-width="1"/>
+  <circle cx="114" cy="98" r="5" fill="#E8F5E8" stroke="#90EE90" stroke-width="1"/>
+  <circle cx="108" cy="90" r="4" fill="#E8F5E8" stroke="#90EE90" stroke-width="1"/>
+</svg>

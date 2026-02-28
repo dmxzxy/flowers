@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- Lily of the valley bloom - multiple small hanging bells along arching stem -->
+  <!-- Main stem -->
+  <path d="M130 220 Q127 180 128 130" stroke="#228B22" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <!-- Broad leaves -->
+  <ellipse cx="106" cy="175" rx="13" ry="35" fill="#228B22" transform="rotate(-12 106 175)"/>
+  <ellipse cx="152" cy="170" rx="12" ry="32" fill="#2E8B2E" transform="rotate(10 152 170)"/>
+  <!-- Flower stem - graceful arch -->
+  <path d="M128 130 Q120 110 110 95 Q100 82 88 75 Q78 70 72 70" stroke="#228B22" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- Hanging bell flowers - small stem then bell -->
+  <!-- Bell 1 (lowest) -->
+  <path d="M118 105 L118 112" stroke="#90EE90" stroke-width="1.5"/>
+  <path d="M112 120 Q118 112 124 120 Q118 122 112 120 Z" fill="#FFFFFF" stroke="#90EE90" stroke-width="0.5"/>
+  <ellipse cx="118" cy="120" rx="6" ry="3" fill="#F5FFF5" opacity="0.5"/>
+  <!-- Bell 2 -->
+  <path d="M108 92 L108 99" stroke="#90EE90" stroke-width="1.5"/>
+  <path d="M102 107 Q108 99 114 107 Q108 109 102 107 Z" fill="#FFFFFF" stroke="#90EE90" stroke-width="0.5"/>
+  <ellipse cx="108" cy="107" rx="6" ry="3" fill="#F5FFF5" opacity="0.5"/>
+  <!-- Bell 3 -->
+  <path d="M96 82 L96 89" stroke="#90EE90" stroke-width="1.5"/>
+  <path d="M90 97 Q96 89 102 97 Q96 99 90 97 Z" fill="#FFFFFF" stroke="#90EE90" stroke-width="0.5"/>
+  <ellipse cx="96" cy="97" rx="6" ry="3" fill="#F5FFF5" opacity="0.5"/>
+  <!-- Bell 4 -->
+  <path d="M85 76 L85 83" stroke="#90EE90" stroke-width="1.5"/>
+  <path d="M79 91 Q85 83 91 91 Q85 93 79 91 Z" fill="#FFFFFF" stroke="#90EE90" stroke-width="0.5"/>
+  <ellipse cx="85" cy="91" rx="6" ry="3" fill="#F5FFF5" opacity="0.5"/>
+  <!-- Bell 5 (top, smallest) -->
+  <path d="M76 72 L76 77" stroke="#90EE90" stroke-width="1.5"/>
+  <path d="M71 84 Q76 77 81 84 Q76 86 71 84 Z" fill="#FFFFFF" stroke="#90EE90" stroke-width="0.5"/>
+  <ellipse cx="76" cy="84" rx="5" ry="2.5" fill="#F5FFF5" opacity="0.5"/>
+</svg>

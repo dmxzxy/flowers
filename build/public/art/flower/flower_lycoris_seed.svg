@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- Lycoris seed -->
+  <ellipse cx="128" cy="180" rx="14" ry="18" fill="#8B3000"/>
+  <ellipse cx="128" cy="180" rx="10" ry="14" fill="#A0522D"/>
+  <path d="M128 168 Q130 175 128 185" stroke="#6B2000" stroke-width="1.5" fill="none"/>
+  <!-- Soil hint -->
+  <ellipse cx="128" cy="200" rx="30" ry="6" fill="#5C4033" opacity="0.3"/>
+</svg>

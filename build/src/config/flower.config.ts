@@ -9,6 +9,8 @@ export const ALL_FLOWERS: FlowerType[] = [
   'rose', 'tulip', 'daisy', 'sunflower', 'lavender', 'orchid', 'peony', 'carnation', 'chrysanthemum', 'hibiscus',
   'lily', 'sakura', 'violet', 'jasmine', 'iris', 'camellia', 'magnolia', 'gardenia', 'wisteria', 'plumeria',
   'lotus', 'azalea', 'hydrangea', 'freesia', 'anemone', 'dahlia', 'marigold', 'zinnia', 'bluebell', 'moonflower',
+  // 成就解锁专属花朵
+  'lycoris', 'snowlotus', 'datura', 'lilyvalley', 'birdofparadise',
 ];
 
 // ==================== 花朵等级配置 ====================
@@ -315,6 +317,52 @@ export const flowers: FlowerConfig[] = [
       bloom: '/art/flower/flower_moonflower_bloom.svg',
     },
   },
+  // ---- 成就解锁专属花朵 ----
+  {
+    id: 'lycoris', name: '彼岸花', color: '#FF4500', basePrice: 65,
+    states: {
+      seed: '/art/flower/flower_lycoris_seed.svg',
+      sprout: '/art/flower/flower_lycoris_sprout.svg',
+      growing: '/art/flower/flower_lycoris_growing.svg',
+      bloom: '/art/flower/flower_lycoris_bloom.svg',
+    },
+  },
+  {
+    id: 'snowlotus', name: '雪莲', color: '#B0D4F1', basePrice: 70,
+    states: {
+      seed: '/art/flower/flower_snowlotus_seed.svg',
+      sprout: '/art/flower/flower_snowlotus_sprout.svg',
+      growing: '/art/flower/flower_snowlotus_growing.svg',
+      bloom: '/art/flower/flower_snowlotus_bloom.svg',
+    },
+  },
+  {
+    id: 'datura', name: '曼陀罗', color: '#7B1FA2', basePrice: 75,
+    states: {
+      seed: '/art/flower/flower_datura_seed.svg',
+      sprout: '/art/flower/flower_datura_sprout.svg',
+      growing: '/art/flower/flower_datura_growing.svg',
+      bloom: '/art/flower/flower_datura_bloom.svg',
+    },
+  },
+  {
+    id: 'lilyvalley', name: '铃兰', color: '#90EE90', basePrice: 70,
+    states: {
+      seed: '/art/flower/flower_lilyvalley_seed.svg',
+      sprout: '/art/flower/flower_lilyvalley_sprout.svg',
+      growing: '/art/flower/flower_lilyvalley_growing.svg',
+      bloom: '/art/flower/flower_lilyvalley_bloom.svg',
+    },
+  },
+  {
+    id: 'birdofparadise', name: '天堂鸟', color: '#FF8C00', basePrice: 80,
+    states: {
+      seed: '/art/flower/flower_birdofparadise_seed.svg',
+      sprout: '/art/flower/flower_birdofparadise_sprout.svg',
+      growing: '/art/flower/flower_birdofparadise_growing.svg',
+      bloom: '/art/flower/flower_birdofparadise_bloom.svg',
+    },
+  },
 ];
 
 export const getFlowerConfig = (id: string): FlowerConfig | undefined => {
@@ -389,8 +437,10 @@ export const FLOWER_UNLOCK_MAP: FlowerUnlockInfo[] = PLAYER_LEVEL_CONFIGS.flatMa
   cfg.unlockedFlowers.map(f => ({ flowerType: f as FlowerType, requiredPlayerLevel: cfg.level }))
 );
 
-/** 获取指定花朵的解锁等级 */
+/** 获取指定花朵的解锁等级（成就解锁花朵返回 999） */
 export const getFlowerUnlockLevel = (flowerType: FlowerType): number => {
+  // 成就解锁花朵不在等级列表中
+  if (ACHIEVEMENT_FLOWER_SET.has(flowerType)) return 999;
   const info = FLOWER_UNLOCK_MAP.find(u => u.flowerType === flowerType);
   return info?.requiredPlayerLevel ?? 1;
 };
@@ -401,3 +451,16 @@ export const getUnlockedFlowers = (playerLevel: number): FlowerType[] => {
     .filter(cfg => cfg.level <= playerLevel)
     .flatMap(cfg => cfg.unlockedFlowers as FlowerType[]);
 };
+
+// ==================== 成就解锁花朵 ====================
+/** 通过成就解锁的花朵（不通过等级解锁） */
+export const ACHIEVEMENT_FLOWERS: FlowerType[] = [
+  'lycoris', 'snowlotus', 'datura', 'lilyvalley', 'birdofparadise',
+];
+
+/** 快速查询集合 */
+export const ACHIEVEMENT_FLOWER_SET = new Set<FlowerType>(ACHIEVEMENT_FLOWERS);
+
+/** 判断花朵是否为成就解锁类型 */
+export const isAchievementFlower = (flowerType: FlowerType): boolean =>
+  ACHIEVEMENT_FLOWER_SET.has(flowerType);

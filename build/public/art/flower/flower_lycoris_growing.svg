@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- Lycoris growing - tall stem with bud -->
+  <path d="M128 210 Q126 170 128 120" stroke="#228B22" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <!-- Leaves on stem -->
+  <ellipse cx="118" cy="170" rx="18" ry="6" fill="#228B22" transform="rotate(-25 118 170)"/>
+  <ellipse cx="138" cy="155" rx="16" ry="5" fill="#228B22" transform="rotate(20 138 155)"/>
+  <!-- Bud - tight cluster of emerging petals -->
+  <ellipse cx="128" cy="110" rx="8" ry="16" fill="#FF4500" opacity="0.7"/>
+  <ellipse cx="124" cy="108" rx="5" ry="14" fill="#FF6347" opacity="0.6" transform="rotate(-10 124 108)"/>
+  <ellipse cx="132" cy="108" rx="5" ry="14" fill="#FF6347" opacity="0.6" transform="rotate(10 132 108)"/>
+</svg>

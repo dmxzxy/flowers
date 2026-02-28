@@ -5,6 +5,7 @@ import {
   AchievementCategory,
   getAchievementDef,
 } from '../config/achievement.config';
+import { getFlowerConfig } from '../config/flower.config';
 import type { AchievementStats } from '../hooks/useAchievements';
 import type { AchievementId } from '../config/achievement.config';
 
@@ -117,7 +118,14 @@ export const AchievementPanel: FC<Props> = memo(({
                   </div>
                   {!isHidden && (
                     <div className="achievement-card-reward">
-                      🪙 {ach.rewardCoins}
+                      {ach.rewardFlower ? (
+                        <>
+                          <span className="reward-flower-tag">🌺 解锁「{getFlowerConfig(ach.rewardFlower)?.name ?? ach.rewardFlower}」</span>
+                          {ach.rewardCoins > 0 && <span className="reward-coins-tag">💰 {ach.rewardCoins}</span>}
+                        </>
+                      ) : (
+                        <span className="reward-coins-tag">💰 {ach.rewardCoins} 金币</span>
+                      )}
                     </div>
                   )}
                 </div>
@@ -151,12 +159,20 @@ export const AchievementToastUI: FC<{
   const def = getAchievementDef(achievementId);
   if (!def) return null;
 
+  const flowerName = def.rewardFlower ? getFlowerConfig(def.rewardFlower)?.name : null;
+
   return (
     <div className="achievement-toast" onAnimationEnd={onDismiss}>
       <div className="achievement-toast-icon">{def.icon}</div>
       <div className="achievement-toast-text">
         <div className="achievement-toast-label">🏆 成就达成！</div>
         <div className="achievement-toast-name">{def.name}</div>
+        <div className="achievement-toast-reward">
+          {flowerName
+            ? <span>🌺 解锁「{flowerName}」</span>
+            : <span>💰 +{def.rewardCoins} 金币</span>
+          }
+        </div>
       </div>
     </div>
   );

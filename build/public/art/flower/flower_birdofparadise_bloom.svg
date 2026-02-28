@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- Bird of paradise bloom - dramatic asymmetric shape -->
+  <!-- Stem -->
+  <path d="M128 220 Q126 175 130 110" stroke="#228B22" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <!-- Large leaves -->
+  <ellipse cx="98" cy="180" rx="11" ry="35" fill="#228B22" transform="rotate(-18 98 180)"/>
+  <ellipse cx="158" cy="172" rx="10" ry="32" fill="#228B22" transform="rotate(15 158 172)"/>
+  <ellipse cx="108" cy="150" rx="9" ry="28" fill="#2E8B2E" transform="rotate(-10 108 150)"/>
+  <!-- Spathe (green-purple boat shape) -->
+  <path d="M110 105 Q130 85 165 100 Q148 108 110 105 Z" fill="#228B22" stroke="#1B5E1B" stroke-width="1.5"/>
+  <!-- Orange crest petals - dramatic upward spikes -->
+  <path d="M130 100 Q128 70 120 45" stroke="#FF8C00" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M135 98 Q136 65 132 40" stroke="#FF8C00" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <path d="M140 97 Q144 68 145 48" stroke="#FFA500" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- Petal fill hints -->
+  <path d="M128 90 Q125 65 120 45 L132 40 Q134 65 130 90 Z" fill="#FF8C00" opacity="0.6"/>
+  <path d="M135 88 Q138 65 145 48 L140 46 Q135 65 132 88 Z" fill="#FFA500" opacity="0.5"/>
+  <!-- Blue tongue petals - pointing forward/down -->
+  <path d="M130 104 Q140 108 155 115" stroke="#1E90FF" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <path d="M132 106 Q145 112 160 120" stroke="#1E90FF" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M128 106 Q138 115 148 125" stroke="#4169E1" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Blue tongue fill -->
+  <path d="M130 104 Q142 108 155 115 L160 120 Q145 112 132 106 Z" fill="#1E90FF" opacity="0.5"/>
+  <!-- Center detail -->
+  <circle cx="132" cy="100" r="4" fill="#CC7000"/>
+</svg>

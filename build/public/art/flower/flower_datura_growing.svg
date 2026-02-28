@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- Datura growing - stem with trumpet bud forming -->
+  <path d="M128 210 Q126 170 128 120" stroke="#2E7D32" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <!-- Dark leaves -->
+  <ellipse cx="108" cy="170" rx="22" ry="8" fill="#2E7D32" transform="rotate(-25 108 170)"/>
+  <ellipse cx="148" cy="158" rx="20" ry="7" fill="#2E7D32" transform="rotate(20 148 158)"/>
+  <ellipse cx="112" cy="148" rx="18" ry="6" fill="#388E3C" transform="rotate(-15 112 148)"/>
+  <!-- Closed trumpet bud -->
+  <path d="M120 115 Q128 95 136 115" fill="#6A0DAD" opacity="0.8"/>
+  <path d="M122 118 Q128 100 134 118" fill="#9B59B6" opacity="0.6"/>
+  <ellipse cx="128" cy="116" rx="8" ry="4" fill="#7B1FA2" opacity="0.5"/>
+</svg>

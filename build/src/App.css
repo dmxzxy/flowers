@@ -3811,6 +3811,18 @@
   color: #FF8F00;
   font-weight: 500;
   margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.reward-flower-tag {
+  color: #E91E63;
+  font-weight: 600;
+}
+.reward-coins-tag {
+  color: #FF8F00;
+  font-weight: 600;
 }
 
 .achievement-claim-btn {
@@ -3871,6 +3883,7 @@
 .achievement-toast-text { display: flex; flex-direction: column; }
 .achievement-toast-label { font-size: 11px; color: #FF8F00; font-weight: 600; }
 .achievement-toast-name { font-size: 15px; font-weight: 700; color: #5D4037; }
+.achievement-toast-reward { font-size: 12px; font-weight: 600; color: #E91E63; margin-top: 1px; }
 
 @keyframes achievementToastAnim {
   0%   { opacity: 0; transform: translateX(-50%) translateY(-20px) scale(0.9); }

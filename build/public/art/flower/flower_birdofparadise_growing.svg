@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- Bird of paradise growing - stem with spathe forming -->
+  <path d="M128 210 Q126 170 128 115" stroke="#228B22" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <!-- Large banana-like leaves -->
+  <ellipse cx="100" cy="170" rx="10" ry="32" fill="#228B22" transform="rotate(-20 100 170)"/>
+  <ellipse cx="156" cy="165" rx="9" ry="30" fill="#228B22" transform="rotate(18 156 165)"/>
+  <ellipse cx="110" cy="145" rx="8" ry="25" fill="#2E8B2E" transform="rotate(-12 110 145)"/>
+  <!-- Spathe bud - boat shape forming -->
+  <path d="M118 110 Q128 95 148 105" fill="#228B22" stroke="#1B6B1B" stroke-width="1.5"/>
+  <path d="M122 108 Q130 100 142 106" fill="#2E7D2E" opacity="0.7"/>
+  <!-- Hint of orange emerging -->
+  <path d="M132 102 Q136 96 140 100" fill="#FF8C00" opacity="0.5"/>
+</svg>

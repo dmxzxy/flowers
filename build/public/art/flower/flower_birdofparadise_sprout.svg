@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- Bird of paradise sprout - tall narrow leaf -->
+  <path d="M128 210 Q127 195 128 170" stroke="#228B22" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <!-- Tall narrow leaf -->
+  <ellipse cx="128" cy="155" rx="6" ry="20" fill="#228B22"/>
+  <ellipse cx="132" cy="160" rx="5" ry="16" fill="#2E8B2E" transform="rotate(5 132 160)"/>
+  <ellipse cx="128" cy="215" rx="30" ry="6" fill="#5C4033" opacity="0.3"/>
+</svg>

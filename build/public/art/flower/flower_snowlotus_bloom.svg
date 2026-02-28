@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- Snow lotus bloom - compact layered round petals, icy/crystalline -->
+  <!-- Stem -->
+  <path d="M128 220 Q126 175 128 120" stroke="#5F8A5F" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <!-- Basal leaves -->
+  <ellipse cx="105" cy="180" rx="25" ry="8" fill="#6B8E6B" transform="rotate(-25 105 180)"/>
+  <ellipse cx="151" cy="175" rx="23" ry="7" fill="#6B8E6B" transform="rotate(20 151 175)"/>
+  <!-- Outer petals - large round -->
+  <ellipse cx="128" cy="80" rx="32" ry="28" fill="#E0F0FF" opacity="0.7"/>
+  <ellipse cx="105" cy="90" rx="26" ry="24" fill="#E0F0FF" opacity="0.6" transform="rotate(-15 105 90)"/>
+  <ellipse cx="151" cy="90" rx="26" ry="24" fill="#E0F0FF" opacity="0.6" transform="rotate(15 151 90)"/>
+  <!-- Middle petals -->
+  <ellipse cx="128" cy="85" rx="24" ry="22" fill="#B0D4F1" opacity="0.7"/>
+  <ellipse cx="115" cy="88" rx="18" ry="20" fill="#B0D4F1" opacity="0.6" transform="rotate(-10 115 88)"/>
+  <ellipse cx="141" cy="88" rx="18" ry="20" fill="#B0D4F1" opacity="0.6" transform="rotate(10 141 88)"/>
+  <!-- Inner petals -->
+  <ellipse cx="128" cy="82" rx="16" ry="16" fill="#F0F8FF" opacity="0.8"/>
+  <ellipse cx="120" cy="84" rx="12" ry="14" fill="#F0F8FF" opacity="0.7" transform="rotate(-5 120 84)"/>
+  <ellipse cx="136" cy="84" rx="12" ry="14" fill="#F0F8FF" opacity="0.7" transform="rotate(5 136 84)"/>
+  <!-- Center -->
+  <circle cx="128" cy="83" r="8" fill="#D4ECFF"/>
+  <!-- Ice sparkles -->
+  <circle cx="118" cy="72" r="2.5" fill="#FFFFFF" opacity="0.9"/>
+  <circle cx="140" cy="75" r="2" fill="#FFFFFF" opacity="0.9"/>
+  <circle cx="128" cy="68" r="2" fill="#FFFFFF" opacity="0.8"/>
+  <circle cx="110" cy="85" r="1.5" fill="#FFFFFF" opacity="0.7"/>
+  <circle cx="146" cy="82" r="1.5" fill="#FFFFFF" opacity="0.7"/>
+</svg>
