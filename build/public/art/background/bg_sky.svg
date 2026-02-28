@@ -1,39 +1,50 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800" height="1400" viewBox="0 0 800 1400" preserveAspectRatio="xMidYMin slice">
   <defs>
+    <!-- 柔和暖调天空：降低饱和度，融入暖黄底色 -->
     <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#82C9E5"/>
-      <stop offset="40%" stop-color="#A8DCF0"/>
-      <stop offset="75%" stop-color="#D0EDF8"/>
-      <stop offset="100%" stop-color="#E8F5FC"/>
+      <stop offset="0%" stop-color="#9ABFCF"/>
+      <stop offset="30%" stop-color="#B5D4DF"/>
+      <stop offset="60%" stop-color="#D4E4E8"/>
+      <stop offset="85%" stop-color="#E6E8DD"/>
+      <stop offset="100%" stop-color="#EDE8D8"/>
+    </linearGradient>
+    <!-- 底部暖色渐变，模拟透过温室玻璃的暖光 -->
+    <linearGradient id="warmFog" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F5E6C8" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#F5E6C8" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#E8D5B0" stop-opacity="0.4"/>
     </linearGradient>
   </defs>
 
   <!-- 整片天空 -->
   <rect width="800" height="1400" fill="url(#sky)"/>
 
-  <!-- 太阳（右上方，暖光晕） -->
-  <circle cx="620" cy="100" r="100" fill="#FFF8DC" opacity="0.35"/>
-  <circle cx="620" cy="100" r="60" fill="#FFECB3" opacity="0.5"/>
-  <circle cx="620" cy="100" r="35" fill="#FFE082" opacity="0.8"/>
-  <circle cx="620" cy="100" r="18" fill="#FFD54F"/>
+  <!-- 暖色雾气覆盖 -->
+  <rect width="800" height="1400" fill="url(#warmFog)"/>
 
-  <!-- 云朵组 1 — 左上近处 -->
-  <g opacity="0.9">
-    <ellipse cx="140" cy="130" rx="85" ry="30" fill="white"/>
-    <ellipse cx="200" cy="118" rx="65" ry="26" fill="white"/>
-    <ellipse cx="100" cy="124" rx="50" ry="22" fill="#F5F5F5"/>
+  <!-- 太阳（右上方，暖光晕，扩大光晕范围） -->
+  <circle cx="620" cy="100" r="140" fill="#FFF8DC" opacity="0.2"/>
+  <circle cx="620" cy="100" r="90" fill="#FFECB3" opacity="0.35"/>
+  <circle cx="620" cy="100" r="50" fill="#FFE082" opacity="0.6"/>
+  <circle cx="620" cy="100" r="22" fill="#FFD54F" opacity="0.9"/>
+
+  <!-- 云朵组 1 — 左上近处（柔化） -->
+  <g opacity="0.7">
+    <ellipse cx="140" cy="130" rx="85" ry="30" fill="#F0EDE8"/>
+    <ellipse cx="200" cy="118" rx="65" ry="26" fill="#F5F2ED"/>
+    <ellipse cx="100" cy="124" rx="50" ry="22" fill="#EAE6E0"/>
   </g>
 
   <!-- 云朵组 2 — 右中远处 -->
-  <g opacity="0.65">
-    <ellipse cx="500" cy="200" rx="95" ry="32" fill="white"/>
-    <ellipse cx="570" cy="188" rx="70" ry="28" fill="white"/>
-    <ellipse cx="450" cy="195" rx="55" ry="24" fill="#F5F5F5"/>
+  <g opacity="0.5">
+    <ellipse cx="500" cy="200" rx="95" ry="32" fill="#F0EDE8"/>
+    <ellipse cx="570" cy="188" rx="70" ry="28" fill="#F5F2ED"/>
+    <ellipse cx="450" cy="195" rx="55" ry="24" fill="#EAE6E0"/>
   </g>
 
   <!-- 云朵组 3 — 左下更远 -->
-  <g opacity="0.4">
-    <ellipse cx="250" cy="310" rx="110" ry="28" fill="white"/>
-    <ellipse cx="330" cy="300" rx="75" ry="22" fill="white"/>
+  <g opacity="0.3">
+    <ellipse cx="250" cy="310" rx="110" ry="28" fill="#EDE8E0"/>
+    <ellipse cx="330" cy="300" rx="75" ry="22" fill="#F0EBE3"/>
   </g>
 </svg>
