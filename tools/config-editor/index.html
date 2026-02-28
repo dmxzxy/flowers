@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌸 花朵游戏 - 配置编辑器</title>
+<style>
+/* ==================== Reset & Base ==================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --pink: #EC407A; --pink-light: #FCE4EC; --pink-dark: #AD1457;
+  --purple: #AB47BC; --green: #66BB6A; --blue: #42A5F5;
+  --orange: #FF9800; --red: #EF5350; --grey: #757575;
+  --bg: #FFF5F8; --card: #fff; --border: #F8BBD0;
+  --radius: 12px; --shadow: 0 2px 12px rgba(183,110,121,0.1);
+}
+body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: #333; line-height: 1.5; }
+button { cursor: pointer; font-family: inherit; }
+input, select, textarea { font-family: inherit; font-size: 13px; }
+
+/* ==================== Layout ==================== */
+.app { display: flex; height: 100vh; }
+.sidebar { width: 220px; background: linear-gradient(180deg, #FFFAF5, var(--pink-light)); border-right: 1px solid var(--border); padding: 20px 0; flex-shrink: 0; display: flex; flex-direction: column; }
+.sidebar h1 { font-size: 18px; color: var(--pink-dark); padding: 0 20px 16px; border-bottom: 1px solid var(--border); }
+.sidebar h1 span { font-size: 22px; }
+.nav { flex: 1; padding: 12px 0; display: flex; flex-direction: column; gap: 2px; }
+.nav-item { padding: 10px 20px; font-size: 14px; border: none; background: none; text-align: left; color: #666; border-left: 3px solid transparent; transition: all 0.15s; }
+.nav-item:hover { background: rgba(236,64,122,0.06); color: #333; }
+.nav-item.active { background: rgba(236,64,122,0.1); color: var(--pink-dark); border-left-color: var(--pink); font-weight: 600; }
+.nav-item .nav-icon { margin-right: 8px; }
+.sidebar-footer { padding: 12px 20px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
+.main { flex: 1; overflow-y: auto; padding: 24px 32px; }
+
+/* ==================== Section ==================== */
+.section { display: none; }
+.section.active { display: block; }
+.section-title { font-size: 22px; color: var(--pink-dark); margin-bottom: 6px; }
+.section-desc { color: var(--grey); font-size: 13px; margin-bottom: 20px; }
+
+/* ==================== Card / Form ==================== */
+.card { background: var(--card); border: 1.5px solid #F3E5F5; border-radius: var(--radius); padding: 18px 20px; margin-bottom: 16px; box-shadow: var(--shadow); }
+.card-title { font-size: 15px; font-weight: 600; color: var(--pink-dark); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px; }
+.form-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+.form-group { display: flex; flex-direction: column; gap: 4px; }
+.form-group label { font-size: 12px; color: var(--grey); font-weight: 500; }
+.form-group input, .form-group select { padding: 7px 10px; border: 1.5px solid #E0E0E0; border-radius: 8px; outline: none; transition: border-color 0.2s; }
+.form-group input:focus, .form-group select:focus { border-color: var(--pink); }
+.form-group input[type="color"] { height: 36px; padding: 2px; cursor: pointer; }
+.form-group .hint { font-size: 11px; color: #bbb; }
+
+/* ==================== Table ==================== */
+.table-wrap { overflow-x: auto; margin-top: 8px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: var(--pink-light); color: var(--pink-dark); font-weight: 600; padding: 8px 10px; text-align: center; white-space: nowrap; position: sticky; top: 0; }
+td { padding: 6px 8px; text-align: center; border-bottom: 1px solid #f0f0f0; }
+td input { width: 100%; text-align: center; border: 1px solid #e8e8e8; border-radius: 6px; padding: 4px 6px; }
+td input:focus { border-color: var(--pink); outline: none; }
+tr:hover td { background: #FFF5F8; }
+.row-actions { display: flex; gap: 4px; justify-content: center; }
+
+/* ==================== Buttons ==================== */
+.btn { padding: 8px 16px; border: none; border-radius: 10px; font-size: 13px; font-weight: 600; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+.btn-pink { background: linear-gradient(135deg, #F48FB1, var(--pink)); color: #fff; }
+.btn-pink:hover { background: linear-gradient(135deg, var(--pink), var(--pink-dark)); transform: translateY(-1px); }
+.btn-green { background: linear-gradient(135deg, #A5D6A7, var(--green)); color: #fff; }
+.btn-green:hover { background: linear-gradient(135deg, var(--green), #43A047); }
+.btn-purple { background: linear-gradient(135deg, #CE93D8, var(--purple)); color: #fff; }
+.btn-purple:hover { background: linear-gradient(135deg, var(--purple), #8E24AA); }
+.btn-orange { background: linear-gradient(135deg, #FFE0B2, var(--orange)); color: #fff; }
+.btn-orange:hover { background: linear-gradient(135deg, var(--orange), #F57C00); }
+.btn-red { background: linear-gradient(135deg, #EF9A9A, var(--red)); color: #fff; }
+.btn-red:hover { background: linear-gradient(135deg, var(--red), #C62828); }
+.btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--pink-dark); }
+.btn-outline:hover { background: var(--pink-light); }
+.btn-sm { padding: 4px 10px; font-size: 12px; border-radius: 8px; }
+.btn-block { width: 100%; justify-content: center; }
+
+/* ==================== Flower Card ==================== */
+.flower-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.flower-card { background: var(--card); border: 1.5px solid #F3E5F5; border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); position: relative; }
+.flower-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.flower-color-dot { width: 28px; height: 28px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.15); flex-shrink: 0; }
+.flower-card-name { font-size: 16px; font-weight: 700; color: #333; }
+.flower-card-id { font-size: 11px; color: #aaa; font-family: monospace; }
+.flower-card .form-grid { grid-template-columns: 1fr 1fr; gap: 8px 12px; }
+.flower-card-actions { display: flex; gap: 8px; margin-top: 12px; justify-content: flex-end; }
+.flower-card-delete { position: absolute; top: 10px; right: 10px; }
+
+/* ==================== Export Panel ==================== */
+.export-area { position: relative; }
+.export-area textarea { width: 100%; height: 400px; font-family: 'Cascadia Code', 'Fira Code', Consolas, monospace; font-size: 12px; line-height: 1.6; padding: 16px; border: 1.5px solid #E0E0E0; border-radius: var(--radius); background: #FAFAFA; resize: vertical; }
+.export-tabs { display: flex; gap: 4px; margin-bottom: 10px; }
+.export-tab { padding: 6px 14px; border: 1.5px solid var(--border); background: transparent; border-radius: 8px 8px 0 0; font-size: 13px; color: var(--grey); }
+.export-tab.active { background: var(--pink-light); color: var(--pink-dark); font-weight: 600; border-bottom-color: var(--pink-light); }
+.copy-toast { position: fixed; top: 20px; right: 20px; background: var(--green); color: #fff; padding: 10px 20px; border-radius: 10px; font-weight: 600; opacity: 0; transition: opacity 0.3s; z-index: 999; }
+.copy-toast.show { opacity: 1; }
+
+/* ==================== Player Level ==================== */
+.unlock-tags { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; }
+.unlock-tag { font-size: 11px; background: var(--pink-light); color: var(--pink-dark); padding: 2px 8px; border-radius: 6px; }
+.unlock-select { min-width: 80px; }
+
+/* ==================== Pot Skins ==================== */
+.skin-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+
+/* ==================== Toast ==================== */
+.toast-container { position: fixed; top: 20px; right: 20px; z-index: 999; display: flex; flex-direction: column; gap: 8px; }
+.toast { padding: 10px 20px; border-radius: 10px; font-weight: 600; font-size: 13px; color: #fff; animation: toastIn 0.3s ease; }
+.toast-success { background: var(--green); }
+.toast-error { background: var(--red); }
+@keyframes toastIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h1><span>🌸</span> 配置编辑器</h1>
+    <div class="nav">
+      <button class="nav-item active" data-tab="game"><span class="nav-icon">⚙️</span>全局配置</button>
+      <button class="nav-item" data-tab="flowers"><span class="nav-icon">🌷</span>花朵品种</button>
+      <button class="nav-item" data-tab="levels"><span class="nav-icon">⬆️</span>花朵等级</button>
+      <button class="nav-item" data-tab="player"><span class="nav-icon">👤</span>玩家等级</button>
+      <button class="nav-item" data-tab="task"><span class="nav-icon">🛒</span>采购任务</button>
+      <button class="nav-item" data-tab="skins"><span class="nav-icon">🪴</span>花盆皮肤</button>
+      <button class="nav-item" data-tab="export"><span class="nav-icon">📦</span>导出配置</button>
+    </div>
+    <div class="sidebar-footer">
+      <button class="btn btn-green btn-block" onclick="saveToLocalStorage()">💾 暂存</button>
+      <button class="btn btn-outline btn-block" onclick="loadFromLocalStorage()">📂 读取暂存</button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+
+    <!-- ======== 全局配置 ======== -->
+    <div id="tab-game" class="section active">
+      <h2 class="section-title">⚙️ 全局配置</h2>
+      <p class="section-desc">调整花盆网格、水量、金币、收购订单等全局参数</p>
+
+      <div class="card">
+        <div class="card-title">🪴 花盆网格</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>花盆列数 GRID_COLS</label>
+            <input type="number" id="g-gridCols" min="1" max="10" value="4">
+          </div>
+          <div class="form-group">
+            <label>花盆行数 GRID_ROWS</label>
+            <input type="number" id="g-gridRows" min="1" max="20" value="7">
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">💧 水量</div>
+        <div class="form-grid form-grid-3">
+          <div class="form-group">
+            <label>初始水量</label>
+            <input type="number" id="g-initWater" value="100">
+          </div>
+          <div class="form-group">
+            <label>水量上限</label>
+            <input type="number" id="g-maxWater" value="100">
+          </div>
+          <div class="form-group">
+            <label>恢复间隔 (毫秒)</label>
+            <input type="number" id="g-waterRegenInterval" value="10000">
+            <span class="hint">10000 = 10秒</span>
+          </div>
+          <div class="form-group">
+            <label>每次恢复量</label>
+            <input type="number" id="g-waterRegenAmount" value="1">
+          </div>
+          <div class="form-group">
+            <label>浇水消耗</label>
+            <input type="number" id="g-waterCost" value="1">
+          </div>
+          <div class="form-group">
+            <label>缺水警告 (毫秒)</label>
+            <input type="number" id="g-noWaterWarning" value="2000">
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">💰 金币</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>初始金币</label>
+            <input type="number" id="g-initCoins" value="0">
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📋 收购订单</div>
+        <div class="form-grid form-grid-3">
+          <div class="form-group">
+            <label>生成间隔 (毫秒)</label>
+            <input type="number" id="g-buyInterval" value="45000">
+            <span class="hint">45000 = 45秒</span>
+          </div>
+          <div class="form-group">
+            <label>有效期 (毫秒)</label>
+            <input type="number" id="g-buyDuration" value="60000">
+          </div>
+          <div class="form-group">
+            <label>首次延迟 (毫秒)</label>
+            <input type="number" id="g-buyFirstDelay" value="10000">
+          </div>
+          <div class="form-group">
+            <label>数量下限</label>
+            <input type="number" id="g-buyAmountMin" value="3">
+          </div>
+          <div class="form-group">
+            <label>数量上限</label>
+            <input type="number" id="g-buyAmountMax" value="10">
+          </div>
+          <div class="form-group">
+            <label>最大订单数</label>
+            <input type="number" id="g-buyMaxSlots" value="3">
+          </div>
+          <div class="form-group">
+            <label>倍率下限</label>
+            <input type="number" id="g-buyPriceMin" value="1.5" step="0.1">
+          </div>
+          <div class="form-group">
+            <label>倍率上限</label>
+            <input type="number" id="g-buyPriceMax" value="2.5" step="0.1">
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">👆 拖拽</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>触摸拖拽阈值 (px)</label>
+            <input type="number" id="g-dragThreshold" value="8">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======== 花朵品种 ======== -->
+    <div id="tab-flowers" class="section">
+      <h2 class="section-title">🌷 花朵品种</h2>
+      <p class="section-desc">管理所有花朵品种，新增/编辑/删除花朵</p>
+      <div style="margin-bottom: 14px;">
+        <button class="btn btn-pink" onclick="addFlower()">➕ 新增花朵</button>
+      </div>
+      <div id="flower-list" class="flower-cards"></div>
+    </div>
+
+    <!-- ======== 花朵等级 ======== -->
+    <div id="tab-levels" class="section">
+      <h2 class="section-title">⬆️ 花朵等级配置</h2>
+      <p class="section-desc">编辑 20 级属性数值表（所有花朵共用）</p>
+      <div style="margin-bottom: 10px; display: flex; gap: 8px;">
+        <button class="btn btn-pink btn-sm" onclick="addLevel()">➕ 新增等级</button>
+        <button class="btn btn-outline btn-sm" onclick="removeLevelLast()">➖ 删除末级</button>
+      </div>
+      <div class="card table-wrap">
+        <table id="level-table">
+          <thead>
+            <tr>
+              <th>等级</th>
+              <th>收割次数</th>
+              <th>每次产量</th>
+              <th>冷却(秒)</th>
+              <th>升级金币</th>
+              <th>升级魂</th>
+              <th>升级提示</th>
+            </tr>
+          </thead>
+          <tbody id="level-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ======== 玩家等级 ======== -->
+    <div id="tab-player" class="section">
+      <h2 class="section-title">👤 玩家等级</h2>
+      <p class="section-desc">调整每级所需经验、解锁花朵、经验获取参数</p>
+
+      <div class="card">
+        <div class="card-title">🎮 经验参数</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>每次收割获得 XP</label>
+            <input type="number" id="p-xpPerHarvest" value="5">
+          </div>
+          <div class="form-group">
+            <label>魂掉率 (0~1)</label>
+            <input type="number" id="p-soulDropChance" value="0.3" step="0.05" min="0" max="1">
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 10px; display: flex; gap: 8px;">
+        <button class="btn btn-pink btn-sm" onclick="addPlayerLevel()">➕ 新增等级</button>
+        <button class="btn btn-outline btn-sm" onclick="removePlayerLevelLast()">➖ 删除末级</button>
+      </div>
+      <div class="card table-wrap">
+        <table id="player-table">
+          <thead>
+            <tr>
+              <th>等级</th>
+              <th>累计 XP</th>
+              <th>解锁花朵</th>
+            </tr>
+          </thead>
+          <tbody id="player-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ======== 采购任务 ======== -->
+    <div id="tab-task" class="section">
+      <h2 class="section-title">🛒 采购任务参数</h2>
+      <p class="section-desc">调整采购任务的随机生成范围和奖励倍率</p>
+
+      <div class="card">
+        <div class="form-grid form-grid-3">
+          <div class="form-group">
+            <label>任务数量</label>
+            <input type="number" id="t-taskCount" value="5">
+          </div>
+          <div class="form-group">
+            <label>需求品种 最少</label>
+            <input type="number" id="t-typesMin" value="1">
+          </div>
+          <div class="form-group">
+            <label>需求品种 最多</label>
+            <input type="number" id="t-typesMax" value="3">
+          </div>
+          <div class="form-group">
+            <label>单种数量 最少</label>
+            <input type="number" id="t-amountMin" value="1">
+          </div>
+          <div class="form-group">
+            <label>单种数量 最多</label>
+            <input type="number" id="t-amountMax" value="4">
+          </div>
+          <div class="form-group">
+            <label>冷却 (毫秒)</label>
+            <input type="number" id="t-cooldown" value="60000">
+            <span class="hint">60000 = 1分钟</span>
+          </div>
+          <div class="form-group">
+            <label>金币奖励倍率</label>
+            <input type="number" id="t-coinMul" value="1.5" step="0.1">
+          </div>
+          <div class="form-group">
+            <label>经验奖励倍率</label>
+            <input type="number" id="t-xpMul" value="0.5" step="0.1">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======== 花盆皮肤 ======== -->
+    <div id="tab-skins" class="section">
+      <h2 class="section-title">🪴 花盆皮肤</h2>
+      <p class="section-desc">管理花盆皮肤，设置名称、图片路径和解锁费用</p>
+      <div style="margin-bottom: 14px;">
+        <button class="btn btn-pink" onclick="addSkin()">➕ 新增皮肤</button>
+      </div>
+      <div id="skin-list" class="skin-cards"></div>
+    </div>
+
+    <!-- ======== 导出 ======== -->
+    <div id="tab-export" class="section">
+      <h2 class="section-title">📦 导出配置</h2>
+      <p class="section-desc">生成 TypeScript 配置文件，复制后粘贴到项目对应文件即可</p>
+
+      <div style="margin-bottom: 14px; display: flex; gap: 8px; flex-wrap: wrap;">
+        <button class="btn btn-green" onclick="doExport('game')">📋 game.config.ts</button>
+        <button class="btn btn-purple" onclick="doExport('flower')">📋 flower.config.ts</button>
+        <button class="btn btn-orange" onclick="doExport('types')">📋 types/index.ts</button>
+        <button class="btn btn-pink" onclick="doExport('all')">📦 导出全部 (JSON)</button>
+      </div>
+
+      <div class="export-tabs">
+        <button class="export-tab active" data-export="preview" onclick="switchExportTab(this)">预览</button>
+      </div>
+      <div class="export-area">
+        <textarea id="export-output" readonly placeholder="点击上方按钮生成配置文件内容..."></textarea>
+        <button class="btn btn-green" style="margin-top: 10px;" onclick="copyExport()">📋 复制到剪贴板</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast-container" id="toast-container"></div>
+
+<script>
+// ==================== State ====================
+const state = {
+  game: {
+    gridCols: 4, gridRows: 7,
+    initWater: 100, maxWater: 100, waterRegenInterval: 10000, waterRegenAmount: 1, waterCost: 1, noWaterWarning: 2000,
+    initCoins: 0,
+    buyInterval: 45000, buyDuration: 60000, buyFirstDelay: 10000,
+    buyAmountMin: 3, buyAmountMax: 10, buyMaxSlots: 3,
+    buyPriceMin: 1.5, buyPriceMax: 2.5,
+    dragThreshold: 8,
+  },
+  flowers: [
+    { id: 'rose', name: '玫瑰', color: '#E74C3C', basePrice: 5 },
+    { id: 'tulip', name: '郁金香', color: '#F1C40F', basePrice: 5 },
+    { id: 'daisy', name: '雏菊', color: '#FFFFFF', basePrice: 5 },
+    { id: 'sunflower', name: '向日葵', color: '#F39C12', basePrice: 8 },
+    { id: 'lavender', name: '薰衣草', color: '#9B59B6', basePrice: 8 },
+    { id: 'orchid', name: '兰花', color: '#8E44AD', basePrice: 12 },
+    { id: 'peony', name: '牡丹', color: '#FFB6C1', basePrice: 12 },
+    { id: 'carnation', name: '康乃馨', color: '#FF69B4', basePrice: 15 },
+    { id: 'chrysanthemum', name: '菊花', color: '#DDA0DD', basePrice: 15 },
+    { id: 'hibiscus', name: '扶桑', color: '#FF6347', basePrice: 20 },
+  ],
+  levels: [
+    { level: 1, maxHarvests: 1, yieldPerHarvest: 1, cooldownSeconds: 0, upgradeCostCoins: 50, upgradeCostSouls: 1, upgradeLabel: '↑ 收割次数' },
+    { level: 2, maxHarvests: 2, yieldPerHarvest: 1, cooldownSeconds: 30, upgradeCostCoins: 150, upgradeCostSouls: 2, upgradeLabel: '↑ 收割产量' },
+    { level: 3, maxHarvests: 2, yieldPerHarvest: 2, cooldownSeconds: 25, upgradeCostCoins: 300, upgradeCostSouls: 3, upgradeLabel: '↓ 冷却时间' },
+    { level: 4, maxHarvests: 3, yieldPerHarvest: 2, cooldownSeconds: 20, upgradeCostCoins: 500, upgradeCostSouls: 5, upgradeLabel: '↑ 收割产量' },
+    { level: 5, maxHarvests: 3, yieldPerHarvest: 3, cooldownSeconds: 18, upgradeCostCoins: 800, upgradeCostSouls: 7, upgradeLabel: '↑ 收割次数' },
+    { level: 6, maxHarvests: 4, yieldPerHarvest: 3, cooldownSeconds: 15, upgradeCostCoins: 1200, upgradeCostSouls: 10, upgradeLabel: '↓ 冷却时间' },
+    { level: 7, maxHarvests: 4, yieldPerHarvest: 3, cooldownSeconds: 12, upgradeCostCoins: 1800, upgradeCostSouls: 13, upgradeLabel: '↑ 收割产量' },
+    { level: 8, maxHarvests: 4, yieldPerHarvest: 4, cooldownSeconds: 12, upgradeCostCoins: 2500, upgradeCostSouls: 16, upgradeLabel: '↑ 收割次数' },
+    { level: 9, maxHarvests: 5, yieldPerHarvest: 4, cooldownSeconds: 10, upgradeCostCoins: 3500, upgradeCostSouls: 20, upgradeLabel: '↓ 冷却时间' },
+    { level: 10, maxHarvests: 5, yieldPerHarvest: 4, cooldownSeconds: 8, upgradeCostCoins: 5000, upgradeCostSouls: 25, upgradeLabel: '↑ 收割产量' },
+    { level: 11, maxHarvests: 5, yieldPerHarvest: 5, cooldownSeconds: 8, upgradeCostCoins: 7000, upgradeCostSouls: 30, upgradeLabel: '↑ 收割次数' },
+    { level: 12, maxHarvests: 6, yieldPerHarvest: 5, cooldownSeconds: 7, upgradeCostCoins: 9500, upgradeCostSouls: 36, upgradeLabel: '↓ 冷却时间' },
+    { level: 13, maxHarvests: 6, yieldPerHarvest: 5, cooldownSeconds: 6, upgradeCostCoins: 12000, upgradeCostSouls: 42, upgradeLabel: '↑ 收割产量' },
+    { level: 14, maxHarvests: 6, yieldPerHarvest: 6, cooldownSeconds: 6, upgradeCostCoins: 16000, upgradeCostSouls: 50, upgradeLabel: '↑ 收割次数' },
+    { level: 15, maxHarvests: 7, yieldPerHarvest: 6, cooldownSeconds: 5, upgradeCostCoins: 20000, upgradeCostSouls: 58, upgradeLabel: '↓ 冷却时间' },
+    { level: 16, maxHarvests: 7, yieldPerHarvest: 6, cooldownSeconds: 4, upgradeCostCoins: 26000, upgradeCostSouls: 68, upgradeLabel: '↑ 收割产量' },
+    { level: 17, maxHarvests: 7, yieldPerHarvest: 7, cooldownSeconds: 4, upgradeCostCoins: 33000, upgradeCostSouls: 80, upgradeLabel: '↑ 收割次数' },
+    { level: 18, maxHarvests: 8, yieldPerHarvest: 7, cooldownSeconds: 3, upgradeCostCoins: 42000, upgradeCostSouls: 95, upgradeLabel: '↓ 冷却时间' },
+    { level: 19, maxHarvests: 8, yieldPerHarvest: 8, cooldownSeconds: 2, upgradeCostCoins: 55000, upgradeCostSouls: 115, upgradeLabel: '↑ 收割产量' },
+    { level: 20, maxHarvests: 8, yieldPerHarvest: 9, cooldownSeconds: 2, upgradeCostCoins: 0, upgradeCostSouls: 0, upgradeLabel: '' },
+  ],
+  playerLevels: [
+    { level: 1, xpRequired: 0, unlockedFlowers: ['rose', 'tulip', 'daisy'] },
+    { level: 2, xpRequired: 20, unlockedFlowers: ['sunflower', 'lavender'] },
+    { level: 3, xpRequired: 50, unlockedFlowers: ['orchid', 'peony'] },
+    { level: 4, xpRequired: 100, unlockedFlowers: ['carnation', 'chrysanthemum'] },
+    { level: 5, xpRequired: 200, unlockedFlowers: ['hibiscus'] },
+    { level: 6, xpRequired: 350, unlockedFlowers: [] },
+    { level: 7, xpRequired: 550, unlockedFlowers: [] },
+    { level: 8, xpRequired: 800, unlockedFlowers: [] },
+    { level: 9, xpRequired: 1100, unlockedFlowers: [] },
+    { level: 10, xpRequired: 1500, unlockedFlowers: [] },
+  ],
+  task: {
+    taskCount: 5, typesMin: 1, typesMax: 3,
+    amountMin: 1, amountMax: 4, cooldown: 60000,
+    coinMul: 1.5, xpMul: 0.5,
+  },
+  xpPerHarvest: 5,
+  soulDropChance: 0.3,
+  skins: [
+    { id: 'default', name: '经典赤陶', description: '经典的赤陶花盆，温暖朴素', image: '/art/pot/pot_default.svg', unlockCost: 0 },
+    { id: 'ceramic_blue', name: '青花瓷盆', description: '典雅的青花瓷花盆，别具一格', image: '/art/pot/pot_ceramic_blue.svg', unlockCost: 500 },
+  ],
+};
+
+// ==================== Tab Navigation ====================
+document.querySelectorAll('.nav-item').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ==================== Toast ====================
+function toast(msg, type = 'success') {
+  const el = document.createElement('div');
+  el.className = `toast toast-${type}`;
+  el.textContent = msg;
+  document.getElementById('toast-container').appendChild(el);
+  setTimeout(() => el.remove(), 2500);
+}
+
+// ==================== Game Config Sync ====================
+function syncGameFromUI() {
+  const g = state.game;
+  g.gridCols = +$('#g-gridCols').value;
+  g.gridRows = +$('#g-gridRows').value;
+  g.initWater = +$('#g-initWater').value;
+  g.maxWater = +$('#g-maxWater').value;
+  g.waterRegenInterval = +$('#g-waterRegenInterval').value;
+  g.waterRegenAmount = +$('#g-waterRegenAmount').value;
+  g.waterCost = +$('#g-waterCost').value;
+  g.noWaterWarning = +$('#g-noWaterWarning').value;
+  g.initCoins = +$('#g-initCoins').value;
+  g.buyInterval = +$('#g-buyInterval').value;
+  g.buyDuration = +$('#g-buyDuration').value;
+  g.buyFirstDelay = +$('#g-buyFirstDelay').value;
+  g.buyAmountMin = +$('#g-buyAmountMin').value;
+  g.buyAmountMax = +$('#g-buyAmountMax').value;
+  g.buyMaxSlots = +$('#g-buyMaxSlots').value;
+  g.buyPriceMin = +$('#g-buyPriceMin').value;
+  g.buyPriceMax = +$('#g-buyPriceMax').value;
+  g.dragThreshold = +$('#g-dragThreshold').value;
+}
+
+function syncGameToUI() {
+  const g = state.game;
+  $('#g-gridCols').value = g.gridCols;
+  $('#g-gridRows').value = g.gridRows;
+  $('#g-initWater').value = g.initWater;
+  $('#g-maxWater').value = g.maxWater;
+  $('#g-waterRegenInterval').value = g.waterRegenInterval;
+  $('#g-waterRegenAmount').value = g.waterRegenAmount;
+  $('#g-waterCost').value = g.waterCost;
+  $('#g-noWaterWarning').value = g.noWaterWarning;
+  $('#g-initCoins').value = g.initCoins;
+  $('#g-buyInterval').value = g.buyInterval;
+  $('#g-buyDuration').value = g.buyDuration;
+  $('#g-buyFirstDelay').value = g.buyFirstDelay;
+  $('#g-buyAmountMin').value = g.buyAmountMin;
+  $('#g-buyAmountMax').value = g.buyAmountMax;
+  $('#g-buyMaxSlots').value = g.buyMaxSlots;
+  $('#g-buyPriceMin').value = g.buyPriceMin;
+  $('#g-buyPriceMax').value = g.buyPriceMax;
+  $('#g-dragThreshold').value = g.dragThreshold;
+}
+
+// Auto-sync game inputs on change
+document.querySelectorAll('#tab-game input').forEach(el => {
+  el.addEventListener('change', syncGameFromUI);
+});
+
+// ==================== Task Config Sync ====================
+function syncTaskFromUI() {
+  const t = state.task;
+  t.taskCount = +$('#t-taskCount').value;
+  t.typesMin = +$('#t-typesMin').value;
+  t.typesMax = +$('#t-typesMax').value;
+  t.amountMin = +$('#t-amountMin').value;
+  t.amountMax = +$('#t-amountMax').value;
+  t.cooldown = +$('#t-cooldown').value;
+  t.coinMul = +$('#t-coinMul').value;
+  t.xpMul = +$('#t-xpMul').value;
+  state.xpPerHarvest = +$('#p-xpPerHarvest').value;
+  state.soulDropChance = +$('#p-soulDropChance').value;
+}
+
+function syncTaskToUI() {
+  const t = state.task;
+  $('#t-taskCount').value = t.taskCount;
+  $('#t-typesMin').value = t.typesMin;
+  $('#t-typesMax').value = t.typesMax;
+  $('#t-amountMin').value = t.amountMin;
+  $('#t-amountMax').value = t.amountMax;
+  $('#t-cooldown').value = t.cooldown;
+  $('#t-coinMul').value = t.coinMul;
+  $('#t-xpMul').value = t.xpMul;
+  $('#p-xpPerHarvest').value = state.xpPerHarvest;
+  $('#p-soulDropChance').value = state.soulDropChance;
+}
+
+document.querySelectorAll('#tab-task input, #tab-player input').forEach(el => {
+  el.addEventListener('change', syncTaskFromUI);
+});
+
+// ==================== Flower Cards ====================
+function renderFlowers() {
+  const container = $('#flower-list');
+  container.innerHTML = state.flowers.map((f, i) => `
+    <div class="flower-card" data-idx="${i}">
+      <button class="btn btn-red btn-sm flower-card-delete" onclick="deleteFlower(${i})" title="删除">🗑</button>
+      <div class="flower-card-header">
+        <div class="flower-color-dot" style="background: ${f.color}"></div>
+        <div>
+          <div class="flower-card-name">${f.name}</div>
+          <div class="flower-card-id">${f.id}</div>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>ID (英文)</label>
+          <input type="text" value="${f.id}" onchange="updateFlower(${i}, 'id', this.value)" placeholder="如 lily">
+        </div>
+        <div class="form-group">
+          <label>名称</label>
+          <input type="text" value="${f.name}" onchange="updateFlower(${i}, 'name', this.value)">
+        </div>
+        <div class="form-group">
+          <label>颜色</label>
+          <input type="color" value="${f.color}" onchange="updateFlower(${i}, 'color', this.value)">
+        </div>
+        <div class="form-group">
+          <label>基础售价</label>
+          <input type="number" value="${f.basePrice}" min="1" onchange="updateFlower(${i}, 'basePrice', +this.value)">
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function addFlower() {
+  const idx = state.flowers.length + 1;
+  state.flowers.push({
+    id: `flower_${idx}`,
+    name: `新花朵${idx}`,
+    color: '#FF9800',
+    basePrice: 10,
+  });
+  renderFlowers();
+  toast('已添加新花朵');
+}
+
+function updateFlower(idx, key, value) {
+  state.flowers[idx][key] = value;
+  if (key === 'color' || key === 'name' || key === 'id') renderFlowers();
+}
+
+function deleteFlower(idx) {
+  if (!confirm(`确定删除「${state.flowers[idx].name}」？`)) return;
+  state.flowers.splice(idx, 1);
+  renderFlowers();
+  toast('已删除花朵', 'error');
+}
+
+// ==================== Level Table ====================
+function renderLevels() {
+  const tbody = $('#level-tbody');
+  tbody.innerHTML = state.levels.map((lv, i) => `
+    <tr>
+      <td><strong>${lv.level}</strong></td>
+      <td><input type="number" value="${lv.maxHarvests}" min="1" onchange="updateLevel(${i},'maxHarvests',+this.value)"></td>
+      <td><input type="number" value="${lv.yieldPerHarvest}" min="1" onchange="updateLevel(${i},'yieldPerHarvest',+this.value)"></td>
+      <td><input type="number" value="${lv.cooldownSeconds}" min="0" onchange="updateLevel(${i},'cooldownSeconds',+this.value)"></td>
+      <td><input type="number" value="${lv.upgradeCostCoins}" min="0" onchange="updateLevel(${i},'upgradeCostCoins',+this.value)"></td>
+      <td><input type="number" value="${lv.upgradeCostSouls}" min="0" onchange="updateLevel(${i},'upgradeCostSouls',+this.value)"></td>
+      <td><input type="text" value="${lv.upgradeLabel || ''}" onchange="updateLevel(${i},'upgradeLabel',this.value)" style="min-width:100px"></td>
+    </tr>
+  `).join('');
+}
+
+function updateLevel(idx, key, value) {
+  state.levels[idx][key] = value;
+}
+
+function addLevel() {
+  const last = state.levels[state.levels.length - 1];
+  state.levels.push({
+    level: last.level + 1,
+    maxHarvests: last.maxHarvests,
+    yieldPerHarvest: last.yieldPerHarvest + 1,
+    cooldownSeconds: Math.max(0, last.cooldownSeconds - 1),
+    upgradeCostCoins: Math.round(last.upgradeCostCoins * 1.3),
+    upgradeCostSouls: Math.round(last.upgradeCostSouls * 1.2),
+    upgradeLabel: '',
+  });
+  renderLevels();
+  toast('已添加新等级');
+}
+
+function removeLevelLast() {
+  if (state.levels.length <= 1) return;
+  state.levels.pop();
+  renderLevels();
+  toast('已删除末级', 'error');
+}
+
+// ==================== Player Levels ====================
+function renderPlayerLevels() {
+  const tbody = $('#player-tbody');
+  const allFlowerIds = state.flowers.map(f => f.id);
+  tbody.innerHTML = state.playerLevels.map((pl, i) => {
+    const unlockOptions = allFlowerIds.map(fid => {
+      const checked = pl.unlockedFlowers.includes(fid) ? 'checked' : '';
+      const fname = state.flowers.find(f => f.id === fid)?.name || fid;
+      return `<label style="display:inline-flex;align-items:center;gap:3px;font-size:11px;margin:2px 4px;"><input type="checkbox" ${checked} onchange="toggleUnlock(${i},'${fid}',this.checked)">${fname}</label>`;
+    }).join('');
+    return `
+      <tr>
+        <td><strong>${pl.level}</strong></td>
+        <td><input type="number" value="${pl.xpRequired}" min="0" onchange="updatePlayerLevel(${i},'xpRequired',+this.value)"></td>
+        <td style="text-align:left">${unlockOptions}</td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function updatePlayerLevel(idx, key, value) {
+  state.playerLevels[idx][key] = value;
+}
+
+function toggleUnlock(lvIdx, flowerId, checked) {
+  const arr = state.playerLevels[lvIdx].unlockedFlowers;
+  if (checked && !arr.includes(flowerId)) arr.push(flowerId);
+  if (!checked) {
+    const i = arr.indexOf(flowerId);
+    if (i >= 0) arr.splice(i, 1);
+  }
+}
+
+function addPlayerLevel() {
+  const last = state.playerLevels[state.playerLevels.length - 1];
+  state.playerLevels.push({
+    level: last.level + 1,
+    xpRequired: Math.round(last.xpRequired * 1.5),
+    unlockedFlowers: [],
+  });
+  renderPlayerLevels();
+  toast('已添加新玩家等级');
+}
+
+function removePlayerLevelLast() {
+  if (state.playerLevels.length <= 1) return;
+  state.playerLevels.pop();
+  renderPlayerLevels();
+  toast('已删除末级', 'error');
+}
+
+// ==================== Pot Skins ====================
+function renderSkins() {
+  const container = $('#skin-list');
+  container.innerHTML = state.skins.map((s, i) => `
+    <div class="card">
+      <div class="card-title" style="justify-content: space-between;">
+        🪴 ${s.name}
+        <button class="btn btn-red btn-sm" onclick="deleteSkin(${i})">🗑</button>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>ID</label>
+          <input type="text" value="${s.id}" onchange="state.skins[${i}].id=this.value">
+        </div>
+        <div class="form-group">
+          <label>名称</label>
+          <input type="text" value="${s.name}" onchange="state.skins[${i}].name=this.value;renderSkins()">
+        </div>
+        <div class="form-group">
+          <label>描述</label>
+          <input type="text" value="${s.description}" onchange="state.skins[${i}].description=this.value">
+        </div>
+        <div class="form-group">
+          <label>图片路径</label>
+          <input type="text" value="${s.image}" onchange="state.skins[${i}].image=this.value">
+        </div>
+        <div class="form-group">
+          <label>解锁费用 (0=免费)</label>
+          <input type="number" value="${s.unlockCost}" min="0" onchange="state.skins[${i}].unlockCost=+this.value">
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function addSkin() {
+  state.skins.push({ id: 'new_skin', name: '新皮肤', description: '描述...', image: '/art/pot/pot_new.svg', unlockCost: 1000 });
+  renderSkins();
+  toast('已添加新皮肤');
+}
+
+function deleteSkin(idx) {
+  if (!confirm(`确定删除「${state.skins[idx].name}」？`)) return;
+  state.skins.splice(idx, 1);
+  renderSkins();
+  toast('已删除皮肤', 'error');
+}
+
+// ==================== LocalStorage ====================
+const LS_KEY = 'flowers_config_editor';
+
+function saveToLocalStorage() {
+  syncGameFromUI();
+  syncTaskFromUI();
+  localStorage.setItem(LS_KEY, JSON.stringify(state));
+  toast('✅ 已暂存到浏览器');
+}
+
+function loadFromLocalStorage() {
+  const raw = localStorage.getItem(LS_KEY);
+  if (!raw) { toast('没有找到暂存数据', 'error'); return; }
+  try {
+    const data = JSON.parse(raw);
+    Object.assign(state, data);
+    syncGameToUI();
+    syncTaskToUI();
+    renderFlowers();
+    renderLevels();
+    renderPlayerLevels();
+    renderSkins();
+    toast('✅ 已读取暂存数据');
+  } catch (e) {
+    toast('暂存数据解析失败', 'error');
+  }
+}
+
+// ==================== Export ====================
+function doExport(type) {
+  syncGameFromUI();
+  syncTaskFromUI();
+  let output = '';
+  switch (type) {
+    case 'game': output = generateGameConfig(); break;
+    case 'flower': output = generateFlowerConfig(); break;
+    case 'types': output = generateTypes(); break;
+    case 'all': output = JSON.stringify(state, null, 2); break;
+  }
+  $('#export-output').value = output;
+  // Switch to export tab
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  document.querySelector('[data-tab="export"]').classList.add('active');
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('tab-export').classList.add('active');
+  toast(`已生成 ${type === 'all' ? 'JSON' : type + '.config.ts'}`);
+}
+
+function generateGameConfig() {
+  const g = state.game;
+  const skinEntries = state.skins.map(s => `  {
+    id: '${s.id}',
+    name: '${s.name}',
+    description: '${s.description}',
+    image: '${s.image}',
+    unlockCost: ${s.unlockCost},
+  }`).join(',\n');
+
+  return `/**
+ * 全局游戏配置
+ * 所有可调数值集中在此，方便策划调整
+ * ⚠️ 由配置编辑器生成，请勿手动修改
+ */
+
+// ==================== 花盆网格 ====================
+/** 花盆列数 */
+export const GRID_COLS = ${g.gridCols};
+/** 花盆行数 */
+export const GRID_ROWS = ${g.gridRows};
+/** 花盆总数 */
+export const GRID_TOTAL = GRID_COLS * GRID_ROWS;
+
+// ==================== 货币：水量 ====================
+/** 初始水量 */
+export const INITIAL_WATER = ${g.initWater};
+/** 水量上限 */
+export const MAX_WATER = ${g.maxWater};
+/** 水量自动恢复间隔（毫秒） */
+export const WATER_REGEN_INTERVAL_MS = ${g.waterRegenInterval};
+/** 每次恢复水量 */
+export const WATER_REGEN_AMOUNT = ${g.waterRegenAmount};
+/** 浇水消耗水量 */
+export const WATER_COST_PER_USE = ${g.waterCost};
+/** 水不足警告持续时间（毫秒） */
+export const NO_WATER_WARNING_MS = ${g.noWaterWarning};
+
+// ==================== 货币：金币 ====================
+/** 初始金币 */
+export const INITIAL_COINS = ${g.initCoins};
+
+// ==================== 收购订单 ====================
+/** 收购订单生成间隔（毫秒） */
+export const BUY_ORDER_INTERVAL_MS = ${g.buyInterval};
+/** 收购订单有效期（毫秒） */
+export const BUY_ORDER_DURATION_MS = ${g.buyDuration};
+/** 首次收购订单延迟（毫秒） */
+export const BUY_ORDER_FIRST_DELAY_MS = ${g.buyFirstDelay};
+/** 收购数量区间 [min, max]（更大量） */
+export const BUY_ORDER_AMOUNT_RANGE: [number, number] = [${g.buyAmountMin}, ${g.buyAmountMax}];
+/** 收购单价加成倍率（基于花朵 basePrice） */
+export const BUY_ORDER_PRICE_MULTIPLIER: [number, number] = [${g.buyPriceMin}, ${g.buyPriceMax}];
+/** 最大同时存在的收购订单数 */
+export const BUY_ORDER_MAX_SLOTS = ${g.buyMaxSlots};
+
+// ==================== 拖拽 ====================
+/** 触摸拖拽判定阈值（px） */
+export const DRAG_THRESHOLD_PX = ${g.dragThreshold};
+
+// ==================== 花盆皮肤 ====================
+import { PotSkinConfig } from '../types';
+
+export const POT_SKINS: PotSkinConfig[] = [
+${skinEntries}
+];
+
+export const getPotSkinConfig = (skinId: string): PotSkinConfig => {
+  return POT_SKINS.find(s => s.id === skinId) || POT_SKINS[0];
+};
+`;
+}
+
+function generateFlowerConfig() {
+  const flowerIds = state.flowers.map(f => `'${f.id}'`).join(', ');
+
+  const flowerEntries = state.flowers.map(f => `  {
+    id: '${f.id}', name: '${f.name}', color: '${f.color}', basePrice: ${f.basePrice},
+    states: {
+      seed: '/art/flower/flower_${f.id}_seed.svg',
+      sprout: '/art/flower/flower_${f.id}_sprout.svg',
+      growing: '/art/flower/flower_${f.id}_growing.svg',
+      bloom: '/art/flower/flower_${f.id}_bloom.svg',
+    },
+  }`).join(',\n');
+
+  const levelEntries = state.levels.map(lv => {
+    const label = lv.upgradeLabel ? `, upgradeLabel: '${lv.upgradeLabel}'` : '';
+    return `  { level: ${lv.level}, maxHarvests: ${lv.maxHarvests}, yieldPerHarvest: ${lv.yieldPerHarvest}, cooldownSeconds: ${lv.cooldownSeconds}, upgradeCostCoins: ${lv.upgradeCostCoins}, upgradeCostSouls: ${lv.upgradeCostSouls}${label} }`;
+  }).join(',\n');
+
+  const playerEntries = state.playerLevels.map(pl => {
+    const flowers = pl.unlockedFlowers.map(f => `'${f}'`).join(', ');
+    return `  { level: ${pl.level}, xpRequired: ${pl.xpRequired}, unlockedFlowers: [${flowers}] }`;
+  }).join(',\n');
+
+  const t = state.task;
+
+  return `/**
+ * 花朵品种配置 & 等级配置
+ * ⚠️ 由配置编辑器生成，请勿手动修改
+ */
+import { FlowerConfig, FlowerType, FlowerLevelConfig, PlayerLevelConfig, FlowerUnlockInfo } from '../types';
+
+// ==================== 全部花朵 ID 列表 ====================
+export const ALL_FLOWERS: FlowerType[] = [
+  ${flowerIds},
+];
+
+// ==================== 花朵等级配置 ====================
+export const FLOWER_LEVEL_CONFIGS: FlowerLevelConfig[] = [
+${levelEntries},
+];
+
+export const MAX_FLOWER_LEVEL = FLOWER_LEVEL_CONFIGS.length;
+
+export const getLevelConfig = (level: number): FlowerLevelConfig => {
+  const idx = Math.max(0, Math.min(level - 1, FLOWER_LEVEL_CONFIGS.length - 1));
+  return FLOWER_LEVEL_CONFIGS[idx];
+};
+
+// ==================== 花朵品种配置 ====================
+export const flowers: FlowerConfig[] = [
+${flowerEntries},
+];
+
+export const getFlowerConfig = (id: string): FlowerConfig | undefined => {
+  return flowers.find(f => f.id === id);
+};
+
+/** 获取花朵基础售价 */
+export const getFlowerPrice = (flowerType: FlowerType): number => {
+  const cfg = flowers.find(f => f.id === flowerType);
+  return cfg?.basePrice ?? 5;
+};
+
+// ==================== 采购任务生成参数 ====================
+/** 采购任务总数 */
+export const PURCHASE_TASK_COUNT = ${t.taskCount};
+/** 每个任务需求花朵品种数 [min, max] */
+export const TASK_FLOWER_TYPES_RANGE: [number, number] = [${t.typesMin}, ${t.typesMax}];
+/** 每种花需求数量 [min, max] */
+export const TASK_FLOWER_AMOUNT_RANGE: [number, number] = [${t.amountMin}, ${t.amountMax}];
+/** 采购任务奖励金币倍率（基于花朵售价总和） */
+export const TASK_REWARD_COIN_MULTIPLIER = ${t.coinMul};
+/** 采购任务奖励经验倍率 */
+export const TASK_REWARD_XP_MULTIPLIER = ${t.xpMul};
+/** 采购任务冷却时间（毫秒） */
+export const TASK_COOLDOWN_MS = ${t.cooldown};
+/** 每次收割掉落花卉之魂的概率（0~1） */
+export const SOUL_DROP_CHANCE = ${state.soulDropChance};
+
+// ==================== 玩家等级配置 ====================
+export const PLAYER_LEVEL_CONFIGS: PlayerLevelConfig[] = [
+${playerEntries},
+];
+
+export const MAX_PLAYER_LEVEL = PLAYER_LEVEL_CONFIGS.length;
+
+/** 每次收割获得的经验值 */
+export const XP_PER_HARVEST = ${state.xpPerHarvest};
+
+/** 获取指定等级的 XP 配置 */
+export const getPlayerLevelConfig = (level: number): PlayerLevelConfig => {
+  const idx = Math.max(0, Math.min(level - 1, PLAYER_LEVEL_CONFIGS.length - 1));
+  return PLAYER_LEVEL_CONFIGS[idx];
+};
+
+/** 获取指定等级升到下一级所需的 XP */
+export const getXpToNextLevel = (level: number): number => {
+  if (level >= MAX_PLAYER_LEVEL) return 0;
+  return PLAYER_LEVEL_CONFIGS[level].xpRequired - PLAYER_LEVEL_CONFIGS[level - 1].xpRequired;
+};
+
+/** 获取花朵解锁信息列表 */
+export const FLOWER_UNLOCK_MAP: FlowerUnlockInfo[] = PLAYER_LEVEL_CONFIGS.flatMap(cfg =>
+  cfg.unlockedFlowers.map(f => ({ flowerType: f as FlowerType, requiredPlayerLevel: cfg.level }))
+);
+
+/** 获取指定花朵的解锁等级 */
+export const getFlowerUnlockLevel = (flowerType: FlowerType): number => {
+  const info = FLOWER_UNLOCK_MAP.find(u => u.flowerType === flowerType);
+  return info?.requiredPlayerLevel ?? 1;
+};
+
+/** 获取指定玩家等级下已解锁的花朵列表 */
+export const getUnlockedFlowers = (playerLevel: number): FlowerType[] => {
+  return PLAYER_LEVEL_CONFIGS
+    .filter(cfg => cfg.level <= playerLevel)
+    .flatMap(cfg => cfg.unlockedFlowers as FlowerType[]);
+};
+`;
+}
+
+function generateTypes() {
+  const flowerTypeUnion = state.flowers.map(f => `'${f.id}'`).join(' | ');
+  const skinTypeUnion = state.skins.map(s => `'${s.id}'`).join(' | ');
+
+  return `export type FlowerType = ${flowerTypeUnion};
+
+export type PotState = 'empty' | 'seeded' | 'growing' | 'blooming' | 'cooling' | 'harvested';
+
+export type ToolType = 'none' | 'seed' | 'water' | 'harvest';
+
+// ==================== 花盆皮肤 ====================
+export type PotSkinId = ${skinTypeUnion};
+
+export interface PotSkinConfig {
+  id: PotSkinId;
+  name: string;
+  description: string;
+  image: string;
+  /** 解锁金币费用（0 = 默认免费） */
+  unlockCost: number;
+}
+
+export interface FlowerConfig {
+  id: FlowerType;
+  name: string;
+  color: string;
+  /** 花朵基础售价（金币） */
+  basePrice: number;
+  states: {
+    seed: string;
+    sprout: string;
+    growing: string;
+    bloom: string;
+  };
+}
+
+export interface PotData {
+  id: number;
+  row: number;
+  col: number;
+  state: PotState;
+  flowerType?: FlowerType;
+  harvestsRemaining?: number;
+  cooldownUntil?: number;
+}
+
+export interface GameMode {
+  tool: ToolType;
+  selectedFlower?: FlowerType;
+}
+
+export interface Currency {
+  coins: number;
+  water: number;
+}
+
+export type FlowerLevels = Record<FlowerType, number>;
+
+/** 每种花的花卉之魂数量 */
+export type FlowerSouls = Record<FlowerType, number>;
+
+export interface FlowerLevelConfig {
+  level: number;
+  maxHarvests: number;
+  yieldPerHarvest: number;
+  cooldownSeconds: number;
+  upgradeCostCoins: number;
+  upgradeCostSouls: number;
+  /** 本次升级提升的属性名称（展示用） */
+  upgradeLabel?: string;
+}
+
+/** 玩家等级状态 */
+export interface PlayerLevelState {
+  level: number;
+  xp: number;
+  xpToNext: number;
+}
+
+/** 玩家等级配置 */
+export interface PlayerLevelConfig {
+  level: number;
+  xpRequired: number;
+  /** 该等级解锁的花朵 */
+  unlockedFlowers: FlowerType[];
+}
+
+/** 花卉解锁条件 */
+export interface FlowerUnlockInfo {
+  flowerType: FlowerType;
+  requiredPlayerLevel: number;
+}
+
+export interface PurchaseTask {
+  id: string;
+  name: string;
+  description: string;
+  costFlowers: Partial<Record<FlowerType, number>>;
+  rewardCoins: number;
+  rewardXp: number;
+  /** 完成后冷却时间（毫秒） */
+  cooldownMs: number;
+}
+
+export interface Inventory {
+  flowers: Record<FlowerType, number>;
+  total: number;
+}
+
+export interface DragState {
+  isDragging: boolean;
+  tool: ToolType;
+  flowerType?: FlowerType;
+  x: number;
+  y: number;
+}
+
+export interface EffectState {
+  id: number;
+  type: 'seed' | 'water' | 'harvest' | 'levelup' | 'task' | 'xpgain' | 'souldrop' | 'playerlevelup';
+  potId?: number;
+  flowerType?: FlowerType;
+  taskRewardCoins?: number;
+  taskRewardWater?: number;
+  /** XP 获取量 */
+  xpAmount?: number;
+  /** 花卉之魂掉落 */
+  soulFlowerType?: FlowerType;
+  /** 玩家新等级 */
+  newPlayerLevel?: number;
+}
+
+/** 随机收购订单 */
+export interface BuyOrder {
+  id: number;
+  flowerType: FlowerType;
+  flowerName: string;
+  amount: number;
+  pricePerFlower: number;
+  totalPrice: number;
+  expiresAt: number; // Date.now() + duration
+}
+`;
+}
+
+function copyExport() {
+  const textarea = $('#export-output');
+  textarea.select();
+  navigator.clipboard.writeText(textarea.value).then(() => {
+    toast('✅ 已复制到剪贴板');
+  }).catch(() => {
+    document.execCommand('copy');
+    toast('✅ 已复制到剪贴板');
+  });
+}
+
+function switchExportTab(el) {
+  document.querySelectorAll('.export-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ==================== Helpers ====================
+function $(sel) { return document.querySelector(sel); }
+
+// ==================== Init ====================
+renderFlowers();
+renderLevels();
+renderPlayerLevels();
+renderSkins();
+syncGameToUI();
+syncTaskToUI();
+
+// Try auto-load from localStorage
+if (localStorage.getItem(LS_KEY)) {
+  const autoLoad = confirm('发现暂存数据，是否加载？');
+  if (autoLoad) loadFromLocalStorage();
+}
+</script>
+</body>
+</html>
