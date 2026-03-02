@@ -23,6 +23,7 @@ import { PotSkinPanel } from './PotSkinPanel';
 import { ProfileMenu } from './ProfileMenu';
 import { GreenhouseAtmosphere } from './GreenhouseAtmosphere';
 import { AchievementPanel, AchievementToastUI } from './AchievementPanel';
+import { PotUnlockEffect } from './PotUnlockEffect';
 import { useGameState } from '../hooks/useGameState';
 import { useCooldown } from '../hooks/useCooldown';
 import { assets } from '../data/assets';
@@ -43,6 +44,7 @@ export const GameScene: FC = () => {
     flowerSouls,
     playerLevel,
     effects,
+    pushEffect,
     removeEffect,
     noWaterWarning,
     handleFlowerSelect,
@@ -187,12 +189,15 @@ export const GameScene: FC = () => {
     if (!isPotUnlocked(potId)) {
       const info = getPotLockInfo(potId);
       if (info.canBuy) {
-        buyPot(potId);
+        const success = buyPot(potId);
+        if (success) {
+          pushEffect({ type: 'potunlock', potId });
+        }
       }
       return;
     }
     handlePotClick(potId);
-  }, [handlePotClick, isPotUnlocked, getPotLockInfo, buyPot]);
+  }, [handlePotClick, isPotUnlocked, getPotLockInfo, buyPot, pushEffect]);
 
   // 稳定的事件处理器 — 不依赖变化的回调，通过 ref 读取最新逻辑
   useEffect(() => {
@@ -496,6 +501,14 @@ export const GameScene: FC = () => {
                 onComplete={() => removeEffect(eff.id)}
               />
             );
+          case 'potunlock':
+            return eff.potId !== undefined ? (
+              <PotUnlockEffect
+                key={eff.id}
+                potId={eff.potId}
+                onComplete={() => removeEffect(eff.id)}
+              />
+            ) : null;
           default:
             return null;
         }

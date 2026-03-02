@@ -273,6 +273,7 @@ export const useGameState = () => {
 
     // 特效
     effects,
+    pushEffect,
     removeEffect,
 
     // 采购任务

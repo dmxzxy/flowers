@@ -124,7 +124,7 @@ export interface DragState {
 
 export interface EffectState {
   id: number;
-  type: 'seed' | 'water' | 'harvest' | 'levelup' | 'task' | 'xpgain' | 'souldrop' | 'playerlevelup';
+  type: 'seed' | 'water' | 'harvest' | 'levelup' | 'task' | 'xpgain' | 'souldrop' | 'playerlevelup' | 'potunlock';
   potId?: number;
   flowerType?: FlowerType;
   taskRewardCoins?: number;

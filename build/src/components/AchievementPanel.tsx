@@ -1,4 +1,4 @@
-import { FC, memo, useState, useMemo } from 'react';
+import { FC, memo, useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import {
   ACHIEVEMENT_DEFS,
   ACHIEVEMENT_CATEGORIES,
@@ -27,14 +27,49 @@ export const AchievementPanel: FC<Props> = memo(({
   onClaim,
 }) => {
   const [activeCategory, setActiveCategory] = useState<AchievementCategory | 'all'>('all');
+  /** 正在播放领取动画的成就 ID */
+  const [claimingId, setClaimingId] = useState<AchievementId | null>(null);
+  /** 刚完成领取动画的成就（短暂高亮） */
+  const [justClaimedId, setJustClaimedId] = useState<AchievementId | null>(null);
+  const claimTimerRef = useRef<ReturnType<typeof setTimeout>>();
 
   const filtered = useMemo(() => {
-    if (activeCategory === 'all') return ACHIEVEMENT_DEFS;
-    return ACHIEVEMENT_DEFS.filter(a => a.category === activeCategory);
-  }, [activeCategory]);
+    const base = activeCategory === 'all'
+      ? ACHIEVEMENT_DEFS
+      : ACHIEVEMENT_DEFS.filter(a => a.category === activeCategory);
+    // 排序：可领取 > 已解锁未领取 > 已领取 > 未解锁
+    return [...base].sort((a, b) => {
+      const aUnlocked = unlocked.includes(a.id);
+      const bUnlocked = unlocked.includes(b.id);
+      const aClaimed = claimed.includes(a.id);
+      const bClaimed = claimed.includes(b.id);
+      const aCanClaim = aUnlocked && !aClaimed;
+      const bCanClaim = bUnlocked && !bClaimed;
+      if (aCanClaim !== bCanClaim) return aCanClaim ? -1 : 1;
+      if (aUnlocked !== bUnlocked) return aUnlocked ? -1 : 1;
+      return 0;
+    });
+  }, [activeCategory, unlocked, claimed]);
 
   const unlockedCount = unlocked.length;
   const totalCount = ACHIEVEMENT_DEFS.length;
+
+  /** 领取动画 → 延迟后真正领取 */
+  const handleClaim = useCallback((id: AchievementId) => {
+    if (claimingId) return; // 避免重复
+    setClaimingId(id);
+    clearTimeout(claimTimerRef.current);
+    claimTimerRef.current = setTimeout(() => {
+      onClaim(id);
+      setClaimingId(null);
+      setJustClaimedId(id);
+      // 高亮一段时间后清除
+      setTimeout(() => setJustClaimedId(null), 1200);
+    }, 600);
+  }, [claimingId, onClaim]);
+
+  // 清除计时器
+  useEffect(() => () => clearTimeout(claimTimerRef.current), []);
 
   if (!isOpen) return null;
 
@@ -100,11 +135,20 @@ export const AchievementPanel: FC<Props> = memo(({
             const isClaimed = claimed.includes(ach.id);
             const canClaim = isUnlocked && !isClaimed;
             const isHidden = ach.hidden && !isUnlocked;
+            const isClaiming = claimingId === ach.id;
+            const isJustClaimed = justClaimedId === ach.id;
 
             return (
               <div
                 key={ach.id}
-                className={`achievement-card ${isUnlocked ? 'unlocked' : 'locked'} ${isClaimed ? 'claimed' : ''}`}
+                className={[
+                  'achievement-card',
+                  isUnlocked ? 'unlocked' : 'locked',
+                  isClaimed ? 'claimed' : '',
+                  isClaiming ? 'claiming' : '',
+                  isJustClaimed ? 'just-claimed' : '',
+                  canClaim ? 'can-claim' : '',
+                ].filter(Boolean).join(' ')}
               >
                 <div className="achievement-card-icon">
                   {isHidden ? '❓' : ach.icon}
@@ -129,16 +173,27 @@ export const AchievementPanel: FC<Props> = memo(({
                     </div>
                   )}
                 </div>
-                {canClaim && (
+                {canClaim && !isClaiming && (
                   <button
                     className="achievement-claim-btn"
-                    onClick={() => onClaim(ach.id)}
+                    onClick={() => handleClaim(ach.id)}
                   >
                     领取
                   </button>
                 )}
-                {isClaimed && (
+                {/* 领取动画中的光效 */}
+                {isClaiming && (
+                  <div className="achievement-claim-anim">
+                    <span className="claim-sparkle">✨</span>
+                    <span className="claim-sparkle s2">💫</span>
+                    <span className="claim-sparkle s3">⭐</span>
+                  </div>
+                )}
+                {isClaimed && !isJustClaimed && (
                   <div className="achievement-claimed-badge">✓</div>
+                )}
+                {isJustClaimed && (
+                  <div className="achievement-claimed-badge just-claimed-badge">✓</div>
                 )}
               </div>
             );
