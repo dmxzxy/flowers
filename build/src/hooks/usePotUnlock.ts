@@ -75,15 +75,8 @@ export const usePotUnlock = (
     [unlockedPotIds]
   );
 
-  /** 可见的行数（当前等级能看到的最大行数，用于渲染） */
-  const visibleRows = useMemo(() => {
-    let maxRow = 0;
-    for (const rc of POT_ROW_UNLOCKS) {
-      if (playerLevel >= rc.requiredLevel) maxRow = rc.row;
-    }
-    // 多显示一行（下一排预览，让玩家知道还有更多）
-    return Math.min(maxRow + 2, POT_ROW_UNLOCKS.length);
-  }, [playerLevel]);
+  /** 可见的行数 — 始终展示所有行（锁定的花盆仍需解锁购买） */
+  const visibleRows = POT_ROW_UNLOCKS.length;
 
   return {
     unlockedPotIds,

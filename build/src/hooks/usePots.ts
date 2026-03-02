@@ -2,9 +2,9 @@
  * 花盆操作 Hook
  * 管理花盆状态 + plantSeed / waterPot / harvestPot
  */
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { PotData, FlowerType, FlowerLevels, EffectState } from '../types';
-import { GRID_COLS, GRID_ROWS, getLevelConfig, XP_PER_HARVEST, GROWING_DURATION_MS } from '../config';
+import { GRID_COLS, GRID_ROWS, getLevelConfig, XP_PER_HARVEST } from '../config';
 
 const createInitialPots = (): PotData[] => {
   const pots: PotData[] = [];
@@ -26,6 +26,10 @@ export const usePots = (
   savedPots?: PotData[]
 ) => {
   const [pots, setPots] = useState<PotData[]>(savedPots ?? createInitialPots);
+
+  // 使用 ref 同步跟踪花盆状态，避免闭包读取到过期 pots 状态
+  const potsRef = useRef<PotData[]>(pots);
+  potsRef.current = pots;
 
   const plantSeed = useCallback(
     (potId: number, flowerType: FlowerType) => {
@@ -58,8 +62,8 @@ export const usePots = (
           pot.id === potId && (pot.state === 'seeded' || pot.state === 'growing')
             ? {
                 ...pot,
-                state: 'growing' as const,
-                growingUntil: Date.now() + GROWING_DURATION_MS,
+                state: 'blooming' as const,
+                growingUntil: undefined,
               }
             : pot
         )
@@ -72,25 +76,19 @@ export const usePots = (
 
   const harvestPot = useCallback(
     (potId: number) => {
-      // 使用 ref + setPots updater 避免闭包读取到过期 pots 状态
-      let harvestedFlower: FlowerType | undefined;
-      let harvestedYield = 0;
+      // 从 ref 读取最新花盆状态，确保可靠地获取花朵信息
+      const pot = potsRef.current.find(p => p.id === potId);
+      if (!pot || pot.state !== 'blooming' || !pot.flowerType) return;
 
-      setPots(prev => {
-        const pot = prev.find(p => p.id === potId);
-        if (!pot || pot.state !== 'blooming' || !pot.flowerType) return prev;
+      const flowerType = pot.flowerType;
+      const remaining = (pot.harvestsRemaining ?? 1) - 1;
+      const level = flowerLevels[flowerType] || 1;
+      const levelConfig = getLevelConfig(level);
 
-        const flowerType = pot.flowerType;
-        const remaining = (pot.harvestsRemaining ?? 1) - 1;
-        const level = flowerLevels[flowerType] || 1;
-        const levelConfig = getLevelConfig(level);
-
-        // 记录收割信息，setPots 结束后再执行副作用
-        harvestedFlower = flowerType;
-        harvestedYield = levelConfig.yieldPerHarvest;
-
-        return prev.map(p => {
-          if (p.id !== potId) return p;
+      // 更新花盆状态
+      setPots(prev =>
+        prev.map(p => {
+          if (p.id !== potId || p.state !== 'blooming') return p;
           if (remaining > 0 && levelConfig.cooldownSeconds > 0) {
             const totalMs = levelConfig.cooldownSeconds * 1000;
             return {
@@ -109,17 +107,14 @@ export const usePots = (
             cooldownUntil: undefined,
             cooldownTotalMs: undefined,
           };
-        });
-      });
+        })
+      );
 
-      // 副作用：在 setPots updater 之后，根据捕获值执行
-      // React 批处理保证这些在同一微任务内顺序执行
-      if (harvestedFlower) {
-        addFlower(harvestedFlower, harvestedYield);
-        pushEffect({ type: 'harvest', flowerType: harvestedFlower, potId });
-        addXP(XP_PER_HARVEST);
-        tryDropSoul(harvestedFlower);
-      }
+      // 副作用：在状态检查通过后立即执行，不依赖 setPots updater 内的变量
+      addFlower(flowerType, levelConfig.yieldPerHarvest);
+      pushEffect({ type: 'harvest', flowerType, potId });
+      addXP(XP_PER_HARVEST);
+      tryDropSoul(flowerType);
     },
     [flowerLevels, addFlower, pushEffect, addXP, tryDropSoul]
   );
