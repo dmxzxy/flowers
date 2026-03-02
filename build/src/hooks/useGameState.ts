@@ -17,6 +17,7 @@ import { usePickers } from './usePickers';
 import { useBuyOrders } from './useBuyOrder';
 import { usePurchaseTasks } from './usePurchaseTasks';
 import { usePotSkins } from './usePotSkins';
+import { usePotUnlock } from './usePotUnlock';
 import { useAchievements } from './useAchievements';
 import { loadSave, clearSave, useSaveGame, SaveData } from './useSaveGame';
 import { MAX_WATER, WATER_REGEN_INTERVAL_MS, WATER_REGEN_AMOUNT } from '../config';
@@ -90,7 +91,16 @@ export const useGameState = () => {
     initialSave?.pots
   );
 
-  // 8. 成就系统（依赖 pots + flowerLevels + playerLevel + addCoins；需先于 Picker 以便传入 tracked 回调）
+  // 7.5 花盆解锁（依赖 playerLevel + spendCoins）
+  const {
+    unlockedPotIdsArray,
+    isPotUnlocked,
+    getPotLockInfo,
+    buyPot,
+    visibleRows,
+  } = usePotUnlock(playerLevel.level, spendCoins, initialSave?.unlockedPotIds);
+
+  // 8. 成就系统（依赖 pots + flowerLevels + playerLevel + addCoins + isPotUnlocked；需先于 Picker 以便传入 tracked 回调）
   const {
     achievements,
     toasts: achievementToasts,
@@ -102,7 +112,7 @@ export const useGameState = () => {
     recordOrderCompleted,
     setAtmosphere: setAchievementAtmosphere,
     achievementUnlockedFlowers,
-  } = useAchievements(pots, flowerLevels, playerLevel, addCoins);
+  } = useAchievements(pots, flowerLevels, playerLevel, addCoins, isPotUnlocked);
 
   // 包装 plantSeed — 追踪播种成就
   const plantSeedTracked = useCallback(
@@ -139,7 +149,7 @@ export const useGameState = () => {
     batchPlantAll,
     batchWaterAll,
     batchHarvestAll,
-  } = usePickers(pots, plantSeedTracked, waterPot, harvestPotTracked);
+  } = usePickers(pots, plantSeedTracked, waterPot, harvestPotTracked, isPotUnlocked);
 
   // 10. 随机收购订单（依赖 removeFlowers + addCoins + pushEffect）
   const { buyOrders, acceptBuyOrder, dismissBuyOrder, canFulfillOrder, hasAnyFulfillable } = useBuyOrders(
@@ -200,7 +210,8 @@ export const useGameState = () => {
     playerLevel,
     pots,
     activeSkin,
-    unlockedSkins
+    unlockedSkins,
+    unlockedPotIdsArray
   );
 
   /** 清除存档并刷新页面 */
@@ -285,6 +296,12 @@ export const useGameState = () => {
     selectSkin,
     unlockSkin,
     isSkinUnlocked,
+
+    // 花盆解锁
+    isPotUnlocked,
+    getPotLockInfo,
+    buyPot,
+    visibleRows,
 
     // 成就
     achievements,

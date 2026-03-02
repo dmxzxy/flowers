@@ -10,7 +10,8 @@ export const usePickers = (
   pots: PotData[],
   plantSeed: (potId: number, flowerType: FlowerType) => void,
   waterPot: (potId: number) => boolean,
-  harvestPot: (potId: number) => void
+  harvestPot: (potId: number) => void,
+  isPotUnlocked?: (potId: number) => boolean
 ) => {
   const [selectedFlower, setSelectedFlower] = useState<FlowerType | null>(null);
   const [showFlowerPicker, setShowFlowerPicker] = useState(false);
@@ -30,25 +31,27 @@ export const usePickers = (
     [selectedPotId, plantSeed]
   );
 
-  /** 一键种花：对所有空花盆种植指定花朵 */
+  /** 一键种花：对所有已解锁的空花盆种植指定花朵 */
   const batchPlantAll = useCallback(
     (flowerType: FlowerType) => {
       setSelectedFlower(flowerType);
       setShowFlowerPicker(false);
       pots.forEach(pot => {
-        if (pot.state === 'empty') {
+        if (pot.state === 'empty' && (!isPotUnlocked || isPotUnlocked(pot.id))) {
           plantSeed(pot.id, flowerType);
         }
       });
       setSelectedPotId(null);
     },
-    [pots, plantSeed]
+    [pots, plantSeed, isPotUnlocked]
   );
 
   const handlePotClick = useCallback(
     (potId: number) => {
       const pot = pots.find(p => p.id === potId);
       if (!pot) return;
+      // 未解锁的花盆不响应 Picker 打开
+      if (isPotUnlocked && !isPotUnlocked(potId)) return;
 
       setSelectedPotId(potId);
       if (pot.state === 'empty') {
@@ -59,7 +62,7 @@ export const usePickers = (
         setShowHarvestPicker(true);
       }
     },
-    [pots]
+    [pots, isPotUnlocked]
   );
 
   const handleWaterFromPicker = useCallback(() => {
@@ -68,16 +71,16 @@ export const usePickers = (
     setSelectedPotId(null);
   }, [selectedPotId, waterPot]);
 
-  /** 一键浇水：对所有已播种/生长中的花盆浇水 */
+  /** 一键浇水：对所有已解锁的已播种/生长中的花盆浇水 */
   const batchWaterAll = useCallback(() => {
     pots.forEach(pot => {
-      if (pot.state === 'seeded' || pot.state === 'growing') {
+      if ((pot.state === 'seeded' || pot.state === 'growing') && (!isPotUnlocked || isPotUnlocked(pot.id))) {
         waterPot(pot.id);
       }
     });
     setShowWaterPicker(false);
     setSelectedPotId(null);
-  }, [pots, waterPot]);
+  }, [pots, waterPot, isPotUnlocked]);
 
   const harvestFromPicker = useCallback(() => {
     if (selectedPotId !== null) harvestPot(selectedPotId);
@@ -85,16 +88,16 @@ export const usePickers = (
     setSelectedPotId(null);
   }, [selectedPotId, harvestPot]);
 
-  /** 一键收获：对所有开花的花盆收割 */
+  /** 一键收获：对所有已解锁的开花花盆收割 */
   const batchHarvestAll = useCallback(() => {
     pots.forEach(pot => {
-      if (pot.state === 'blooming') {
+      if (pot.state === 'blooming' && (!isPotUnlocked || isPotUnlocked(pot.id))) {
         harvestPot(pot.id);
       }
     });
     setShowHarvestPicker(false);
     setSelectedPotId(null);
-  }, [pots, harvestPot]);
+  }, [pots, harvestPot, isPotUnlocked]);
 
   const closeFlowerPicker = useCallback(() => {
     setShowFlowerPicker(false);

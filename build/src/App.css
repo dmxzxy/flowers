@@ -523,6 +523,74 @@
   filter: brightness(1.2) drop-shadow(0 0 6px rgba(76,175,80,0.5));
 }
 
+/* ===== 花盆锁定状态 ===== */
+.pot-locked {
+  cursor: default;
+}
+.pot-locked:hover {
+  transform: none;
+  filter: none;
+}
+.pot-locked:active {
+  transform: none;
+}
+.pot-buyable {
+  cursor: pointer;
+}
+.pot-buyable:hover {
+  transform: scale(1.04);
+  filter: brightness(1.02);
+}
+.pot-buyable:active {
+  transform: scale(0.96);
+}
+
+.pot-base-locked {
+  opacity: 0.3;
+  filter: grayscale(0.6) drop-shadow(1px 2px 4px rgba(0,0,0,0.15));
+}
+
+.pot-lock-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  pointer-events: none;
+}
+.pot-lock-icon {
+  font-size: 20px;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+}
+.pot-lock-level {
+  font-size: 10px;
+  font-weight: 700;
+  color: #8D6E63;
+  background: rgba(255,255,255,0.8);
+  padding: 1px 6px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+.pot-lock-cost {
+  font-size: 10px;
+  font-weight: 700;
+  color: #E65100;
+  background: rgba(255,255,255,0.85);
+  padding: 1px 6px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+.pot-lock-buyable .pot-lock-icon {
+  animation: potUnlockPulse 2s ease-in-out infinite;
+}
+@keyframes potUnlockPulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.15); }
+}
+
 .pot-container {
   position: relative;
   width: 100%;

@@ -69,6 +69,7 @@ export function useAchievements(
   flowerLevels: FlowerLevels,
   playerLevel: PlayerLevelState,
   addCoins: (amount: number) => void,
+  isPotUnlocked?: (potId: number) => boolean,
 ) {
   const [save, setSave] = useState<AchievementSave>(loadAchievements);
   const [toasts, setToasts] = useState<AchievementToast[]>([]);
@@ -172,9 +173,10 @@ export function useAchievements(
     if (!has('order_10') && stats.totalOrdersCompleted >= 10) unlock('order_10');
     if (!has('order_50') && stats.totalOrdersCompleted >= 50) unlock('order_50');
 
-    // --- 花盆全满 ---
+    // --- 花盆全满（只检查已解锁的花盆） ---
     if (!has('fill_all_pots')) {
-      const allFilled = pots.length > 0 && pots.every(p => p.state !== 'empty');
+      const unlockedPots = isPotUnlocked ? pots.filter(p => isPotUnlocked(p.id)) : pots;
+      const allFilled = unlockedPots.length > 0 && unlockedPots.every(p => p.state !== 'empty');
       if (allFilled) unlock('fill_all_pots');
     }
 

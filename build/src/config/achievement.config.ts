@@ -60,7 +60,7 @@ export const ACHIEVEMENT_DEFS: AchievementDef[] = [
   { id: 'harvest_10',      name: '小小花农',     description: '累计收获 10 次',               icon: '🧑‍🌾', category: 'growing',    rewardCoins: 50 },
   { id: 'harvest_100',     name: '勤劳花匠',     description: '累计收获 100 次',              icon: '👨‍🌾', category: 'growing',    rewardCoins: 500, rewardFlower: 'lycoris' },
   { id: 'harvest_500',     name: '花园传奇',     description: '累计收获 500 次',              icon: '👑', category: 'growing',    rewardCoins: 3000 },
-  { id: 'fill_all_pots',   name: '满园春色',     description: '同时种满全部 28 个花盆',       icon: '🏡', category: 'growing',    rewardCoins: 500 },
+  { id: 'fill_all_pots',   name: '满园春色',     description: '同时种满所有已解锁的花盆',     icon: '🏡', category: 'growing',    rewardCoins: 500 },
 
   // ===== 经济 =====
   { id: 'coins_1000',      name: '小有积蓄',     description: '累计获得 1,000 金币',          icon: '💰', category: 'economy',    rewardCoins: 100 },

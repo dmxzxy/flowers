@@ -83,6 +83,10 @@ export const GameScene: FC = () => {
     claimAchievement,
     setAchievementAtmosphere,
     achievementUnlockedFlowers,
+    isPotUnlocked,
+    getPotLockInfo,
+    buyPot,
+    visibleRows,
     saveNow,
     resetGame,
     saveInfo,
@@ -146,7 +150,7 @@ export const GameScene: FC = () => {
         processedPotsRef.current.add(potId);
 
         const pot = pots.find(p => p.id === potId);
-        if (!pot) return;
+        if (!pot || !isPotUnlocked(potId)) return;
 
         if (dragToolRef.current === 'seed' && pot.state === 'empty' && dragFlowerTypeRef.current) {
           plantSeed(potId, dragFlowerTypeRef.current);
@@ -179,8 +183,16 @@ export const GameScene: FC = () => {
       justDraggedRef.current = false;
       return;
     }
+    // 花盆未解锁 → 尝试购买
+    if (!isPotUnlocked(potId)) {
+      const info = getPotLockInfo(potId);
+      if (info.canBuy) {
+        buyPot(potId);
+      }
+      return;
+    }
     handlePotClick(potId);
-  }, [handlePotClick]);
+  }, [handlePotClick, isPotUnlocked, getPotLockInfo, buyPot]);
 
   // 稳定的事件处理器 — 不依赖变化的回调，通过 ref 读取最新逻辑
   useEffect(() => {
@@ -343,7 +355,13 @@ export const GameScene: FC = () => {
           achievementUnclaimedCount={achievementUnclaimedCount}
         />
         <div className="garden-container">
-          <PotGrid pots={pots} onPotClick={handlePotClickGuarded} potImage={potImage} />
+          <PotGrid
+            pots={pots}
+            onPotClick={handlePotClickGuarded}
+            potImage={potImage}
+            getPotLockInfo={getPotLockInfo}
+            visibleRows={visibleRows}
+          />
         </div>
         <div className="game-hint">
           {dragState.tool === 'seed' && '🌱 拖拽到空花盆进行播种'}

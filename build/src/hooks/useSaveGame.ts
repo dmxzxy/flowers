@@ -30,6 +30,8 @@ export interface SaveData {
   pots: PotData[];
   activeSkin: PotSkinId;
   unlockedSkins: PotSkinId[];
+  /** 已解锁（购买）的花盆 ID 列表 */
+  unlockedPotIds?: number[];
 }
 
 /** 从 localStorage 读取存档（失败返回 null），含字段校验与迁移 */
@@ -107,6 +109,12 @@ export const loadSave = (): SaveData | null => {
       data.unlockedSkins = ['default'];
     }
 
+    // unlockedPotIds — 迁移：旧存档没有此字段时，根据已有花盆状态推断
+    if (!Array.isArray(data.unlockedPotIds)) {
+      // 旧存档：所有花盆都是已解锁的（兼容升级）
+      data.unlockedPotIds = data.pots.map(p => p.id);
+    }
+
     return data;
   } catch {
     return null;
@@ -146,7 +154,8 @@ export const useSaveGame = (
   playerLevel: PlayerLevelState,
   pots: PotData[],
   activeSkin: PotSkinId,
-  unlockedSkins: Set<PotSkinId>
+  unlockedSkins: Set<PotSkinId>,
+  unlockedPotIds: number[]
 ) => {
   // 所有需要持久化的状态用 ref 追踪，以便定时器访问最新值
   const stateRef = useRef({
@@ -158,6 +167,7 @@ export const useSaveGame = (
     pots,
     activeSkin,
     unlockedSkins,
+    unlockedPotIds,
   });
 
   // 同步 ref
@@ -170,6 +180,7 @@ export const useSaveGame = (
     pots,
     activeSkin,
     unlockedSkins,
+    unlockedPotIds,
   };
 
   /** 立即保存（如果重置已请求则跳过） */
@@ -187,6 +198,7 @@ export const useSaveGame = (
       pots: s.pots,
       activeSkin: s.activeSkin,
       unlockedSkins: Array.from(s.unlockedSkins) as PotSkinId[],
+      unlockedPotIds: s.unlockedPotIds,
     });
   }, []);
 

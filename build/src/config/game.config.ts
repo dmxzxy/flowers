@@ -12,6 +12,35 @@ export const GRID_ROWS = 7;
 /** 花盆总数 */
 export const GRID_TOTAL = GRID_COLS * GRID_ROWS;
 
+// ==================== 花盆分排解锁 ====================
+/** 每排花盆的解锁条件：所需玩家等级 + 每个花盆的购买价格 */
+export interface PotRowConfig {
+  row: number;
+  /** 该排可见/可购买的最低玩家等级 */
+  requiredLevel: number;
+  /** 每个花盆的购买价格（0 = 免费自动解锁） */
+  costPerPot: number;
+}
+
+export const POT_ROW_UNLOCKS: PotRowConfig[] = [
+  { row: 0, requiredLevel: 1,  costPerPot: 0 },
+  { row: 1, requiredLevel: 3,  costPerPot: 100 },
+  { row: 2, requiredLevel: 5,  costPerPot: 300 },
+  { row: 3, requiredLevel: 7,  costPerPot: 600 },
+  { row: 4, requiredLevel: 9,  costPerPot: 1200 },
+  { row: 5, requiredLevel: 12, costPerPot: 2500 },
+  { row: 6, requiredLevel: 15, costPerPot: 5000 },
+];
+
+/** 获取某排花盆的配置 */
+export const getPotRowConfig = (row: number): PotRowConfig =>
+  POT_ROW_UNLOCKS[row] ?? POT_ROW_UNLOCKS[0];
+
+/** 初始免费解锁的花盆 ID 列表（costPerPot === 0 的行） */
+export const INITIAL_UNLOCKED_POTS: number[] = POT_ROW_UNLOCKS
+  .filter(r => r.costPerPot === 0)
+  .flatMap(r => Array.from({ length: GRID_COLS }, (_, c) => r.row * GRID_COLS + c));
+
 // ==================== 货币：水量 ====================
 /** 初始水量 */
 export const INITIAL_WATER = 100;
