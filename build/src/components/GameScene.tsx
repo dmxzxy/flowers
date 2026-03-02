@@ -7,10 +7,9 @@ import { Toolbar } from './Toolbar';
 import { InventoryPanel } from './InventoryPanel';
 import { DragIndicator } from './DragIndicator';
 import { HarvestEffect } from './HarvestEffect';
-import { CurrencyBar } from './CurrencyBar';
+import { TopBar } from './TopBar';
 import { PurchasePanel } from './PurchasePanel';
 import { FlowerLevelPanel } from './FlowerLevelPanel';
-import { PlayerLevelBar } from './PlayerLevelBar';
 import { SeedEffect } from './SeedEffect';
 import { WaterEffect } from './WaterEffect';
 import { LevelUpEffect } from './LevelUpEffect';
@@ -344,20 +343,13 @@ export const GameScene: FC = () => {
         weather={atmosphere.weather}
       />
       <div className="game-content">
-        <CurrencyBar currency={currency} maxWater={maxWater} noWaterWarning={noWaterWarning} waterRegenCountdown={waterRegenCountdown} />
-        <PlayerLevelBar playerLevel={playerLevel} />
-        <Toolbar
-          onToggleInventory={toggleInventory}
-          inventoryTotal={inventory.total}
-          onOpenPurchase={togglePurchase}
-          onOpenLevels={toggleLevels}
-          onOpenBuyOrders={toggleBuyOrders}
-          buyOrderCount={buyOrders.length}
-          buyOrderFulfillable={hasAnyFulfillableBuyOrder}
-          onOpenPotSkins={togglePotSkins}
+        <TopBar
+          playerLevel={playerLevel}
+          currency={currency}
+          maxWater={maxWater}
+          noWaterWarning={noWaterWarning}
+          waterRegenCountdown={waterRegenCountdown}
           onOpenProfile={() => setShowProfile(true)}
-          onOpenAchievements={() => setShowAchievements(true)}
-          achievementUnclaimedCount={achievementUnclaimedCount}
         />
         <div className="garden-container">
           <PotGrid
@@ -368,12 +360,18 @@ export const GameScene: FC = () => {
             visibleRows={visibleRows}
           />
         </div>
-        <div className="game-hint">
-          {dragState.tool === 'seed' && '🌱 拖拽到空花盆进行播种'}
-          {dragState.tool === 'water' && '💧 拖拽到花盆进行浇水'}
-          {dragState.tool === 'harvest' && '🌾 拖拽到开花的花盆进行收获'}
-          {dragState.tool === 'none' && '点击花盆进行操作'}
-        </div>
+        <Toolbar
+          onToggleInventory={toggleInventory}
+          inventoryTotal={inventory.total}
+          onOpenPurchase={togglePurchase}
+          onOpenLevels={toggleLevels}
+          onOpenBuyOrders={toggleBuyOrders}
+          buyOrderCount={buyOrders.length}
+          buyOrderFulfillable={hasAnyFulfillableBuyOrder}
+          onOpenPotSkins={togglePotSkins}
+          onOpenAchievements={() => setShowAchievements(true)}
+          achievementUnclaimedCount={achievementUnclaimedCount}
+        />
       </div>
 
       <DragIndicator dragState={dragState} />

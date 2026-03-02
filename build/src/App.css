@@ -260,7 +260,201 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 15px;
+  padding: 10px 15px;
+}
+
+/* ========== 顶部栏 ========== */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 6px;
+  margin-bottom: 6px;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.top-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 3px 10px 3px 3px;
+  background: linear-gradient(135deg, rgba(255,249,245,0.95), rgba(255,240,245,0.92));
+  border-radius: 24px;
+  border: 1px solid rgba(236,64,122,0.1);
+  box-shadow: 0 2px 10px rgba(183,110,121,0.1);
+  backdrop-filter: blur(10px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.top-bar-left:active {
+  transform: scale(0.97);
+}
+
+.top-bar-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 1px 4px rgba(183,110,121,0.15);
+}
+.top-bar-avatar svg {
+  display: block;
+}
+
+.top-bar-level-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.top-bar-level {
+  font-size: 12px;
+  font-weight: 700;
+  color: #5D4037;
+  line-height: 1;
+}
+
+.top-bar-xp-track {
+  width: 60px;
+  height: 6px;
+  background: rgba(255,235,238,0.8);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.top-bar-xp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #F48FB1, #EC407A);
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.top-bar-xp-text {
+  font-size: 8px;
+  color: #AD1457;
+  line-height: 1;
+  opacity: 0.7;
+}
+
+.top-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.top-bar-currency {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: linear-gradient(135deg, rgba(255,249,245,0.95), rgba(255,240,245,0.92));
+  padding: 5px 10px;
+  border-radius: 18px;
+  border: 1px solid rgba(236,64,122,0.08);
+  box-shadow: 0 2px 8px rgba(183,110,121,0.08);
+  backdrop-filter: blur(10px);
+}
+.top-bar-currency svg {
+  flex-shrink: 0;
+}
+
+.top-bar-coins {
+  font-size: 13px;
+  font-weight: 700;
+  color: #996515;
+  font-variant-numeric: tabular-nums;
+}
+
+.top-bar-water {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1565C0;
+  font-variant-numeric: tabular-nums;
+}
+
+.top-bar-regen {
+  font-size: 9px;
+  color: #42A5F5;
+  opacity: 0.8;
+  white-space: nowrap;
+}
+
+/* ========== 浮动工具栏（底部） ========== */
+.toolbar-float {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+  padding: 0;
+  pointer-events: none;
+}
+
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, rgba(255,245,248,0.96), rgba(255,240,245,0.94));
+  padding: 6px 10px;
+  border-radius: 18px;
+  box-shadow: 0 4px 20px rgba(183,110,121,0.15), inset 0 1px 0 rgba(255,255,255,0.8);
+  border: 1px solid rgba(236,64,122,0.1);
+  backdrop-filter: blur(14px);
+  pointer-events: auto;
+}
+
+.toolbar-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: rgba(255,255,255,0.7);
+  border: 1.5px solid rgba(183,110,121,0.08);
+  position: relative;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 4px rgba(183,110,121,0.08);
+}
+.toolbar-btn svg {
+  display: block;
+  pointer-events: none;
+}
+.toolbar-btn:hover {
+  background: #FCE4EC;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(183,110,121,0.18);
+}
+.toolbar-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+
+.toolbar-btn-inventory {
+  background: linear-gradient(135deg, rgba(252,228,236,0.8), rgba(248,187,208,0.6));
+}
+.toolbar-btn-inventory:hover {
+  background: linear-gradient(135deg, #F8BBD0, #F48FB1);
+}
+
+/* 新订单到达弹跳动画 */
+.toolbar-btn-bounce {
+  animation: toolbarBtnBounce 0.6s ease-out;
+}
+@keyframes toolbarBtnBounce {
+  0% { transform: scale(1); }
+  20% { transform: scale(1.25); }
+  40% { transform: scale(0.95); }
+  60% { transform: scale(1.1); }
+  80% { transform: scale(1); }
+  100% { transform: scale(1); }
 }
 
 /* Toolbar */
@@ -448,6 +642,7 @@
   align-items: center;
   justify-content: center;
   position: relative;
+  padding-bottom: 56px; /* 为浮动工具栏留空间 */
 }
 
 .pot-grid-wrapper {
@@ -710,20 +905,7 @@
 
 /* Game Hint */
 .game-hint {
-  text-align: center;
-  color: rgba(255,255,255,0.95);
-  font-size: 13px;
-  padding: 10px 18px;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
-  background: linear-gradient(135deg, rgba(183,110,121,0.3), rgba(173,20,87,0.22));
-  border-radius: 22px;
-  margin-top: auto;
-  max-width: 400px;
-  margin-left: auto;
-  margin-right: auto;
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.15);
-  letter-spacing: 0.5px;
+  display: none; /* 已移除，保留CSS防止残留引用 */
 }
 
 /* Drag Indicator */
@@ -1049,18 +1231,17 @@
     bottom: 40px;
   }
   
-  .toolbar {
-    padding: 10px;
-    gap: 10px;
+  .toolbar-float {
+    gap: 6px;
   }
-  
-  .toolbar-flower {
-    width: 38px;
-    height: 38px;
+  .toolbar-group {
+    padding: 5px 8px;
+    gap: 4px;
   }
-  
-  .toolbar-flower-name {
-    font-size: 8px;
+  .toolbar-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 11px;
   }
 }
 
@@ -1268,71 +1449,61 @@
 @media (max-width: 480px) {
   /* 游戏内容 */
   .game-content {
-    padding: 10px;
-    padding-top: max(10px, env(safe-area-inset-top));
-    padding-bottom: max(10px, env(safe-area-inset-bottom));
+    padding: 8px;
+    padding-top: max(8px, env(safe-area-inset-top));
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
   }
   
-  /* 工具栏 - 紧凑纵向 */
-  .toolbar {
-    padding: 8px 10px;
-    gap: 8px;
-    max-width: 100%;
-    border-radius: 10px;
+  /* 顶部栏 - 紧凑 */
+  .top-bar {
+    padding: 2px 4px;
+    margin-bottom: 4px;
+    gap: 6px;
   }
-  
-  .toolbar-section {
-    gap: 5px;
+  .top-bar-left {
+    padding: 2px 8px 2px 2px;
+    gap: 6px;
   }
-  
-  .toolbar-title {
-    font-size: 12px;
+  .top-bar-avatar {
+    width: 30px;
+    height: 30px;
   }
-  
-  .toolbar-flowers {
-    gap: 4px;
+  .top-bar-avatar svg {
+    width: 30px;
+    height: 30px;
   }
-  
-  .toolbar-flower {
-    width: 36px;
-    height: 36px;
-  }
-  
-  .toolbar-flower-name {
-    font-size: 7px;
-  }
-  
-  .toolbar-water,
-  .toolbar-harvest {
-    padding: 6px 10px;
-  }
-  
-  .toolbar-water-icon {
-    width: 18px;
-    height: 18px;
-  }
-  
-  .toolbar-water span,
-  .toolbar-harvest span {
+  .top-bar-level {
     font-size: 11px;
   }
-  
-  .toolbar-harvest-icon {
-    font-size: 14px;
+  .top-bar-xp-track {
+    width: 50px;
+    height: 5px;
   }
-  
-  .toolbar-current {
-    font-size: 10px;
-    padding: 3px 8px;
+  .top-bar-xp-text {
+    font-size: 7px;
   }
-  
-  .toolbar-clear {
-    padding: 3px 8px;
-    font-size: 10px;
+  .top-bar-currency {
+    padding: 4px 8px;
+    gap: 3px;
   }
-  
-  .toolbar-divider {
-    height: 30px;
+  .top-bar-coins, .top-bar-water {
+    font-size: 12px;
+  }
+
+  /* 浮动工具栏 */
+  .toolbar-float {
+    bottom: 8px;
+    gap: 6px;
+  }
+  .toolbar-group {
+    padding: 5px 8px;
+    gap: 4px;
+    border-radius: 14px;
+  }
+  .toolbar-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 11px;
   }
   
   /* 花盆网格 */
@@ -1342,6 +1513,7 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    padding-bottom: 50px;
   }
   
   .pot-grid-wrapper {
@@ -1430,13 +1602,6 @@
     font-size: 10px;
   }
   
-  /* 提示 */
-  .game-hint {
-    font-size: 11px;
-    padding: 8px 12px;
-    margin-top: 5px;
-  }
-  
   /* 拖拽指示器 */
   .drag-indicator {
     transform: translate(-50%, -50%) scale(0.8);
@@ -1497,14 +1662,18 @@
 
 /* 横屏适配 */
 @media (orientation: landscape) and (max-height: 500px) {
-  .toolbar {
-    flex-direction: row;
-    padding: 5px 10px;
-    margin-bottom: 5px;
+  .toolbar-float {
+    bottom: 4px;
+    gap: 4px;
   }
-  
-  .toolbar-title {
-    display: none;
+  .toolbar-group {
+    padding: 3px 6px;
+    gap: 3px;
+  }
+  .toolbar-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
   }
   
   .pot-grid-wrapper {
@@ -1516,10 +1685,10 @@
     right: 5px;
     padding: 5px 8px;
   }
-  
-  .game-hint {
-    padding: 5px;
-    font-size: 10px;
+
+  .top-bar {
+    padding: 2px 4px;
+    margin-bottom: 2px;
   }
 }
 
@@ -2597,17 +2766,29 @@
 }
 
 /* ==================== 采购/升级按钮样式 ==================== */
-.toolbar-tool-purchase {
+.toolbar-tool-purchase, .toolbar-btn-purchase {
   background: linear-gradient(135deg, #e3f2fd, #bbdefb);
 }
-.toolbar-tool-purchase:hover {
+.toolbar-tool-purchase:hover, .toolbar-btn-purchase:hover {
   background: linear-gradient(135deg, #bbdefb, #90caf9);
 }
-.toolbar-tool-levels {
+.toolbar-tool-levels, .toolbar-btn-levels {
   background: linear-gradient(135deg, #fff3e0, #ffe0b2);
 }
-.toolbar-tool-levels:hover {
+.toolbar-tool-levels:hover, .toolbar-btn-levels:hover {
   background: linear-gradient(135deg, #ffe0b2, #ffcc80);
+}
+.toolbar-btn-buyorders {
+  background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+}
+.toolbar-btn-buyorders:hover {
+  background: linear-gradient(135deg, #FFE0B2, #FFCC80);
+}
+.toolbar-btn-potskins {
+  background: linear-gradient(135deg, #EFEBE9, #D7CCC8);
+}
+.toolbar-btn-potskins:hover {
+  background: linear-gradient(135deg, #D7CCC8, #BCAAA4);
 }
 
 /* ==================== 交付任务完成特效 ==================== */
@@ -3712,11 +3893,11 @@
   background: #EEEEEE;
 }
 
-.toolbar-tool-profile {
+.toolbar-tool-profile, .toolbar-btn-profile {
   background: linear-gradient(135deg, #E1BEE7, #CE93D8);
 }
 
-.toolbar-tool-profile:hover {
+.toolbar-tool-profile:hover, .toolbar-btn-profile:hover {
   background: linear-gradient(135deg, #CE93D8, #BA68C8);
 }
 
@@ -4039,10 +4220,10 @@
 }
 
 /* Toolbar achievement button */
-.toolbar-tool-achievements {
+.toolbar-tool-achievements, .toolbar-btn-achievements {
   background: linear-gradient(135deg, #FFF8E1, #FFECB3);
 }
-.toolbar-tool-achievements:hover {
+.toolbar-tool-achievements:hover, .toolbar-btn-achievements:hover {
   background: linear-gradient(135deg, #FFECB3, #FFD54F);
 }
 

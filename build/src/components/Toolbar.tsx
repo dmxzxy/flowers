@@ -1,4 +1,12 @@
 import { FC, useEffect, useRef, useState } from 'react';
+import {
+  IconInventory,
+  IconPurchase,
+  IconBuyOrders,
+  IconFlowerGuide,
+  IconPotSkins,
+  IconAchievements,
+} from './ToolbarIcons';
 
 interface ToolbarProps {
   onToggleInventory: () => void;
@@ -9,7 +17,6 @@ interface ToolbarProps {
   buyOrderCount: number;
   buyOrderFulfillable: boolean;
   onOpenPotSkins: () => void;
-  onOpenProfile: () => void;
   onOpenAchievements: () => void;
   achievementUnclaimedCount: number;
 }
@@ -23,7 +30,6 @@ export const Toolbar: FC<ToolbarProps> = ({
   buyOrderCount,
   buyOrderFulfillable,
   onOpenPotSkins,
-  onOpenProfile,
   onOpenAchievements,
   achievementUnclaimedCount,
 }) => {
@@ -45,31 +51,32 @@ export const Toolbar: FC<ToolbarProps> = ({
   }, [buyOrderCount]);
 
   return (
-    <div className="toolbar">
-      <div className="toolbar-section">
+    <div className="toolbar-float">
+      {/* 左侧主要功能组：仓库 + 采购 + 收购 */}
+      <div className="toolbar-group toolbar-group-main">
         <div
-          className="toolbar-tool toolbar-tool-inventory"
+          className="toolbar-btn toolbar-btn-inventory"
           onClick={onToggleInventory}
           title="仓库"
         >
-          <span className="toolbar-icon">📦</span>
+          <IconInventory size={20} />
           {inventoryTotal > 0 && (
             <span className="toolbar-badge">{inventoryTotal}</span>
           )}
         </div>
         <div
-          className="toolbar-tool toolbar-tool-purchase"
+          className="toolbar-btn toolbar-btn-purchase"
           onClick={onOpenPurchase}
           title="采购任务"
         >
-          <span className="toolbar-icon">🛒</span>
+          <IconPurchase size={20} />
         </div>
         <div
-          className={`toolbar-tool toolbar-tool-buyorders ${orderBounce ? 'toolbar-tool-bounce' : ''}`}
+          className={`toolbar-btn toolbar-btn-buyorders ${orderBounce ? 'toolbar-btn-bounce' : ''}`}
           onClick={onOpenBuyOrders}
           title="收购订单"
         >
-          <span className="toolbar-icon">🛍️</span>
+          <IconBuyOrders size={20} />
           {buyOrderCount > 0 && (
             <span className="toolbar-badge">{buyOrderCount}</span>
           )}
@@ -77,36 +84,33 @@ export const Toolbar: FC<ToolbarProps> = ({
             <span className="toolbar-red-dot" />
           )}
         </div>
+      </div>
+
+      {/* 右侧辅助功能组：图鉴 + 花盆 + 成就 */}
+      <div className="toolbar-group toolbar-group-aux">
         <div
-          className="toolbar-tool toolbar-tool-levels"
+          className="toolbar-btn toolbar-btn-levels"
           onClick={onOpenLevels}
           title="花朵图鉴"
         >
-          <span className="toolbar-icon">🌸</span>
+          <IconFlowerGuide size={20} />
         </div>
         <div
-          className="toolbar-tool toolbar-tool-potskins"
+          className="toolbar-btn toolbar-btn-potskins"
           onClick={onOpenPotSkins}
           title="花盆皮肤"
         >
-          <span className="toolbar-icon">🪴</span>
+          <IconPotSkins size={20} />
         </div>
         <div
-          className="toolbar-tool toolbar-tool-achievements"
+          className="toolbar-btn toolbar-btn-achievements"
           onClick={onOpenAchievements}
           title="成就"
         >
-          <span className="toolbar-icon">🏆</span>
+          <IconAchievements size={20} />
           {achievementUnclaimedCount > 0 && (
             <span className="toolbar-badge">{achievementUnclaimedCount}</span>
           )}
-        </div>
-        <div
-          className="toolbar-tool toolbar-tool-profile"
-          onClick={onOpenProfile}
-          title="个人中心"
-        >
-          <span className="toolbar-icon">👤</span>
         </div>
       </div>
     </div>
